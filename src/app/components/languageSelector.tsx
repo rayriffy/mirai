@@ -70,14 +70,14 @@ export const LangaugeSelector: FunctionComponent = props => {
                     className={({ active }) =>
                       classNames(
                         active ? 'text-white bg-indigo-600' : 'text-gray-900',
-                        'cursor-default select-none relative py-2 pl-3 pr-9'
+                        'cursor-default select-none relative'
                       )
                     }
                     value={language}
                   >
                     {({ selected, active }) => (
                       <Link href={asPath} locale={language.id}>
-                        <a className="flex items-center cursor-default">
+                        <a className="flex items-center cursor-default py-2 pl-3 pr-9">
                           <img
                             src={getFlagResource(language.flag)}
                             alt=""
