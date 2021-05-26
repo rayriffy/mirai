@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import Link from 'next/link'
 
 import { useLocale } from '../core/services/useLocale'
 
@@ -39,12 +40,13 @@ const Page: NextPage = props => {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           {locale('or')}{' '}
-          <a
-            href="#"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
-          >
-            {locale('createAcc')}
-          </a>
+          <Link href="/register">
+            <a
+              className="font-medium text-indigo-600 hover:text-indigo-500"
+            >
+              {locale('createAcc')}
+            </a>
+          </Link>
         </p>
       </div>
 
