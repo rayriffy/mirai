@@ -1,6 +1,6 @@
 export interface User {
   displayName: string
-  email: string
-  preferredBrnach?: string
+  emailHash: string
+  preferredBranch?: string
   role: 'default' | 'staff' | 'admin'
 }

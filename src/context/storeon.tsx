@@ -3,9 +3,10 @@ import { FunctionComponent, createContext } from 'react'
 import { createStoreon } from 'storeon'
 import { customContext } from 'storeon/react'
 
-import { title } from './store/title'
+import { title, TitleStore, TitleEvent } from './store/title'
+import { user, UserStore, UserEvent } from './store/user'
 
-export const store = createStoreon([title])
+export const store = createStoreon<TitleStore & UserStore, TitleEvent & UserEvent>([title, user])
 
 const StoreonContext = createContext(store)
 

@@ -4,7 +4,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { Listbox, Transition } from '@headlessui/react'
-import { CheckIcon, SelectorIcon } from '@heroicons/react/solid'
+import { SelectorIcon } from '@heroicons/react/solid'
+
+import { classNames } from '../../core/services/classNames'
 
 const languages = [
   {
@@ -18,8 +20,6 @@ const languages = [
     flag: 'TH',
   }
 ]
-
-const classNames = (...classes: string[]) => classes.filter(Boolean).join(' ')
 
 export const LangaugeSelector: FunctionComponent = props => {
   const { locale, asPath } = useRouter()
@@ -75,7 +75,7 @@ export const LangaugeSelector: FunctionComponent = props => {
                     }
                     value={language}
                   >
-                    {({ selected, active }) => (
+                    {({ selected }) => (
                       <Link href={asPath} locale={language.id}>
                         <a className="flex items-center cursor-default py-2 pl-3 pr-9">
                           <img

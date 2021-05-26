@@ -1,5 +1,6 @@
 import { NextPage } from 'next'
 import Link from 'next/link'
+import { Spinner } from '../core/components/spinner'
 
 import { useLocale } from '../core/services/useLocale'
 
@@ -52,6 +53,7 @@ const Page: NextPage = props => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+          <Spinner />
           <form className="space-y-6" action="#" method="POST">
             <div>
               <label
