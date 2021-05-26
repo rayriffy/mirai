@@ -1,10 +1,18 @@
+import { FormEventHandler, useCallback, useRef, useState } from 'react'
+
 import { NextPage } from 'next'
 import Link from 'next/link'
-import { Spinner } from '../core/components/spinner'
+import { useRouter } from 'next/router'
+
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import { createFirebaseInstance } from '../core/services/createFirebaseInstance'
+
+import { XCircleIcon } from '@heroicons/react/outline'
 
 import { useLocale } from '../core/services/useLocale'
 
-const Page: NextPage = props => {
+const Page: NextPage = () => {
+  const { push } = useRouter()
   const { locale } = useLocale({
     en: {
       signInHead: 'Sign in to your account',
@@ -15,6 +23,7 @@ const Page: NextPage = props => {
       forgot: 'Forgot your password?',
       signIn: 'Sign in',
       orFast: 'Or continue with',
+      errorHead: 'Unable to proceed',
     },
     th: {
       signInHead: 'เข้าสู่ระบบ',
@@ -25,8 +34,35 @@ const Page: NextPage = props => {
       forgot: 'ลืมรหัสผ่าน?',
       signIn: 'เข้าสู่ระบบ',
       orFast: 'หรือเข้าสู่ระบบด้วย',
+      errorHead: 'ไม่สามารถทำรายการต่อได้',
     },
   })
+
+  const emailRef = useRef<HTMLInputElement>(null)
+  const passwordRef = useRef<HTMLInputElement>(null)
+
+  const [isOperation, setIsOperation] = useState<boolean>(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const onSubmit = useCallback<FormEventHandler<HTMLFormElement>>(async e => {
+    e.preventDefault()
+
+    setIsOperation(true)
+    setError(null)
+
+    const email = emailRef.current.value
+    const password = passwordRef.current.value
+
+    try {
+      const instance = createFirebaseInstance()
+      await signInWithEmailAndPassword(getAuth(instance), email, password)
+      push('/dashboard')
+    } catch (e) {
+      const { message } = e
+      setError(message)
+      setIsOperation(false)
+    }
+  }, [emailRef, passwordRef])
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -53,8 +89,27 @@ const Page: NextPage = props => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-          <Spinner />
-          <form className="space-y-6" action="#" method="POST">
+          {error !== null && (
+            <div className="rounded-md bg-yellow-50 p-4 mb-6">
+              <div className="flex">
+                <div className="flex-shrink-0">
+                  <XCircleIcon
+                    className="h-5 w-5 text-red-400"
+                    aria-hidden="true"
+                  />
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-red-800">
+                    {locale('errorHead')}
+                  </h3>
+                  <div className="mt-2 text-sm text-red-700">
+                    <p>{error}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+          <form className="space-y-6" onSubmit={onSubmit}>
             <div>
               <label
                 htmlFor="email"
@@ -69,7 +124,9 @@ const Page: NextPage = props => {
                   type="email"
                   autoComplete="email"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  ref={emailRef}
+                  disabled={isOperation}
+                  className="transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-200 disabled:cursor-wait"
                 />
               </div>
             </div>
@@ -88,7 +145,9 @@ const Page: NextPage = props => {
                   type="password"
                   autoComplete="current-password"
                   required
-                  className="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                  ref={passwordRef}
+                  disabled={isOperation}
+                  className="transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-200 disabled:cursor-wait"
                 />
               </div>
             </div>
@@ -107,7 +166,8 @@ const Page: NextPage = props => {
             <div>
               <button
                 type="submit"
-                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={isOperation}
+                className="transition w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:hover:bg-indigo-500"
               >
                 {locale('signIn')}
               </button>
@@ -128,9 +188,9 @@ const Page: NextPage = props => {
 
             <div className="mt-6 grid grid-cols-3 gap-3">
               <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                <button
+                  disabled={isOperation}
+                  className="transition w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-200 disabled:cursor-wait"
                 >
                   <span className="sr-only">Sign in with Facebook</span>
                   <svg
@@ -145,13 +205,13 @@ const Page: NextPage = props => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </button>
               </div>
 
               <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                <button
+                  disabled={isOperation}
+                  className="transition w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-200 disabled:cursor-wait"
                 >
                   <span className="sr-only">Sign in with Twitter</span>
                   <svg
@@ -162,13 +222,13 @@ const Page: NextPage = props => {
                   >
                     <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84" />
                   </svg>
-                </a>
+                </button>
               </div>
 
               <div>
-                <a
-                  href="#"
-                  className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50"
+                <button
+                  disabled={isOperation}
+                  className="transition w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-200 disabled:cursor-wait"
                 >
                   <span className="sr-only">Sign in with GitHub</span>
                   <svg
@@ -183,7 +243,7 @@ const Page: NextPage = props => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </button>
               </div>
             </div>
           </div>

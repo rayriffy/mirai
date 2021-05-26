@@ -92,7 +92,7 @@ const Page: NextPage = () => {
                 </div>
                 <div className="ml-3">
                   <h3 className="text-sm font-medium text-red-800">
-                    Unable to proceed
+                    {locale('errorHead')}
                   </h3>
                   <div className="mt-2 text-sm text-red-700">
                     <p>{error}</p>

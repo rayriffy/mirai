@@ -12,8 +12,6 @@ export const AuthWrapper: FunctionComponent = props => {
     user: { auth },
   } = useStoreon('user')
 
-  console.log({ auth })
-
   useEffect(() => {
     if (auth === undefined) {
       push('/')
