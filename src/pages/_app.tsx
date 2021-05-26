@@ -29,7 +29,7 @@ const NextApp: NextPage<AppProps> = props => {
   }, [user])
 
   useEffect(() => {
-    if (['/', '/register', '/forgot'].includes(asPath) && (user !== undefined || user !== null)) {
+    if (['/', '/register', '/forgot'].includes(asPath) && user !== undefined && user !== null) {
       push('/dashboard')
     }
   }, [asPath, user])
