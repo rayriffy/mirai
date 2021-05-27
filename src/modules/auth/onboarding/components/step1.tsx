@@ -1,4 +1,6 @@
 import {
+  Dispatch,
+  FunctionComponent,
   FormEventHandler,
   Fragment,
   SetStateAction,
@@ -10,13 +12,13 @@ import { useLocale } from '../../../../core/services/useLocale'
 
 import { Input } from '../@types/Input'
 
-interface IProps {
+interface Props {
   input: Input
-  setInput: React.Dispatch<SetStateAction<Input>>
+  setInput: Dispatch<SetStateAction<Input>>
   onNext(): void
 }
 
-export const Step1: React.FC<IProps> = props => {
+export const Step1: FunctionComponent<Props> = props => {
   const { input, setInput, onNext } = props
   const { locale } = useLocale({
     en: {

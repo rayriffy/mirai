@@ -1,6 +1,7 @@
+import { Role } from '../Role'
 export interface User {
   displayName: string
   emailHash: string
-  preferredBranch?: string
-  role: 'default' | 'staff' | 'admin'
+  preferredBranch: string
+  role: Role
 }
