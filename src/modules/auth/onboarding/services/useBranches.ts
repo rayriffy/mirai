@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Branch } from '../../../../core/@types/firebase/Branch'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
-interface BranchWithId {
+export interface BranchWithId {
   id: string
   data: Branch
 }

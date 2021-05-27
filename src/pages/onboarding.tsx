@@ -1,14 +1,21 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
 import { Step } from '../modules/auth/onboarding/components/step'
 import { useLocale } from '../core/services/useLocale'
-import { Input } from '../modules/auth/onboarding/@types/Input'
+import { useStoreon } from '../context/storeon'
 
 import { Step1 } from '../modules/auth/onboarding/components/step1'
+import { Step2 } from '../modules/auth/onboarding/components/step2'
+import { Step3 } from '../modules/auth/onboarding/components/step3'
+
+import { Input } from '../modules/auth/onboarding/@types/Input'
 
 const Page: NextPage = () => {
+  const { push } = useRouter()
+  const { user: { metadata } } = useStoreon('user')
   const { locale } = useLocale({
     en: {
       title: 'Greetings',
@@ -20,7 +27,6 @@ const Page: NextPage = () => {
     },
   })
 
-  // const { data } = useBranches()
   const [step, setStep] = useState<number>(1)
   const onNext = useCallback(() => setStep(o => o + 1), [step])
   const onPrev = useCallback(() => setStep(o => o - 1), [step])
@@ -29,6 +35,12 @@ const Page: NextPage = () => {
     displayName: '',
     preferredBranch: '',
   })
+
+  useEffect(() => {
+    if (metadata !== null && metadata !== undefined) {
+      push('/dashboard')
+    }
+  }, [metadata])
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
@@ -46,7 +58,7 @@ const Page: NextPage = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white shadow sm:rounded-lg">
-          {step === 1 ? <Step1 {...{ input, setInput, onNext }} /> : null}
+          {step === 1 ? <Step1 {...{ input, setInput, onNext }} /> : step === 2 ? <Step2 {...{ input, setInput, onPrev, onNext }} /> : <Step3 {...{ input }} />}
         </div>
       </div>
     </div>
