@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
-import { FunctionComponent, useEffect, useMemo } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 
 import { useStoreon } from '../../context/storeon'
 
-import { Spinner } from '../../core/components/spinner'
+import { CenterSpinner } from '../../core/components/centerSpinner'
 import { useUserMetadata } from '../services/useUserMetadata'
 
 export const AuthWrapper: FunctionComponent = props => {
@@ -21,9 +21,7 @@ export const AuthWrapper: FunctionComponent = props => {
   return (
     <>
       {auth === undefined || auth === null ? (
-        <div>
-          <Spinner />
-        </div>
+        <CenterSpinner />
       ) : (
         <UserWrapper {...props} />
       )}
@@ -54,9 +52,7 @@ export const UserWrapper: FunctionComponent = props => {
   return (
     <>
       {metadata === undefined ? (
-        <div>
-          <Spinner />
-        </div>
+        <CenterSpinner />
       ) : (
         children
       )}
