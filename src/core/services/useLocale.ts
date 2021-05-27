@@ -9,9 +9,9 @@ type Input = Record<Language, {
 }>
 
 export const useLocale = (input: Input) => {
-  const { locale: targetLocale } = useRouter()
+  const { locale: detectedLocale } = useRouter()
 
-  const locale = (key: keyof Input['en']) => input[targetLocale][key] ?? key
+  const locale = (key: keyof Input['en']) => input[window.detectedLocale][key] ?? key
 
-  return { locale }
+  return { locale, detectedLocale }
 }
