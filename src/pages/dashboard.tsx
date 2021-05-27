@@ -4,7 +4,7 @@ import { CenterSpinner } from '../core/components/centerSpinner'
 
 const Page: NextPage = () => {
   return (
-    <CenterSpinner />
+    <>OK</>
   )
 }
 
