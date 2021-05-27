@@ -46,6 +46,7 @@
     "preact-render-to-string": "^5.1.19",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat",
+    "react-icons": "^4.2.0",
     "react-ssr-prepass": "npm:preact-ssr-prepass",
     "storeon": "^3.1.4",
     "swr": "^0.5.6",

@@ -1,7 +1,6 @@
-export interface Brnach {
+import { GeoPoint } from 'firebase/firestore'
+
+export interface Branch {
   name: string
-  localtion: {
-    lat: number
-    lon: number
-  }
+  location: GeoPoint
 }
