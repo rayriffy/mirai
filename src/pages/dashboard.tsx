@@ -1,8 +1,10 @@
 import { NextPage } from 'next'
 
-const Page: NextPage = props => {
+import { CenterSpinner } from '../core/components/centerSpinner'
+
+const Page: NextPage = () => {
   return (
-    <>OK</>
+    <CenterSpinner />
   )
 }
 
