@@ -1,13 +1,10 @@
-import { collection, getFirestore, onSnapshot } from '@firebase/firestore'
 import { useState, useEffect } from 'react'
 
-import { Branch } from '../../../../core/@types/firebase/Branch'
+import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
-export interface BranchWithId {
-  id: string
-  data: Branch
-}
+import { Branch } from '../../../../core/@types/firebase/Branch'
+import { BranchWithId } from '../../../../core/@types/BranchWithId'
 
 export const useBranches = () => {
   const [data, setData] = useState<BranchWithId[]>([])
