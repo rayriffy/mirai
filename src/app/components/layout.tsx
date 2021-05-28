@@ -1,34 +1,33 @@
-import { useRouter } from 'next/router'
 import { FunctionComponent, Fragment, useEffect } from 'react'
+
+import { useRouter } from 'next/router'
+
 import { useStoreon } from '../../context/storeon'
 import { useAuth } from '../../core/services/useAuth'
-import { useAuthReader } from '../services/useAuthReader'
 
 import { Footer } from './footer'
 
 export const AppLayout: FunctionComponent = props => {
   const { children } = props
 
+  useAuth()
   const { asPath, push } = useRouter()
-  const user = useAuth()
 
-  const { dispatch } = useStoreon('user')
+  const { user: { auth } } = useStoreon('user')
 
-  useAuthReader()
-
-  useEffect(() => {
-    dispatch('user/auth', user)
-  }, [user])
+  // useEffect(() => {
+  //   dispatch('user/auth', user)
+  // }, [user])
 
   useEffect(() => {
     if (
       ['/', '/register', '/forgot'].includes(asPath) &&
-      user !== undefined &&
-      user !== null
+      auth !== undefined &&
+      auth !== null
     ) {
       push('/dashboard')
     }
-  }, [asPath, user])
+  }, [asPath, auth])
 
   return (
     <Fragment>

@@ -14,6 +14,7 @@ import { useLocale } from '../../../../core/services/useLocale'
 import { FaApple, FaFacebook, FaGoogle } from 'react-icons/fa'
 
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { useAuthReader } from '../../../../app/services/useAuthReader'
 import {
   FacebookAuthProvider,
   getAuth,
@@ -27,6 +28,8 @@ import {
 import { XCircleIcon } from '@heroicons/react/outline'
 
 export const SigninModule: FunctionComponent = () => {
+  useAuthReader()
+
   const { push } = useRouter()
   const { locale } = useLocale({
     en: {
