@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
@@ -5,6 +7,7 @@ import { useRouter } from 'next/router'
 import { Context } from '../context/storeon'
 import { HeadTitle } from '../core/components/headTitle'
 import { AppLayout } from '../app/components/layout'
+import { Footer } from '../app/components/footer'
 
 import { AuthWrapper } from '../app/components/authWrapper'
 import { DashboardWrapper } from '../app/components/dashboardWrapper'
@@ -21,11 +24,17 @@ const NextApp: NextPage<AppProps> = props => {
       <HeadTitle />
       <AppLayout>
         {['/', '/register', '/forgot'].includes(asPath) ? (
-          <Component {...pageProps} />
+          <Fragment>
+            <Component {...pageProps} />
+            <Footer />
+          </Fragment>
         ) : (
           <AuthWrapper>
             {['/onboarding'].includes(asPath) ? (
-              <Component {...pageProps} />
+              <Fragment>
+                <Component {...pageProps} />
+                <Footer />
+              </Fragment>
             ) : (
               <DashboardWrapper>
                 <Component {...pageProps} />
