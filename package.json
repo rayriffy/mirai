@@ -52,7 +52,7 @@
     "swr": "^0.5.6",
     "tailwindcss": "^2.1.2",
     "web-api-hooks": "^3.0.2",
-    "webpack": "^5.37.1",
+    "webpack": "^5.38.1",
     "worker-loader": "^3.0.8"
   },
   "devDependencies": {
