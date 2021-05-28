@@ -11,19 +11,15 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useLocale } from '../../../../core/services/useLocale'
 
-import { FaApple, FaFacebook, FaGoogle } from 'react-icons/fa'
-
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 import { useAuthReader } from '../../../../app/services/useAuthReader'
 import {
-  FacebookAuthProvider,
   getAuth,
-  GoogleAuthProvider,
   signInWithEmailAndPassword,
   signInWithRedirect,
-  OAuthProvider,
   AuthProvider,
 } from 'firebase/auth'
+import { ssoProviders } from '../constants/ssoProviders'
 
 import { XCircleIcon } from '@heroicons/react/outline'
 
@@ -61,24 +57,6 @@ export const SigninModule: FunctionComponent = () => {
 
   const [isOperation, setIsOperation] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
-
-  const providers = [
-    {
-      id: 'facebook',
-      provider: new FacebookAuthProvider(),
-      Icon: FaFacebook,
-    },
-    {
-      id: 'apple',
-      provider: new OAuthProvider('apple.com'),
-      Icon: FaApple,
-    },
-    {
-      id: 'google',
-      provider: new GoogleAuthProvider(),
-      Icon: FaGoogle,
-    },
-  ]
 
   const onSubmit = useCallback<FormEventHandler<HTMLFormElement>>(
     async e => {
@@ -233,7 +211,7 @@ export const SigninModule: FunctionComponent = () => {
             </div>
 
             <div className="mt-6 grid grid-cols-3 gap-3">
-              {providers.map(({ id, provider, Icon }) => (
+              {ssoProviders.map(({ id, provider, Icon }) => (
                 <div key={`auth-provider-${id}`}>
                   <button
                     disabled={isOperation}
