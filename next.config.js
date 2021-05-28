@@ -24,17 +24,17 @@ module.exports = withPlugins(
     },
     i18n: {
       locales: ['en', 'th'],
-      // defaultLocale: 'en',
-      domains: [
-        {
-          domain: 'mirai.rayriffy.com',
-          defaultLocale: 'en',
-        },
-        {
-          domain: 'มิไร.ริฟฟี่.ไทย',
-          defaultLocale: 'th',
-        }
-      ]
+      defaultLocale: 'en',
+      // domains: [
+      //   {
+      //     domain: 'mirai.rayriffy.com',
+      //     defaultLocale: 'en',
+      //   },
+      //   {
+      //     domain: 'มิไร.ริฟฟี่.ไทย',
+      //     defaultLocale: 'th',
+      //   }
+      // ]
     },
     images: {
       domains: [
