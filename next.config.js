@@ -24,7 +24,7 @@ module.exports = withPlugins(
     },
     i18n: {
       locales: ['en', 'th'],
-      defaultLocale: 'en',
+      // defaultLocale: 'en',
       domains: [
         {
           domain: 'mirai.rayriffy.com',
