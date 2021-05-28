@@ -1,6 +1,8 @@
-import { FunctionComponent, Fragment, useState, useCallback, useEffect, useMemo } from 'react'
+import { FunctionComponent, useState, useCallback, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
+
+import { Footer } from '../footer'
 
 import { MobileHeader } from './header/mobile'
 import { MobileOverlay } from './mobileOverlay'
@@ -30,6 +32,7 @@ export const DashboardWrapper: FunctionComponent = props => {
         >
           {children}
         </main>
+        <Footer />
       </div>
     </div>
   )
