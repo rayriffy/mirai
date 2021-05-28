@@ -24,7 +24,7 @@ export const DashboardWrapper: FunctionComponent = props => {
     <div className="h-screen flex overflow-hidden bg-gray-50">
       <MobileOverlay show={sidebarOpen} onToggleSidebar={onToggleSidebar} />
       <DesktopHeader />
-      <div className="flex flex-col w-0 flex-1 overflow-hidden">
+      <div className="flex flex-col w-0 flex-1 overflow-auto">
         <MobileHeader onToggleSidebar={onToggleSidebar} />
         <main
           className="flex-1 relative z-0 overflow-y-auto focus:outline-none pb-6"
