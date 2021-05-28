@@ -20,6 +20,7 @@ export const AuthWrapper: FunctionComponent = props => {
 
   return (
     <>
+      auth
       {auth === undefined ? (
         <CenterSpinner />
       ) : (
@@ -53,10 +54,14 @@ export const UserWrapper: FunctionComponent = props => {
 
   return (
     <Fragment>
+      user
       {contextMeta === undefined ? (
         <CenterSpinner />
       ) : (
-        children
+        <>
+          inapp
+          {children}
+        </>
       )}
     </Fragment>
   )

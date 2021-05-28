@@ -17,6 +17,7 @@ const Page: NextPage = () => {
   return (
     <div className={classNames(isRequireSignin ? '' : 'items-center', 'min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8')}>
       {isRequireSignin ? <SigninModule /> : <Spinner />}
+      {auth === undefined ? 'undefined' : auth === undefined ? 'null' : JSON.stringify(auth)}
     </div>
   )
 }
