@@ -4,12 +4,15 @@ import { onSnapshot, collection, doc, getFirestore } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
 
 import { User } from '../../core/@types/firebase/User'
-import { useStoreon } from '../../context/storeon'
 
 export const useUserMetadata = (uid: string) => {
   const [metadata, setMetadata] = useState<User | null>(undefined)
 
   useEffect(() => {
+    if (uid === '') {
+      setMetadata(null)
+    }
+
     const instance = createFirebaseInstance()
 
     const listener = onSnapshot(

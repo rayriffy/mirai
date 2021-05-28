@@ -8,6 +8,8 @@ import { BranchSelectorSkeleton } from './branchSelectorSkeleton'
 export const BranchSelection = forwardRef<HTMLInputElement>((_, ref) => {
   const { data, loading } = useBranches()
 
+  console.log({ data, loading })
+
   return (
     <Fragment>
       {loading ? (

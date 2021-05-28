@@ -25,8 +25,8 @@ export const useBranches = () => {
         }
       })
 
-      setLoading(false)
       setData(res)
+      setLoading(false)
     })
   }, [])
 
