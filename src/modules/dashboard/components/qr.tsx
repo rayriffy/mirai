@@ -17,7 +17,7 @@ export const QRProfile = memo(() => {
   const renderQR = debounce(() => {
     toDataURL(document.querySelector('#qr-profile'), uid, {
       errorCorrectionLevel: 'L',
-      margin: 0,
+      margin: 1,
       width,
     })
   }, 50)
