@@ -25,6 +25,8 @@ const api: NextApiHandler = async (req, res) => {
         preferredBranch,
         emailHash: crypto.createHash('md5').update(userData.auth.email.trim().toLowerCase()).digest("hex"),
         role: 'default',
+        favoriteArcades: [],
+        balance: 0,
       }
 
       firebase.firestore().collection('users').doc(userData.auth.uid).set(payload)

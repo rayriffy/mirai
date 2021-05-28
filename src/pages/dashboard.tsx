@@ -10,7 +10,8 @@ import {
   PencilAltIcon,
   TrashIcon,
   UserAddIcon,
-} from '@heroicons/react/solid'
+  PlusIcon,
+} from '@heroicons/react/outline'
 import { classNames } from '../core/services/classNames'
 
 import { FavoriteArcadeItem } from '../modules/dashboard/components/favoriteArcadeItem'
@@ -96,15 +97,18 @@ const Page: NextPage = () => {
             </h2>
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
               <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} />
-              <div className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">{uid}</div>
+              <dd className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">{uid}</dd>
             </div>
           </div>
           <div className="">
             <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
               Balance
             </h2>
-            <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
+            <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
               <dd className="text-3xl font-semibold text-gray-900">฿{balance.toLocaleString()}</dd>
+              {/* <button className="p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
+                <PlusIcon className="w-6 h-6 text-gray-500" />
+              </button> */}
             </div>
           </div>
         </div>
