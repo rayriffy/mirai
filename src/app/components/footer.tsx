@@ -1,7 +1,7 @@
-import { FunctionComponent, memo } from 'react'
+import { memo } from 'react'
 import { LangaugeSelector } from './languageSelector'
 
-export const Footer: FunctionComponent = memo(() => {
+export const Footer = memo(() => {
   return (
     <footer className="bg-white">
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">

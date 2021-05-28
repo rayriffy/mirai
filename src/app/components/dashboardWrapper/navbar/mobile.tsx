@@ -1,11 +1,11 @@
-import React, { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { Menu, menus } from '../../../constants/menu'
 
-const MobileMenuLink: React.FC<Menu> = props => {
+const MobileMenuLink = memo<Menu>(props => {
   const { name, link } = props
 
   const { pathname } = useRouter()
@@ -29,9 +29,9 @@ const MobileMenuLink: React.FC<Menu> = props => {
       </a>
     </Link>
   )
-}
+})
 
-export const MobileNavbar: React.FC = React.memo(() => {
+export const MobileNavbar: React.FC = memo(() => {
   return (
     <nav className="px-2">
       <div className="space-y-1">
