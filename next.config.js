@@ -28,7 +28,9 @@ module.exports = withPlugins(
       defaultLocale: 'en',
     },
     images: {
-      domains: [],
+      domains: [
+        'www.gravatar.com'
+      ],
     },
     experimental: {
       polyfillsOptimization: true,

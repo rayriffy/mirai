@@ -34,7 +34,7 @@ export const UserWrapper: FunctionComponent = props => {
 
   const { asPath, push } = useRouter()
   const {
-    user: { auth },
+    user: { auth, metadata: contextMeta },
     dispatch,
   } = useStoreon('user')
   const metadata = useUserMetadata(auth.uid)
@@ -51,7 +51,7 @@ export const UserWrapper: FunctionComponent = props => {
 
   return (
     <>
-      {metadata === undefined ? (
+      {contextMeta === undefined ? (
         <CenterSpinner />
       ) : (
         children
