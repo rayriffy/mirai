@@ -1,10 +1,17 @@
-import { memo, Fragment } from 'react'
+import { memo, Fragment, useCallback } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 
 import { classNames } from '../../../../core/services/classNames'
 
+import { signOut, getAuth } from 'firebase/auth'
+import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+
 export const MobileUser = memo(() => {
+  const onLogout = useCallback(() => {
+    signOut(getAuth(createFirebaseInstance()))
+  }, [])
+
   return (
     <Menu as="div" className="ml-3 relative">
       {({ open }) => (
@@ -79,15 +86,15 @@ export const MobileUser = memo(() => {
               <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
+                    <button
+                      onClick={onLogout}
                       className={classNames(
                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                         'block px-4 py-2 text-sm'
                       )}
                     >
                       Logout
-                    </a>
+                    </button>
                   )}
                 </Menu.Item>
               </div>
