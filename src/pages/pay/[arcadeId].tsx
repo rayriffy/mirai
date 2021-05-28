@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   try {
     initializeFirebase()
 
-    const arcadeDoc = await firebase.firestore().collection('arcade').doc(arcadeId as string).get()
+    const arcadeDoc = await firebase.firestore().collection('arcades').doc(arcadeId as string).get()
 
     if (arcadeDoc.exists) {
       const arcade = {
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
         data: arcadeDoc.data()
       } as ArcadeWithId
 
-      const branchDoc = await firebase.firestore().collection('branch').doc(arcade.data.branchId).get()
+      const branchDoc = await firebase.firestore().collection('branches').doc(arcade.data.branchId).get()
 
       if (branchDoc.exists) {
         const branch = {
