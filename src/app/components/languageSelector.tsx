@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, Fragment } from 'react'
+import { memo, useState, Fragment } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -21,7 +21,7 @@ const languages = [
   }
 ]
 
-export const LangaugeSelector: FunctionComponent = props => {
+export const LangaugeSelector = memo(() => {
   const { locale, asPath } = useRouter()
 
   const [selected, setSelected] = useState(languages.find(o => o.id === locale))
@@ -103,4 +103,4 @@ export const LangaugeSelector: FunctionComponent = props => {
       )}
     </Listbox>
   )
-}
+})

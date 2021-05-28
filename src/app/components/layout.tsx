@@ -15,10 +15,6 @@ export const AppLayout: FunctionComponent = props => {
 
   const { user: { auth } } = useStoreon('user')
 
-  // useEffect(() => {
-  //   dispatch('user/auth', user)
-  // }, [user])
-
   useEffect(() => {
     if (
       ['/', '/register', '/forgot'].includes(asPath) &&
