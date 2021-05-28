@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from 'react'
+import { Fragment } from 'react'
 
 import { NextPage } from 'next'
 
@@ -16,8 +16,8 @@ import { classNames } from '../core/services/classNames'
 
 import { FavoriteArcadeItem } from '../modules/dashboard/components/favoriteArcadeItem'
 
-import { useQR } from '../modules/dashboard/services/useQR'
 import { useStoreon } from '../context/storeon'
+import { QRProfile } from '../modules/dashboard/components/qr'
 
 const projects = [
   {
@@ -62,8 +62,6 @@ const projects = [
 const Page: NextPage = () => {
   const { user: { auth: { uid }, metadata: { favoriteArcades, balance } } } = useStoreon('user')
 
-  const { data } = useQR(uid)
-
   return (
     <Fragment>
       {/* Page title & actions */}
@@ -96,7 +94,8 @@ const Page: NextPage = () => {
               Qr Profile
             </h2>
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
-              <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} />
+              <QRProfile />
+              {/* <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} /> */}
               <dd className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">{uid}</dd>
             </div>
           </div>
