@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { FunctionComponent, useEffect } from 'react'
+import { Fragment, FunctionComponent, useEffect } from 'react'
 
 import { useStoreon } from '../../context/storeon'
 
@@ -42,20 +42,22 @@ export const UserWrapper: FunctionComponent = props => {
   useEffect(() => {
     if (metadata !== undefined) {
       dispatch('user/metadata', metadata)
-
-      if (metadata === null && asPath !== '/onboarding') {
-        push('/onboarding')
-      }
     }
-  }, [metadata, asPath])
+  }, [metadata])
+
+  useEffect(() => {
+    if (contextMeta === null && asPath !== '/onboarding') {
+      push('/onboarding')
+    }
+  }, [contextMeta, asPath])
 
   return (
-    <>
+    <Fragment>
       {contextMeta === undefined ? (
         <CenterSpinner />
       ) : (
         children
       )}
-    </>
+    </Fragment>
   )
 }
