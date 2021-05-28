@@ -20,7 +20,7 @@ interface IProps {
 }
 
 export const Step2: FunctionComponent<IProps> = props => {
-  const { input, setInput, onPrev, onNext } = props
+  const { setInput, onPrev, onNext } = props
   const { locale } = useLocale({
     en: {
       title: 'Preferred branch',

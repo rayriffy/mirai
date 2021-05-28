@@ -19,7 +19,7 @@ interface Props {
 }
 
 export const Step1: FunctionComponent<Props> = props => {
-  const { input, setInput, onNext } = props
+  const { setInput, onNext } = props
   const { locale } = useLocale({
     en: {
       title: 'Display name',
@@ -69,7 +69,6 @@ export const Step1: FunctionComponent<Props> = props => {
             <input
               id="displayName"
               type="text"
-              value={input.displayName}
               required
               ref={inputRef}
               className="shadow-sm focus:ring-gray-500 block w-full sm:text-sm border-gray-300 rounded-md focus:border-gray-500"
