@@ -23,7 +23,7 @@ const api: NextApiHandler = async (req, res) => {
       const payload: User = {
         displayName,
         preferredBranch,
-        emailHash: crypto.createHash('md5').update(userData.auth.email).digest("hex"),
+        emailHash: crypto.createHash('md5').update(userData.auth.email.trim().toLowerCase()).digest("hex"),
         role: 'default',
       }
 

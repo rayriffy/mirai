@@ -8,7 +8,9 @@ import { Context } from '../context/storeon'
 import { HeadTitle } from '../core/components/headTitle'
 import { AppLayout } from '../app/components/layout'
 import { useStoreon } from '../context/storeon'
+
 import { AuthWrapper } from '../app/components/authWrapper'
+import { DashboardWrapper } from '../app/components/dashboardWrapper'
 
 import { useAuthReader } from '../app/services/useAuthReader'
 import { useAuth } from '../core/services/useAuth'
@@ -29,7 +31,11 @@ const NextApp: NextPage<AppProps> = props => {
   }, [user])
 
   useEffect(() => {
-    if (['/', '/register', '/forgot'].includes(asPath) && user !== undefined && user !== null) {
+    if (
+      ['/', '/register', '/forgot'].includes(asPath) &&
+      user !== undefined &&
+      user !== null
+    ) {
       push('/dashboard')
     }
   }, [asPath, user])
@@ -42,7 +48,13 @@ const NextApp: NextPage<AppProps> = props => {
           <Component {...pageProps} />
         ) : (
           <AuthWrapper>
-            <Component {...pageProps} />
+            {['/onboarding'].includes(asPath) ? (
+              <Component {...pageProps} />
+            ) : (
+              <DashboardWrapper>
+                <Component {...pageProps} />
+              </DashboardWrapper>
+            )}
           </AuthWrapper>
         )}
       </AppLayout>
