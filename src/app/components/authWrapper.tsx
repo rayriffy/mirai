@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import { Fragment, FunctionComponent, useEffect } from 'react'
+import { Fragment, FunctionComponent, useEffect, useState } from 'react'
 
 import { useStoreon } from '../../context/storeon'
 
@@ -39,6 +39,7 @@ export const UserWrapper: FunctionComponent = props => {
     dispatch,
   } = useStoreon('user')
   const metadata = useUserMetadata(auth.uid)
+  const [lock, setLock] = useState(true)
 
   useEffect(() => {
     if (metadata !== undefined) {
@@ -49,13 +50,15 @@ export const UserWrapper: FunctionComponent = props => {
   useEffect(() => {
     if (contextMeta === null && asPath !== '/onboarding') {
       push('/onboarding')
+    } else if (contextMeta === null && asPath === '/onboarding') {
+      setLock(false)
     }
   }, [contextMeta, asPath])
 
   return (
     <Fragment>
       user
-      {contextMeta === undefined || contextMeta === null ? (
+      {(contextMeta === undefined || contextMeta === null) && lock ? (
         <CenterSpinner />
       ) : (
         <>
