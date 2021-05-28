@@ -4,4 +4,6 @@ export interface User {
   emailHash: string
   preferredBranch: string
   role: Role
+  favoriteArcades: string[]
+  balance: number
 }

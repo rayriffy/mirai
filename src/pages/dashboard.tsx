@@ -1,14 +1,8 @@
+import { Fragment, useEffect } from 'react'
+
 import { NextPage } from 'next'
 
-import { Fragment, useState } from 'react'
-import { Dialog, Menu, Transition } from '@headlessui/react'
-import {
-  ClockIcon,
-  HomeIcon,
-  MenuAlt1Icon,
-  ViewListIcon,
-  XIcon,
-} from '@heroicons/react/outline'
+import { Menu, Transition } from '@headlessui/react'
 import {
   ChevronRightIcon,
   DotsVerticalIcon,
@@ -18,6 +12,11 @@ import {
   UserAddIcon,
 } from '@heroicons/react/solid'
 import { classNames } from '../core/services/classNames'
+
+import { FavoriteArcadeItem } from '../modules/dashboard/components/favoriteArcadeItem'
+
+import { useQR } from '../modules/dashboard/services/useQR'
+import { useStoreon } from '../context/storeon'
 
 const projects = [
   {
@@ -58,9 +57,12 @@ const projects = [
   },
   // More projects...
 ]
-const favoriteArcades = projects.filter(project => project.pinned)
 
 const Page: NextPage = () => {
+  const { user: { auth: { uid }, metadata: { favoriteArcades, balance } } } = useStoreon('user')
+
+  const { data } = useQR(uid)
+
   return (
     <Fragment>
       {/* Page title & actions */}
@@ -86,116 +88,47 @@ const Page: NextPage = () => {
         </div>
       </div>
       {/* Pinned projects */}
-      <div className="px-4 mt-6 sm:px-6 lg:px-8">
-        <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-          Favorite Arcades
-        </h2>
-        <ul className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3">
-          {favoriteArcades.length === 0 ? (
-            <li className="col-span-1">
-              <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500">
-                Add favorite arcade for faster access
-              </div>
-            </li>
-          ) : favoriteArcades.map(project => (
-            <li
-              key={project.id}
-              className="relative col-span-1 flex shadow-sm rounded-md"
-            >
-              <div className="flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-md truncate">
-                <div className="flex-1 px-4 py-2 text-sm truncate">
-                  <a
-                    href="#"
-                    className="text-gray-900 font-medium hover:text-gray-600"
-                  >
-                    {project.title}
-                  </a>
-                  <p className="text-gray-500">
-                    MBK
-                  </p>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
+        <div className="col-span-1 px-4 mt-6 sm:px-6 lg:px-8 space-y-4">
+          <div className="">
+            <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+              Qr Profile
+            </h2>
+            <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
+              <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} />
+              <div className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">{uid}</div>
+            </div>
+          </div>
+          <div className="">
+            <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+              Balance
+            </h2>
+            <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
+              <dd className="text-3xl font-semibold text-gray-900">฿{balance.toLocaleString()}</dd>
+            </div>
+          </div>
+        </div>
+        <div className="col-span-1 md:col-span-1 lg:col-span-3 xl:col-span-4 px-4 mt-6 sm:px-6 lg:px-8">
+          <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+            Favorite Arcades
+          </h2>
+          <ul className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-4 mt-3">
+            {(favoriteArcades ?? []).length === 0 ? (
+              <li className="col-span-1">
+                <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500">
+                  Add favorite arcade for faster access
                 </div>
-                <Menu as="div" className="flex-shrink-0 pr-2">
-                  {({ open }) => (
-                    <>
-                      <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
-                        <span className="sr-only">Open options</span>
-                        <DotsVerticalIcon
-                          className="w-5 h-5"
-                          aria-hidden="true"
-                        />
-                      </Menu.Button>
-                      <Transition
-                        show={open}
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                      >
-                        <Menu.Items
-                          static
-                          className="z-10 mx-3 origin-top-right absolute right-10 top-3 w-48 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
-                        >
-                          <div className="py-1">
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active
-                                      ? 'bg-gray-100 text-gray-900'
-                                      : 'text-gray-700',
-                                    'block px-4 py-2 text-sm'
-                                  )}
-                                >
-                                  View
-                                </a>
-                              )}
-                            </Menu.Item>
-                          </div>
-                          <div className="py-1">
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active
-                                      ? 'bg-gray-100 text-gray-900'
-                                      : 'text-gray-700',
-                                    'block px-4 py-2 text-sm'
-                                  )}
-                                >
-                                  Remove from favorite
-                                </a>
-                              )}
-                            </Menu.Item>
-                            <Menu.Item>
-                              {({ active }) => (
-                                <a
-                                  href="#"
-                                  className={classNames(
-                                    active
-                                      ? 'bg-gray-100 text-gray-900'
-                                      : 'text-gray-700',
-                                    'block px-4 py-2 text-sm'
-                                  )}
-                                >
-                                  Share
-                                </a>
-                              )}
-                            </Menu.Item>
-                          </div>
-                        </Menu.Items>
-                      </Transition>
-                    </>
-                  )}
-                </Menu>
-              </div>
-            </li>
-          ))}
-        </ul>
+              </li>
+            ) : (
+              (favoriteArcades ?? []).map(arcade => (
+                <FavoriteArcadeItem
+                  key={`favoriteArcade-${arcade}`}
+                  arcadeId={arcade}
+                />
+              ))
+            )}
+          </ul>
+        </div>
       </div>
 
       {/* Projects list (only on smallest breakpoint) */}

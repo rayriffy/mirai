@@ -1,9 +1,15 @@
 import { memo } from 'react'
 import { LangaugeSelector } from './languageSelector'
 
-export const Footer = memo(() => {
+interface Props {
+  bg?: string
+}
+
+export const Footer = memo<Props>(props => {
+  const { bg = 'bg-white' } = props
+
   return (
-    <footer className="bg-white">
+    <footer className={bg}>
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 md:flex md:items-center md:justify-between lg:px-8">
         <div className="md:order-2 max-w-md">
 
