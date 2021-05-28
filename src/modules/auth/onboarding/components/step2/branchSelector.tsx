@@ -17,7 +17,7 @@ import getDistance from 'geolib/es/getDistance'
 
 import { classNames } from '../../../../../core/services/classNames'
 
-import { BranchWithId } from '../../services/useBranches'
+import { BranchWithId } from '../../../../../core/@types/BranchWithId'
 import { Spinner } from '../../../../../core/components/spinner'
 
 interface Props {

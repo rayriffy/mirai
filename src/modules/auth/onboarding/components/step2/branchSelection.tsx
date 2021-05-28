@@ -1,4 +1,4 @@
-import React, { forwardRef, Fragment, FunctionComponent, useState } from 'react'
+import React, { forwardRef, Fragment } from 'react'
 
 import { useBranches } from '../../services/useBranches'
 
