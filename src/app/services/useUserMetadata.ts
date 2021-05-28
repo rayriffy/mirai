@@ -13,10 +13,8 @@ export const useUserMetadata = (uid: string) => {
       setMetadata(null)
     }
 
-    const instance = createFirebaseInstance()
-
-    const listener = onSnapshot(
-      doc(collection(getFirestore(instance), 'users'), uid),
+    const listener = uid === '' ? () => {} : onSnapshot(
+      doc(collection(getFirestore(createFirebaseInstance()), 'users'), uid),
       async snapshot => {
         if (snapshot.exists()) {
           const data = snapshot.data() as User

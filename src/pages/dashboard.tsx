@@ -58,7 +58,7 @@ const projects = [
   },
   // More projects...
 ]
-const pinnedProjects = projects.filter(project => project.pinned)
+const favoriteArcades = projects.filter(project => project.pinned)
 
 const Page: NextPage = () => {
   return (
@@ -91,7 +91,13 @@ const Page: NextPage = () => {
           Favorite Arcades
         </h2>
         <ul className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 xl:grid-cols-4 mt-3">
-          {pinnedProjects.map(project => (
+          {favoriteArcades.length === 0 ? (
+            <li className="col-span-1">
+              <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500">
+                Add favorite arcade for faster access
+              </div>
+            </li>
+          ) : favoriteArcades.map(project => (
             <li
               key={project.id}
               className="relative col-span-1 flex shadow-sm rounded-md"
@@ -161,7 +167,7 @@ const Page: NextPage = () => {
                                     'block px-4 py-2 text-sm'
                                   )}
                                 >
-                                  Removed from favorite
+                                  Remove from favorite
                                 </a>
                               )}
                             </Menu.Item>
