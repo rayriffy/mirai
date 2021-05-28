@@ -29,5 +29,5 @@ export const AppLayout: FunctionComponent = props => {
     }
   }, [asPath, auth])
 
-  return <main className="bg-gray-50 min-h-screen">{children}</main>
+  return <div className="bg-gray-50 min-h-screen">{children}</div>
 }
