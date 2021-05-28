@@ -55,7 +55,7 @@ export const UserWrapper: FunctionComponent = props => {
   return (
     <Fragment>
       user
-      {contextMeta === undefined ? (
+      {contextMeta === undefined || contextMeta === null ? (
         <CenterSpinner />
       ) : (
         <>
