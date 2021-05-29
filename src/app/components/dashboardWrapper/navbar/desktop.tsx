@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { Menu, menus } from '../../../constants/menu'
+import { Menu, useMenus } from '../../../services/useMenus'
 
 const DesktopMenuLink = memo<Menu>(props => {
   const { pathname } = useRouter()
@@ -30,6 +30,8 @@ const DesktopMenuLink = memo<Menu>(props => {
 })
 
 export const DesktopNavbar = memo(() => {
+  const { menus } = useMenus()
+
   return (
     <nav className="px-3 mt-6">
       <div className="space-y-1">

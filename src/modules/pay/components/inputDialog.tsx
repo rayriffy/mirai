@@ -11,12 +11,15 @@ import {
   PlusIcon,
   MinusIcon,
   ArrowRightIcon,
+  LocationMarkerIcon,
 } from '@heroicons/react/outline'
 import { getCalculatedPrice } from '../../../core/services/getCalculatedPrice'
 
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { BranchWithId } from '../../../core/@types/BranchWithId'
 import { useStoreon } from '../../../context/storeon'
+import { classNames } from '../../../core/services/classNames'
+import { createApiInstance } from '../../../core/services/createApiInstance'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -32,9 +35,12 @@ export const InputDialog: FunctionComponent<Props> = props => {
 
   const {
     user: {
+      auth,
       metadata: { balance },
     },
   } = useStoreon('user')
+
+  const [paymentProcessing, setPaymentProcessing] = useState<boolean>(false)
 
   const [inputToken, setInputToken] = useState<number>(
     arcadeWithId.data.tokenPerCredit
@@ -52,8 +58,11 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const calculatedPostBalance = useMemo(() => balance - price, [balance, price])
 
   const isIncreaseDisabled = useMemo(
-    () => inputToken >= targetSystem.maxToken || calculatedPostBalance < 0,
-    [inputToken, calculatedPostBalance]
+    () =>
+      inputToken >= targetSystem.maxToken ||
+      calculatedPostBalance < 0 ||
+      paymentProcessing,
+    [inputToken, calculatedPostBalance, paymentProcessing]
   )
   const onInputIncrease = useCallback(() => {
     const inputResult = inputToken + 1
@@ -64,8 +73,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
   }, [inputToken, isIncreaseDisabled])
 
   const isDecreaseDisabled = useMemo(
-    () => inputToken === 1 || calculatedPostBalance < 0,
-    [inputToken]
+    () => inputToken === 1 || paymentProcessing,
+    [inputToken, paymentProcessing]
   )
   const onInputDecrease = useCallback(() => {
     const inputResult = inputToken - 1
@@ -74,6 +83,26 @@ export const InputDialog: FunctionComponent<Props> = props => {
       setInputToken(inputResult)
     }
   }, [inputToken, isIncreaseDisabled])
+
+  const isPayButtonDisabled = useMemo(
+    () => calculatedPostBalance < 0 || paymentProcessing,
+    [calculatedPostBalance, paymentProcessing]
+  )
+  const onPayment = useCallback(async () => {
+    setPaymentProcessing(true)
+
+    try {
+    const apiInstance = await createApiInstance(auth)
+    await apiInstance.post('/api/pay', {
+      targetArcade: arcadeWithId.id,
+      token: inputToken
+    })
+    } catch (e) {
+      console.error(e)
+    } finally {
+      setPaymentProcessing(false)
+    }
+  }, [inputToken, auth])
 
   return (
     <div className="mt-10 border border-gray-200 bg-white rounded-md px-4 py-5 sm:p-6 overflow-hidden touch-manipulation">
@@ -84,10 +113,13 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     aria-hidden="true"
                   />
                 </div> */}
-        <div className="text-center sm:mt-4">
-          <h3 className="text-2xl leading-6 font-semibold text-gray-900 py-3 sm:pt-0">
+        <div className="text-center mt-4">
+          <h3 className="text-2xl leading-6 font-semibold text-gray-900 pt-3">
             {arcadeWithId.data.name}
           </h3>
+          <div className="flex justify-center py-2">
+              <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" /><span className="text-gray-500">MBK</span>
+          </div>
           <div className="my-6 text-center flex justify-center">
             <div className="relative mt-2">
               <h1 className="text-3xl font-bold">฿{price.toLocaleString()}</h1>
@@ -126,7 +158,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 </div>
                 <div className="flex flex-col">
                   <button
-                    className="-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-tr-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200"
+                    className={classNames(paymentProcessing ? 'cursor-wait' : isIncreaseDisabled ? 'cursor-not-allowed' : '',"-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-tr-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200")}
                     onClick={onInputIncrease}
                     disabled={isIncreaseDisabled}
                   >
@@ -136,7 +168,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     />
                   </button>
                   <button
-                    className="-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-br-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200"
+                    className={classNames(paymentProcessing ? 'cursor-wait' : isDecreaseDisabled ? 'cursor-not-allowed' : '', "-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-br-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200")}
                     onClick={onInputDecrease}
                     disabled={isDecreaseDisabled}
                   >
@@ -173,13 +205,23 @@ export const InputDialog: FunctionComponent<Props> = props => {
       <div className="mt-5 sm:mt-6">
         <button
           type="button"
-          className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+          disabled={isPayButtonDisabled}
+          className={classNames(
+            calculatedPostBalance < 0
+              ? 'cursor-not-allowed'
+              : paymentProcessing
+              ? 'cursor-wait'
+              : '',
+            'transition inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm disabled:bg-indigo-400 disabled:hover:bg-indigo-500'
+          )}
+          onClick={onPayment}
         >
           Pay
         </button>
         <button
           type="button"
-          className="mt-1 inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm"
+          disabled={paymentProcessing}
+          className="mt-1 inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm disabled:bg-gray-200 disabled:hover:bg-gray-100 disabled:cursor-wait"
         >
           Cancel
         </button>
