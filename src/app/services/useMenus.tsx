@@ -1,6 +1,19 @@
-import { ReactNode, FunctionComponent, SVGProps, useMemo, Fragment, useState, useEffect } from 'react'
+import {
+  ReactNode,
+  FunctionComponent,
+  SVGProps,
+  useMemo,
+  Fragment,
+  useState,
+  useEffect,
+} from 'react'
 
-import { GlobeIcon, HomeIcon, LocationMarkerIcon, PuzzleIcon } from '@heroicons/react/outline'
+import {
+  GlobeIcon,
+  HomeIcon,
+  LocationMarkerIcon,
+  PuzzleIcon,
+} from '@heroicons/react/outline'
 
 import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
 import { getDoc, getFirestore, doc, collection } from 'firebase/firestore'
@@ -33,7 +46,7 @@ export const useMenus = () => {
       home: 'หน้าหลัก',
       arcades: 'ตู้เกม',
       branches: 'สาขาร้าน',
-      staff: 'ระบบสำหรับพนักงาน',
+      staff: 'สำหรับพนักงาน',
     },
   })
 
@@ -79,14 +92,16 @@ export const useMenus = () => {
         name: locale('branches'),
         match: ['/dashboard/branches'],
       },
-      ...(role !== 'default' ? [
-        {
-          icon: PuzzleIcon,
-          link: '/staff',
-          name: locale('staff'),
-          match: ['/dashboard/branches'],
-        }
-      ] : [])
+      ...(role !== 'default'
+        ? [
+            {
+              icon: PuzzleIcon,
+              link: '/staff',
+              name: locale('staff'),
+              match: ['/dashboard/branches'],
+            },
+          ]
+        : []),
     ],
     [detectedLocale, branchName, role]
   )
