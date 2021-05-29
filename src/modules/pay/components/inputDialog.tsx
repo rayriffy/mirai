@@ -76,7 +76,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
   }, [inputToken, isIncreaseDisabled])
 
   return (
-    <div className="mt-10 border border-gray-200 bg-white rounded-md px-4 py-5 sm:p-6 overflow-hidden">
+    <div className="mt-10 border border-gray-200 bg-white rounded-md px-4 py-5 sm:p-6 overflow-hidden touch-manipulation">
       <div>
         {/* <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
                   <CheckIcon

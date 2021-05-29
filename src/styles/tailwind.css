@@ -21,3 +21,7 @@ h6 {
     sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
     'Noto Color Emoji';
 }
+
+.touch-manipulation {
+  touch-action: manipulation;
+}
