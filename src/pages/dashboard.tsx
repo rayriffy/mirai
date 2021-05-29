@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 
 import { NextPage } from 'next'
+import Image from 'next/image'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
@@ -17,7 +18,6 @@ import { classNames } from '../core/services/classNames'
 import { FavoriteArcadeItem } from '../modules/dashboard/components/favoriteArcadeItem'
 
 import { useStoreon } from '../context/storeon'
-import { QRProfile } from '../modules/dashboard/components/qr'
 
 const projects = [
   {
@@ -94,7 +94,11 @@ const Page: NextPage = () => {
               Qr Profile
             </h2>
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
-              <QRProfile />
+              <Image
+                src={`/api/qr/${uid}`}
+                width={768}
+                height={768}
+              />
               {/* <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} /> */}
               <dd className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">{uid}</dd>
             </div>
