@@ -1,8 +1,12 @@
+import { Fragment } from 'react'
+
 import { GetServerSideProps, NextPage } from 'next'
-import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
-import { StoreWithId } from '../../../core/@types/StoreWithId'
+import Link from 'next/link'
+
 import { Arcade } from '../../../core/@types/firebase/Arcade'
 import { Store } from '../../../core/@types/firebase/Store'
+import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
+import { StoreWithId } from '../../../core/@types/StoreWithId'
 
 interface Props {
   arcadesWithId: ArcadeWithId[]
@@ -10,7 +14,26 @@ interface Props {
 }
 
 const Page: NextPage<Props> = props => {
-  return <div>{JSON.stringify(props)}</div>
+  const { arcadesWithId } = props
+  return (
+    <Fragment>
+      <div>{JSON.stringify(props)}</div>
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {arcadesWithId.map(arcade => (
+          <div className="" key={arcade.id}>
+            <Link href={`/pay/${arcade.id}`}>
+              <a>
+                <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
+                  <h1 className="text-gray-800 font-semibold text-xl">{arcade.data.name}</h1>
+                  <h2 className="text-gray-500">{arcade.data.storeName}</h2>
+                </div>
+              </a>
+            </Link>
+          </div>
+        ))}
+      </div>
+    </Fragment>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
@@ -47,6 +70,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
         .firestore()
         .collection('arcades')
         .where('storeId', '==', storeDoc.id)
+        .orderBy('name', 'asc')
         .get()
       const arcades = arcadeCollection.docs.map(doc => {
         const arcadeData = doc.data() as Arcade
