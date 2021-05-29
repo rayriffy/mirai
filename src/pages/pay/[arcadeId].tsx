@@ -2,17 +2,26 @@ import { Fragment } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
+import { InputDialog } from '../../modules/pay/components/inputDialog'
+
 import { ArcadeWithId } from '../../core/@types/ArcadeWithId'
 import { BranchWithId } from '../../core/@types/BranchWithId'
 import { Branch } from '../../core/@types/firebase/Branch'
 
 interface Props {
-  arcade: ArcadeWithId
-  branch: BranchWithId
+  arcadeWithId: ArcadeWithId
+  branchWithId: BranchWithId
 }
 
 const Page: NextPage<Props> = props => {
-  return <>{JSON.stringify(props)}</>
+  return (
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}
+      <div className="max-w-xl mx-auto">
+        <InputDialog {...props} />
+      </div>
+    </div>
+  )
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
@@ -60,8 +69,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
 
         return {
           props: {
-            arcade,
-            branch,
+            arcadeWithId: arcade,
+            branchWithId: branch,
           },
         }
       } else {

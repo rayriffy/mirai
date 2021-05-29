@@ -34,7 +34,7 @@ export const LangaugeSelector = memo(() => {
         <>
           <Listbox.Label className="sr-only">Language</Listbox.Label>
           <div className="mt-1 relative w-36">
-            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm">
+            <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center">
                 <img
                   src={getFlagResource(selected.flag)}
@@ -67,7 +67,7 @@ export const LangaugeSelector = memo(() => {
                     key={language.id}
                     className={({ active }) =>
                       classNames(
-                        active ? 'text-white bg-cyan-600' : 'text-gray-900',
+                        active ? 'text-white bg-indigo-600' : 'text-gray-900',
                         'cursor-default select-none relative'
                       )
                     }
