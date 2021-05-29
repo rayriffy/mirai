@@ -12,7 +12,7 @@ import { signOut, getAuth } from 'firebase/auth'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
 export const DesktopUser = memo(() => {
-  const { user: { metadata } } = useStoreon('user')
+  const { user: { auth: { email }, metadata: { emailHash, displayName } } } = useStoreon('user')
 
   const onLogout = useCallback(() => {
     signOut(getAuth(createFirebaseInstance()))
@@ -28,17 +28,17 @@ export const DesktopUser = memo(() => {
                 <span className="flex min-w-0 items-center justify-between space-x-3">
                   <Image
                     className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
-                    src={`https://www.gravatar.com/avatar/${metadata.emailHash}`}
+                    src={`https://www.gravatar.com/avatar/${emailHash}`}
                     width={40}
                     height={40}
                     alt=""
                   />
                   <span className="flex-1 flex flex-col min-w-0">
                     <span className="text-gray-900 text-sm font-medium truncate">
-                      {metadata.displayName}
+                      {displayName}
                     </span>
                     <span className="text-gray-500 text-sm truncate">
-                      @jessyschwarz
+                      {email}
                     </span>
                   </span>
                 </span>
