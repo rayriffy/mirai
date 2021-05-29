@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import { Menu, useMenus } from '../../../services/useMenus'
+import { classNames } from '../../../../core/services/classNames'
 
 const DesktopMenuLink = memo<Menu>(props => {
   const { pathname } = useRouter()
@@ -12,16 +13,18 @@ const DesktopMenuLink = memo<Menu>(props => {
   return (
     <Link href={props.link}>
       <a
-        className={`group flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md focus:outline-none focus:bg-gray-50 transition ease-in-out duration-150 ${
+        className={classNames(
           isMatch
             ? 'text-gray-900 bg-gray-200'
-            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50'
-        }`}
+            : 'text-gray-700 hover:text-gray-900 hover:bg-gray-50',
+          'group flex items-center px-2 py-2 text-sm leading-5 font-medium rounded-md focus:outline-none focus:bg-gray-50 transition ease-in-out duration-150'
+        )}
       >
         <props.icon
-          className={`mr-3 h-6 w-6 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150 ${
-            isMatch ? 'text-gray-500' : 'text-gray-400'
-          }`}
+          className={classNames(
+            isMatch ? 'text-gray-500' : 'text-gray-400',
+            'mr-3 h-6 w-6 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150'
+          )}
         />
         {props.name}
       </a>
