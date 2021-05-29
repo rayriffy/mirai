@@ -6,16 +6,26 @@ import { useStoreon } from '../../context/storeon'
 import { useAuth } from '../../core/services/useAuth'
 
 import { Footer } from './footer'
+import { isAgentiOS } from '../../core/services/isAgentiOS'
 
 export const AppLayout: FunctionComponent = props => {
   const { children } = props
 
+  const {
+    dispatch,
+    startup,
+    user: { auth },
+  } = useStoreon('user', 'startup')
+
+  useEffect(() => {
+    if (isAgentiOS() && !startup) {
+      dispatch('startup/init')
+      window.location.reload()
+    }
+  }, [])
+
   useAuth()
   const { asPath, push } = useRouter()
-
-  const {
-    user: { auth },
-  } = useStoreon('user')
 
   useEffect(() => {
     if (
