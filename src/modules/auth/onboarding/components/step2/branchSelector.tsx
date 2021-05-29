@@ -1,7 +1,6 @@
 import {
   forwardRef,
   Fragment,
-  FunctionComponent,
   useCallback,
   useState,
 } from 'react'
