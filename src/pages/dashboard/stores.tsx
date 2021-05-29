@@ -22,7 +22,6 @@ const Page: NextPage<Props> = props => {
               <a>
                 <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
                   <h1 className="text-gray-800 font-semibold text-xl">{store.data.name}</h1>
-                  {/* <h2 className="text-gray-500">{arcade.data.storeName}</h2> */}
                 </div>
               </a>
             </Link>
