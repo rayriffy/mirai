@@ -12,29 +12,37 @@ interface Props {
 }
 
 const Page: NextPage<Props> = props => {
-  return (
-    <>{JSON.stringify(props)}</>
-  )
+  return <>{JSON.stringify(props)}</>
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   const { arcadeId } = ctx.params
 
   const { default: firebase } = await import('firebase-admin')
-  const { initializeFirebase } = await import('../../modules/api/services/initializeFirebase')
+  const { initializeFirebase } = await import(
+    '../../modules/api/services/initializeFirebase'
+  )
 
   try {
     initializeFirebase()
 
-    const arcadeDoc = await firebase.firestore().collection('arcades').doc(arcadeId as string).get()
+    const arcadeDoc = await firebase
+      .firestore()
+      .collection('arcades')
+      .doc(arcadeId as string)
+      .get()
 
     if (arcadeDoc.exists) {
       const arcade = {
         id: arcadeDoc.id,
-        data: arcadeDoc.data()
+        data: arcadeDoc.data(),
       } as ArcadeWithId
 
-      const branchDoc = await firebase.firestore().collection('branches').doc(arcade.data.branchId).get()
+      const branchDoc = await firebase
+        .firestore()
+        .collection('branches')
+        .doc(arcade.data.branchId)
+        .get()
 
       if (branchDoc.exists) {
         const branchData = branchDoc.data() as Branch
@@ -54,7 +62,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
           props: {
             arcade,
             branch,
-          }
+          },
         }
       } else {
         throw 'not-found'

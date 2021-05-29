@@ -7,6 +7,6 @@ export interface Transaction {
   token: number
   value: number
   status: 'pending' | 'processing' | 'success' | 'failed' | 'cancelled'
-  createdAt: Timestamp  
+  createdAt: Timestamp
   updatedAt: Timestamp
 }

@@ -7,15 +7,25 @@ import { useStoreon } from '../context/storeon'
 import { Spinner } from '../core/components/spinner'
 import { classNames } from '../core/services/classNames'
 
-const SigninModule = dynamic(async () => await import('../modules/auth/signin/components').then(o => o.SigninModule))
+const SigninModule = dynamic(
+  async () =>
+    await import('../modules/auth/signin/components').then(o => o.SigninModule)
+)
 
 const Page: NextPage = () => {
-  const { user: { auth } } = useStoreon('user')
+  const {
+    user: { auth },
+  } = useStoreon('user')
 
   const isRequireSignin = useMemo(() => auth === null, [auth])
 
   return (
-    <div className={classNames(isRequireSignin ? '' : 'items-center', 'min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8')}>
+    <div
+      className={classNames(
+        isRequireSignin ? '' : 'items-center',
+        'min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8'
+      )}
+    >
       {isRequireSignin ? <SigninModule /> : <Spinner />}
     </div>
   )

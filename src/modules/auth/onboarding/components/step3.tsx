@@ -33,7 +33,7 @@ export const Step3: FunctionComponent<Props> = props => {
       successMessage: 'ยินดีต้อนรับสู่ Mirai',
       fail: 'ไม่สำเร็จ',
       failMessage: 'กรุณาลองอีกครั้งในอีก 2-3 นาที',
-      start: 'เริ่มต้นใช้งาน'
+      start: 'เริ่มต้นใช้งาน',
     },
   })
 

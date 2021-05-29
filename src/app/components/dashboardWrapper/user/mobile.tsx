@@ -11,7 +11,11 @@ import { createFirebaseInstance } from '../../../../core/services/createFirebase
 import { useStoreon } from '../../../../context/storeon'
 
 export const MobileUser = memo(() => {
-  const { user: { metadata: { emailHash } } } = useStoreon('user')
+  const {
+    user: {
+      metadata: { emailHash },
+    },
+  } = useStoreon('user')
 
   const onLogout = useCallback(() => {
     signOut(getAuth(createFirebaseInstance()))

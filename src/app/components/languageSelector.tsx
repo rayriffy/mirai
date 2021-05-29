@@ -18,7 +18,7 @@ const languages = [
     id: 'th',
     name: 'ไทย',
     flag: 'TH',
-  }
+  },
 ]
 
 export const LangaugeSelector = memo(() => {
@@ -32,9 +32,7 @@ export const LangaugeSelector = memo(() => {
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
         <>
-          <Listbox.Label className="sr-only">
-            Language
-          </Listbox.Label>
+          <Listbox.Label className="sr-only">Language</Listbox.Label>
           <div className="mt-1 relative w-36">
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm">
               <span className="flex items-center">

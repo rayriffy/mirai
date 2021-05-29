@@ -6,7 +6,10 @@ import { customContext } from 'storeon/react'
 import { title, TitleStore, TitleEvent } from './store/title'
 import { user, UserStore, UserEvent } from './store/user'
 
-export const store = createStoreon<TitleStore & UserStore, TitleEvent & UserEvent>([title, user])
+export const store = createStoreon<
+  TitleStore & UserStore,
+  TitleEvent & UserEvent
+>([title, user])
 
 const StoreonContext = createContext(store)
 

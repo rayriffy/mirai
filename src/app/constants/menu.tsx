@@ -1,6 +1,4 @@
-import {
-  HomeIcon,
-} from '@heroicons/react/outline'
+import { HomeIcon } from '@heroicons/react/outline'
 
 export interface Menu {
   icon: React.FC<React.SVGProps<SVGSVGElement>>

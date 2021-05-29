@@ -3,9 +3,7 @@ import { memo, Fragment } from 'react'
 import Link from 'next/link'
 
 import { Menu, Transition } from '@headlessui/react'
-import {
-  DotsVerticalIcon,
-} from '@heroicons/react/solid'
+import { DotsVerticalIcon } from '@heroicons/react/solid'
 import { classNames } from '../../../core/services/classNames'
 
 import { useArcade } from '../services/useArcade'
@@ -20,9 +18,7 @@ export const FavoriteArcadeItem = memo<Props>(props => {
   const { data, loading, error } = useArcade(arcadeId)
 
   return (
-    <li
-      className="relative col-span-1 flex shadow-sm rounded-md"
-    >
+    <li className="relative col-span-1 flex shadow-sm rounded-md">
       <div className="flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-md truncate">
         <div className="flex-1 px-4 py-2 text-sm truncate">
           {loading ? (
@@ -34,8 +30,8 @@ export const FavoriteArcadeItem = memo<Props>(props => {
             <Fragment>
               <Link href={`/pay/${arcadeId}`}>
                 <a className="text-gray-900 font-medium hover:text-gray-600">
-                {data.name}
-              </a>
+                  {data.name}
+                </a>
               </Link>
               <p className="text-gray-500">{data.branchName}</p>
             </Fragment>
@@ -47,10 +43,7 @@ export const FavoriteArcadeItem = memo<Props>(props => {
               <>
                 <Menu.Button className="w-8 h-8 bg-white inline-flex items-center justify-center text-gray-400 rounded-full hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                   <span className="sr-only">Open options</span>
-                  <DotsVerticalIcon
-                    className="w-5 h-5"
-                    aria-hidden="true"
-                  />
+                  <DotsVerticalIcon className="w-5 h-5" aria-hidden="true" />
                 </Menu.Button>
                 <Transition
                   show={open}

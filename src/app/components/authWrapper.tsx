@@ -58,7 +58,9 @@ export const UserWrapper: FunctionComponent = props => {
     <Fragment>
       {(contextMeta === undefined || contextMeta === null) && lock ? (
         <CenterSpinner />
-      ) : children}
+      ) : (
+        children
+      )}
     </Fragment>
   )
 }

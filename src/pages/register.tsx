@@ -158,7 +158,14 @@ const Page: NextPage = () => {
                   htmlFor="agreement"
                   className="ml-2 block text-sm text-gray-500"
                 >
-                  {locale('agreement1')} <a className="text-gray-900 hover:underline cursor-pointer">{locale('agreement2')}</a> {locale('agreement3')} <a className="text-gray-900 hover:underline cursor-pointer">{locale('agreement4')}</a>
+                  {locale('agreement1')}{' '}
+                  <a className="text-gray-900 hover:underline cursor-pointer">
+                    {locale('agreement2')}
+                  </a>{' '}
+                  {locale('agreement3')}{' '}
+                  <a className="text-gray-900 hover:underline cursor-pointer">
+                    {locale('agreement4')}
+                  </a>
                 </label>
               </div>
             </div>

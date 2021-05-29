@@ -8,11 +8,11 @@ const api: NextApiHandler = async (req, res) => {
       projectId: process.env.PROJECT_ID,
       clientEmail: process.env.CLIENT_EMAIL,
       privateKey: process.env.PRIVATE_KEY,
-    })
+    }),
   })
 
   return res.send({
-    message: 'ok'
+    message: 'ok',
   })
 }
 
