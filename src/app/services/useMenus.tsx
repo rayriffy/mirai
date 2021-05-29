@@ -84,7 +84,7 @@ export const useMenus = () => {
             <span className="text-gray-500">{storeName}</span>
           </Fragment>
         ),
-        match: ['/dashboard/arcades/[arcadeId]'],
+        match: ['/dashboard/arcades/[storeId]', '/pay/[arcadeId]'],
       },
       {
         icon: GlobeIcon,
@@ -98,7 +98,7 @@ export const useMenus = () => {
               icon: PuzzleIcon,
               link: '/staff',
               name: locale('staff'),
-              match: ['/dashboard/stores'],
+              match: ['/dashboard/staff'],
             },
           ]
         : []),
