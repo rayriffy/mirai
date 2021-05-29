@@ -79,10 +79,10 @@ export const InputDialog: FunctionComponent<Props> = props => {
                   </h3>
                   <div className="my-6 text-center flex justify-center">
                     <div className="relative mt-2">
-                      <h1 className="text-3xl font-bold">{price}฿</h1>
+                      <h1 className="text-3xl font-bold">฿{price.toLocaleString()}</h1>
                       {isDiscounted && (
                         <h2 className="absolute -right-8 -top-5 text-lg font-medium line-through text-gray-700">
-                          {original}฿
+                          ฿{original.toLocaleString()}
                         </h2>
                       )}
                     </div>
@@ -142,14 +142,14 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <div className="space-x-4 flex items-center justify-center">
                       <div className="text-center">
                         <h1>Before</h1>
-                        <h2 className="text-xl font-semibold">{balance}฿</h2>
+                        <h2 className="text-xl font-semibold">฿{balance.toLocaleString()}</h2>
                       </div>
                       <div>
                         <ArrowRightIcon className="w-6 h-6" />
                       </div>
                       <div className="text-center">
                         <h1>After</h1>
-                        <h2 className="text-xl font-semibold">{calculatedPostBalance}฿</h2>
+                        <h2 className="text-xl font-semibold">฿{calculatedPostBalance.toLocaleString()}</h2>
                       </div>
                     </div>
                   </div>

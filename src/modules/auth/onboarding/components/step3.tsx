@@ -9,6 +9,7 @@ import { Spinner } from '../../../../core/components/spinner'
 import { useLocale } from '../../../../core/services/useLocale'
 
 import { Input } from '../@types/Input'
+import { createApiInstance } from '../../../../core/services/createApiInstance'
 
 interface Props {
   input: Input
@@ -42,13 +43,8 @@ export const Step3: FunctionComponent<Props> = props => {
   useEffect(() => {
     ;(async () => {
       try {
-        const token = await auth.getIdToken()
-
-        const res = await axios.post('/api/onboarding', input, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        })
+        const apiInstance = await createApiInstance(auth)
+        const res = await apiInstance.post('/api/onboarding', input)
 
         setResult(res.data.success ? 'success' : 'fail')
       } catch (e) {
