@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import { Menu, menus } from '../../../constants/menu'
+import { Menu, useMenus } from '../../../services/useMenus'
 
 const MobileMenuLink = memo<Menu>(props => {
   const { name, link } = props
@@ -32,6 +32,8 @@ const MobileMenuLink = memo<Menu>(props => {
 })
 
 export const MobileNavbar: React.FC = memo(() => {
+  const { menus } = useMenus()
+
   return (
     <nav className="px-2">
       <div className="space-y-1">
