@@ -28,7 +28,7 @@ export const DesktopUser = memo(() => {
       {({ open }) => (
         <>
           <div>
-            <Menu.Button className="group w-full bg-gray-100 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-purple-500">
+            <Menu.Button className="group w-full bg-gray-100 rounded-md px-3.5 py-2 text-sm text-left font-medium text-gray-700 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500">
               <span className="flex w-full justify-between items-center">
                 <span className="flex min-w-0 items-center justify-between space-x-3">
                   <Image

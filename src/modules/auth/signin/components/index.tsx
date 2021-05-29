@@ -95,7 +95,7 @@ export const SigninModule: FunctionComponent = () => {
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <img
           className="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-mark-cyan-600.svg"
+          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
           alt="Workflow"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -104,7 +104,7 @@ export const SigninModule: FunctionComponent = () => {
         <p className="mt-2 text-center text-sm text-gray-600">
           {locale('or')}{' '}
           <Link href="/register">
-            <a className="font-medium text-cyan-600 hover:text-cyan-500">
+            <a className="font-medium text-indigo-600 hover:text-indigo-500">
               {locale('createAcc')}
             </a>
           </Link>
@@ -150,7 +150,7 @@ export const SigninModule: FunctionComponent = () => {
                   required
                   ref={emailRef}
                   disabled={isOperation}
-                  className="transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm disabled:bg-gray-200 disabled:cursor-wait"
+                  className="transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-200 disabled:cursor-wait"
                 />
               </div>
             </div>
@@ -171,7 +171,7 @@ export const SigninModule: FunctionComponent = () => {
                   required
                   ref={passwordRef}
                   disabled={isOperation}
-                  className="transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-cyan-500 focus:border-cyan-500 sm:text-sm disabled:bg-gray-200 disabled:cursor-wait"
+                  className="transition appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm disabled:bg-gray-200 disabled:cursor-wait"
                 />
               </div>
             </div>
@@ -180,7 +180,7 @@ export const SigninModule: FunctionComponent = () => {
               <div className="text-sm">
                 <a
                   href="#"
-                  className="font-medium text-cyan-600 hover:text-cyan-500"
+                  className="font-medium text-indigo-600 hover:text-indigo-500"
                 >
                   {locale('forgot')}
                 </a>
@@ -191,7 +191,7 @@ export const SigninModule: FunctionComponent = () => {
               <button
                 type="submit"
                 disabled={isOperation}
-                className="transition w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-cyan-600 hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 disabled:bg-cyan-400 disabled:hover:bg-cyan-500"
+                className="transition w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 disabled:hover:bg-indigo-500"
               >
                 {locale('signIn')}
               </button>
