@@ -101,7 +101,7 @@ const Page: NextPage = () => {
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
               <Image src={`/api/qr/${uid}`} width={768} height={768} />
               {/* <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} /> */}
-              <dd className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">
+              <dd className="text-sm lg:text-xs text-center font-mono pt-2 break-words">
                 {uid}
               </dd>
             </div>

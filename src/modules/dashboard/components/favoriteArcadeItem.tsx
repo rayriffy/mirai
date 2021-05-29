@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react'
+import { memo, Fragment, useState, useCallback } from 'react'
 
 import Link from 'next/link'
 
@@ -7,6 +7,8 @@ import { DotsVerticalIcon } from '@heroicons/react/solid'
 import { classNames } from '../../../core/services/classNames'
 
 import { useArcade } from '../services/useArcade'
+import { createApiInstance } from '../../../core/services/createApiInstance'
+import { useStoreon } from '../../../context/storeon'
 
 interface Props {
   arcadeId: string
@@ -15,7 +17,19 @@ interface Props {
 export const FavoriteArcadeItem = memo<Props>(props => {
   const { arcadeId } = props
 
+  const { user: { auth } } = useStoreon('user')
+
   const { data, loading, error } = useArcade(arcadeId)
+  const [disabled, setDisabled] = useState(false)
+
+  const onRemoveFavorite = useCallback(async () => {
+    setDisabled(true)
+    const apiInstance = await createApiInstance(auth)
+    await apiInstance.post('/api/removeFavorite', {
+      targetArcade: arcadeId,
+    })
+    setDisabled(false)
+  }, [arcadeId])
 
   return (
     <li className="relative col-span-1 flex shadow-sm rounded-md">
@@ -80,17 +94,18 @@ export const FavoriteArcadeItem = memo<Props>(props => {
                     <div className="py-1">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <button
+                            onClick={onRemoveFavorite}
+                            disabled={disabled}
                             className={classNames(
                               active
                                 ? 'bg-gray-100 text-gray-900'
                                 : 'text-gray-700',
-                              'block px-4 py-2 text-sm'
+                              'block px-4 py-2 text-sm w-full text-left disabled:bg-gray-50 disabled:cursor-wait'
                             )}
                           >
                             Remove from favorite
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                       <Menu.Item>
