@@ -1,11 +1,6 @@
-import {
-  Fragment,
-  FunctionComponent,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react'
+import { FunctionComponent, useCallback, useMemo, useState } from 'react'
 
+import Link from 'next/link'
 import {
   TicketIcon,
   PlusIcon,
@@ -13,21 +8,23 @@ import {
   ArrowRightIcon,
   LocationMarkerIcon,
 } from '@heroicons/react/outline'
-import { getCalculatedPrice } from '../../../core/services/getCalculatedPrice'
 
-import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
-import { BranchWithId } from '../../../core/@types/BranchWithId'
+import { getCalculatedPrice } from '../../../core/services/getCalculatedPrice'
 import { useStoreon } from '../../../context/storeon'
 import { classNames } from '../../../core/services/classNames'
 import { createApiInstance } from '../../../core/services/createApiInstance'
+import { FavoriteButton } from './favoriteButton'
+
+import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
+import { StoreWithId } from '../../../core/@types/StoreWithId'
 
 interface Props {
   arcadeWithId: ArcadeWithId
-  branchWithId: BranchWithId
+  storeWithId: StoreWithId
 }
 
 export const InputDialog: FunctionComponent<Props> = props => {
-  const { arcadeWithId, branchWithId } = props
+  const { arcadeWithId, storeWithId } = props
 
   const targetSystem = {
     maxToken: 20,
@@ -92,33 +89,34 @@ export const InputDialog: FunctionComponent<Props> = props => {
     setPaymentProcessing(true)
 
     try {
-    const apiInstance = await createApiInstance(auth)
-    await apiInstance.post('/api/pay', {
-      targetArcade: arcadeWithId.id,
-      token: inputToken
-    })
+      const apiInstance = await createApiInstance(auth)
+      await apiInstance.post('/api/pay', {
+        targetArcade: arcadeWithId.id,
+        token: inputToken,
+      })
     } catch (e) {
       console.error(e)
     } finally {
       setPaymentProcessing(false)
     }
-  }, [inputToken, auth])
+  }, [inputToken, auth.uid])
 
   return (
     <div className="mt-10 border border-gray-200 bg-white rounded-md px-4 py-5 sm:p-6 overflow-hidden touch-manipulation">
       <div>
         {/* <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
-                  <CheckIcon
-                    className="h-6 w-6 text-green-600"
-                    aria-hidden="true"
-                  />
-                </div> */}
+          <CheckIcon
+            className="h-6 w-6 text-green-600"
+            aria-hidden="true"
+          />
+        </div> */}
         <div className="text-center mt-4">
           <h3 className="text-2xl leading-6 font-semibold text-gray-900 pt-3">
             {arcadeWithId.data.name}
           </h3>
           <div className="flex justify-center py-2">
-              <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" /><span className="text-gray-500">MBK</span>
+            <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" />
+            <span className="text-gray-500">{storeWithId.data.name}</span>
           </div>
           <div className="my-6 text-center flex justify-center">
             <div className="relative mt-2">
@@ -158,7 +156,14 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 </div>
                 <div className="flex flex-col">
                   <button
-                    className={classNames(paymentProcessing ? 'cursor-wait' : isIncreaseDisabled ? 'cursor-not-allowed' : '',"-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-tr-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200")}
+                    className={classNames(
+                      paymentProcessing
+                        ? 'cursor-wait'
+                        : isIncreaseDisabled
+                        ? 'cursor-not-allowed'
+                        : '',
+                      '-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-tr-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200'
+                    )}
                     onClick={onInputIncrease}
                     disabled={isIncreaseDisabled}
                   >
@@ -168,7 +173,14 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     />
                   </button>
                   <button
-                    className={classNames(paymentProcessing ? 'cursor-wait' : isDecreaseDisabled ? 'cursor-not-allowed' : '', "-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-br-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200")}
+                    className={classNames(
+                      paymentProcessing
+                        ? 'cursor-wait'
+                        : isDecreaseDisabled
+                        ? 'cursor-not-allowed'
+                        : '',
+                      '-ml-px relative inline-flex items-center px-3 py-1 border border-gray-300 text-sm font-medium rounded-none rounded-br-md text-gray-700 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-50 hover:bg-gray-100 disabled:bg-gray-100 disabled:hover:bg-gray-200'
+                    )}
                     onClick={onInputDecrease}
                     disabled={isDecreaseDisabled}
                   >
@@ -218,13 +230,24 @@ export const InputDialog: FunctionComponent<Props> = props => {
         >
           Pay
         </button>
-        <button
-          type="button"
-          disabled={paymentProcessing}
-          className="mt-1 inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm disabled:bg-gray-200 disabled:hover:bg-gray-100 disabled:cursor-wait"
-        >
-          Cancel
-        </button>
+        <div className="flex space-x-2 mt-2">
+          <Link href="/dashboard">
+            <a
+              className={classNames(
+                paymentProcessing
+                  ? 'bg-gray-200 hover:bg-gray-100 cursor-wait'
+                  : 'bg-white hover:bg-gray-50',
+                'inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm'
+              )}
+            >
+              Back to dashboard
+            </a>
+          </Link>
+          <FavoriteButton
+            arcadeId={arcadeWithId.id}
+            paymentProcessing={paymentProcessing}
+          />
+        </div>
       </div>
     </div>
   )

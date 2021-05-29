@@ -31,7 +31,7 @@ export interface Menu {
 export const useMenus = () => {
   const {
     user: {
-      metadata: { preferredBranch, role },
+      metadata: { preferredStore, role },
     },
   } = useStoreon('user')
 
@@ -39,33 +39,33 @@ export const useMenus = () => {
     en: {
       home: 'Home',
       arcades: 'Arcades',
-      branches: 'Stores',
+      stores: 'Stores',
       staff: 'Staff mode',
     },
     th: {
       home: 'หน้าหลัก',
       arcades: 'ตู้เกม',
-      branches: 'สาขาร้าน',
+      stores: 'สาขาร้าน',
       staff: 'สำหรับพนักงาน',
     },
   })
 
-  const [branchName, setBranchName] = useState<string>(null)
+  const [storeName, setStoreName] = useState<string>(null)
   useEffect(() => {
-    setBranchName('')
+    setStoreName('')
     getDoc(
       doc(
-        collection(getFirestore(createFirebaseInstance()), 'branches'),
-        preferredBranch
+        collection(getFirestore(createFirebaseInstance()), 'stores'),
+        preferredStore
       )
     )
       .then(doc => {
-        if (doc.exists()) setBranchName(doc.data().name)
+        if (doc.exists()) setStoreName(doc.data().name)
       })
       .catch(e => {
         console.error(e)
       })
-  }, [preferredBranch])
+  }, [preferredStore])
 
   const builtMenus: Menu[] = useMemo(
     () => [
@@ -77,20 +77,20 @@ export const useMenus = () => {
       },
       {
         icon: LocationMarkerIcon,
-        link: `/dashboard/arcades/${preferredBranch}`,
+        link: `/dashboard/arcades/${preferredStore}`,
         name: (
           <Fragment>
             <span className="mr-1">{locale('arcades')}</span>
-            <span className="text-gray-500">{branchName}</span>
+            <span className="text-gray-500">{storeName}</span>
           </Fragment>
         ),
         match: ['/dashboard/arcades/[arcadeId]'],
       },
       {
         icon: GlobeIcon,
-        link: '/dashboard/branches',
-        name: locale('branches'),
-        match: ['/dashboard/branches'],
+        link: '/dashboard/stores',
+        name: locale('stores'),
+        match: ['/dashboard/stores'],
       },
       ...(role !== 'default'
         ? [
@@ -98,12 +98,12 @@ export const useMenus = () => {
               icon: PuzzleIcon,
               link: '/staff',
               name: locale('staff'),
-              match: ['/dashboard/branches'],
+              match: ['/dashboard/stores'],
             },
           ]
         : []),
     ],
-    [detectedLocale, branchName, role]
+    [detectedLocale, storeName, role]
   )
 
   return {

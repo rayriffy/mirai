@@ -3,19 +3,19 @@ import { useState, useEffect } from 'react'
 import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
-import { Branch } from '../../../../core/@types/firebase/Branch'
-import { BranchWithId } from '../../../../core/@types/BranchWithId'
+import { Store } from '../../../../core/@types/firebase/Store'
+import { StoreWithId } from '../../../../core/@types/StoreWithId'
 
-export const useBranches = () => {
-  const [data, setData] = useState<BranchWithId[]>([])
+export const useStores = () => {
+  const [data, setData] = useState<StoreWithId[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
     const instance = createFirebaseInstance()
 
-    onSnapshot(collection(getFirestore(instance), 'branches'), snapshot => {
+    onSnapshot(collection(getFirestore(instance), 'stores'), snapshot => {
       const res = snapshot.docs.map(doc => {
-        const data = doc.data() as Branch
+        const data = doc.data() as Store
         return {
           id: doc.id,
           data,

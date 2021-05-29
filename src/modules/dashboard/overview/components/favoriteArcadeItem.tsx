@@ -4,11 +4,11 @@ import Link from 'next/link'
 
 import { Menu, Transition } from '@headlessui/react'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
-import { classNames } from '../../../core/services/classNames'
+import { classNames } from '../../../../core/services/classNames'
 
 import { useArcade } from '../services/useArcade'
-import { createApiInstance } from '../../../core/services/createApiInstance'
-import { useStoreon } from '../../../context/storeon'
+import { createApiInstance } from '../../../../core/services/createApiInstance'
+import { useStoreon } from '../../../../context/storeon'
 
 interface Props {
   arcadeId: string
@@ -17,7 +17,9 @@ interface Props {
 export const FavoriteArcadeItem = memo<Props>(props => {
   const { arcadeId } = props
 
-  const { user: { auth } } = useStoreon('user')
+  const {
+    user: { auth },
+  } = useStoreon('user')
 
   const { data, loading, error } = useArcade(arcadeId)
   const [disabled, setDisabled] = useState(false)
@@ -25,17 +27,19 @@ export const FavoriteArcadeItem = memo<Props>(props => {
   const onRemoveFavorite = useCallback(async () => {
     setDisabled(true)
     const apiInstance = await createApiInstance(auth)
-    await apiInstance.post('/api/removeFavorite', {
-      targetArcade: arcadeId,
-    })
+    await apiInstance
+      .post('/api/toggleFavorite', {
+        targetArcade: arcadeId,
+      })
+      .catch(e => console.error(e))
     setDisabled(false)
-  }, [arcadeId])
+  }, [arcadeId, auth.uid])
 
   return (
     <li className="relative col-span-1 flex shadow-sm rounded-md">
       <div className="flex-1 flex items-center justify-between border border-gray-200 bg-white rounded-md truncate">
         <div className="flex-1 px-4 py-2 text-sm truncate">
-          {loading ? (
+          {loading || error ? (
             <Fragment>
               <div className="h-4 w-20 bg-gray-900 rounded-md animate-pulse mt-1" />
               <div className="h-4 w-10 bg-gray-500 rounded-md animate-pulse mt-0.5 mb-1" />
@@ -47,11 +51,11 @@ export const FavoriteArcadeItem = memo<Props>(props => {
                   {data.name}
                 </a>
               </Link>
-              <p className="text-gray-500">{data.branchName}</p>
+              <p className="text-gray-500">{data.storeName}</p>
             </Fragment>
           )}
         </div>
-        {!loading && (
+        {!loading && !error && (
           <Menu as="div" className="flex-shrink-0 pr-2">
             {({ open }) => (
               <>

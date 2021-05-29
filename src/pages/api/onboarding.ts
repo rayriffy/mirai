@@ -18,11 +18,11 @@ const api: NextApiHandler = async (req, res) => {
         true
       )
 
-      const { preferredBranch, displayName } = req.body
+      const { preferredStore, displayName } = req.body
 
       const payload: User = {
         displayName,
-        preferredBranch,
+        preferredStore,
         emailHash: crypto
           .createHash('md5')
           .update(userData.auth.email.trim().toLowerCase())

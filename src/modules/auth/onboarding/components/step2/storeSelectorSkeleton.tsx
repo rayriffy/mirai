@@ -2,7 +2,7 @@ import { memo } from 'react'
 
 import { LocationMarkerIcon, SelectorIcon } from '@heroicons/react/outline'
 
-export const BranchSelectorSkeleton = memo(() => (
+export const StoreSelectorSkeleton = memo(() => (
   <div className="flex space-x-2">
     <div className="mt-1 relative w-full">
       <button

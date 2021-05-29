@@ -29,7 +29,7 @@ const Page: NextPage = () => {
 
   const [input, setInput] = useState<Input>({
     displayName: '',
-    preferredBranch: '',
+    preferredStore: '',
   })
 
   return (

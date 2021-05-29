@@ -5,12 +5,12 @@ import { GetServerSideProps, NextPage } from 'next'
 import { InputDialog } from '../../modules/pay/components/inputDialog'
 
 import { ArcadeWithId } from '../../core/@types/ArcadeWithId'
-import { BranchWithId } from '../../core/@types/BranchWithId'
-import { Branch } from '../../core/@types/firebase/Branch'
+import { StoreWithId } from '../../core/@types/StoreWithId'
+import { Store } from '../../core/@types/firebase/Store'
 
 interface Props {
   arcadeWithId: ArcadeWithId
-  branchWithId: BranchWithId
+  storeWithId: StoreWithId
 }
 
 const Page: NextPage<Props> = props => {
@@ -47,30 +47,30 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
         data: arcadeDoc.data(),
       } as ArcadeWithId
 
-      const branchDoc = await firebase
+      const storeDoc = await firebase
         .firestore()
-        .collection('branches')
-        .doc(arcade.data.branchId)
+        .collection('stores')
+        .doc(arcade.data.storeId)
         .get()
 
-      if (branchDoc.exists) {
-        const branchData = branchDoc.data() as Branch
+      if (storeDoc.exists) {
+        const storeData = storeDoc.data() as Store
 
-        const branch = {
-          id: branchDoc.id,
+        const store = {
+          id: storeDoc.id,
           data: {
-            ...branchData,
+            ...storeData,
             location: {
-              latitude: branchData.location.latitude,
-              longitude: branchData.location.longitude,
+              latitude: storeData.location.latitude,
+              longitude: storeData.location.longitude,
             },
           },
-        } as BranchWithId
+        } as StoreWithId
 
         return {
           props: {
             arcadeWithId: arcade,
-            branchWithId: branch,
+            storeWithId: store,
           },
         }
       } else {

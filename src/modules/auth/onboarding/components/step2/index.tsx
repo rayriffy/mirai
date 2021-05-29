@@ -10,7 +10,7 @@ import {
 import { useLocale } from '../../../../../core/services/useLocale'
 
 import { Input } from '../../@types/Input'
-import { BranchSelection } from './branchSelection'
+import { StoreSelection } from './storeSelection'
 
 interface IProps {
   input: Input
@@ -23,9 +23,9 @@ export const Step2: FunctionComponent<IProps> = props => {
   const { setInput, onPrev, onNext } = props
   const { locale } = useLocale({
     en: {
-      title: 'Preferred branch',
+      title: 'Preferred store',
       subtitle:
-        'Choose preferred branch for better experience. This can be changed in settings',
+        'Choose preferred store for better experience. This can be changed in settings',
       prev: 'Previous',
       next: 'Next',
       errorIncompleteFill: 'Some fields are not complete',
@@ -50,7 +50,7 @@ export const Step2: FunctionComponent<IProps> = props => {
     const value = inputRef.current.value
     setInput(o => ({
       ...o,
-      preferredBranch: value,
+      preferredStore: value,
     }))
 
     onNext()
@@ -66,7 +66,7 @@ export const Step2: FunctionComponent<IProps> = props => {
       </div>
       <div className="px-4 py-6 sm:px-6 lg:px-8">
         <div className="space-y-4">
-          <BranchSelection ref={inputRef} />
+          <StoreSelection ref={inputRef} />
         </div>
         <div className="flex justify-end pt-4 space-x-2">
           <button

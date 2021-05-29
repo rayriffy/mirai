@@ -1,6 +1,6 @@
 import { GeoPoint } from 'firebase/firestore'
 
-export interface Branch {
+export interface Store {
   name: string
   location: GeoPoint
 }
