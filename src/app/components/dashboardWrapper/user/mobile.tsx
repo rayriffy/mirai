@@ -1,13 +1,18 @@
 import { memo, Fragment, useCallback } from 'react'
 
+import Image from 'next/image'
+
 import { Menu, Transition } from '@headlessui/react'
 
 import { classNames } from '../../../../core/services/classNames'
 
 import { signOut, getAuth } from 'firebase/auth'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { useStoreon } from '../../../../context/storeon'
 
 export const MobileUser = memo(() => {
+  const { user: { metadata: { emailHash } } } = useStoreon('user')
+
   const onLogout = useCallback(() => {
     signOut(getAuth(createFirebaseInstance()))
   }, [])
@@ -19,9 +24,11 @@ export const MobileUser = memo(() => {
           <div>
             <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
               <span className="sr-only">Open user menu</span>
-              <img
+              <Image
                 className="h-8 w-8 rounded-full"
-                src="https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                src={`https://www.gravatar.com/avatar/${emailHash}`}
+                width={32}
+                height={32}
                 alt=""
               />
             </Menu.Button>
