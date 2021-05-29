@@ -3,8 +3,8 @@ import { Timestamp } from 'firebase/firestore'
 export interface Transaction {
   arcadeId: string
   arcadeName: string
-  branchId: string
-  branchName: string
+  storeId: string
+  storeName: string
   userId: string
   token: number
   value: number

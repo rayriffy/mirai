@@ -13,11 +13,11 @@ import {
   UserAddIcon,
   PlusIcon,
 } from '@heroicons/react/outline'
-import { classNames } from '../core/services/classNames'
+import { classNames } from '../../core/services/classNames'
 
-import { FavoriteArcadeItem } from '../modules/dashboard/components/favoriteArcadeItem'
+import { FavoriteArcadeItem } from '../../modules/dashboard/overview/components/favoriteArcadeItem'
 
-import { useStoreon } from '../context/storeon'
+import { useStoreon } from '../../context/storeon'
 
 const projects = [
   {

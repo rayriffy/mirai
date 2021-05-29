@@ -14,17 +14,21 @@ const api: NextApiHandler = async (req, res) => {
         [],
         true
       )
-      
+
       // todo: remove favorite
       const { targetArcade } = req.body
-      const { auth: { uid }, metadata: { favoriteArcades } } = userData
+      const {
+        auth: { uid },
+        metadata: { favoriteArcades },
+      } = userData
 
-      const filteredOutResult = favoriteArcades.filter(o => o !== targetArcade)
-
-      console.log({ filteredOutResult })
+      // if arcadeId found in favoriteArcades, then remove. otherwise add
+      const processedResult = favoriteArcades.includes(targetArcade)
+        ? favoriteArcades.filter(o => o !== targetArcade)
+        : [...favoriteArcades, targetArcade]
 
       await firebase.firestore().collection('users').doc(uid).update({
-        favoriteArcades: filteredOutResult,
+        favoriteArcades: processedResult,
       })
 
       return res.send({

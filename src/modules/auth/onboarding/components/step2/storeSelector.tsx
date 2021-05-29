@@ -11,18 +11,18 @@ import getDistance from 'geolib/es/getDistance'
 
 import { classNames } from '../../../../../core/services/classNames'
 
-import { BranchWithId } from '../../../../../core/@types/BranchWithId'
+import { StoreWithId } from '../../../../../core/@types/StoreWithId'
 import { Spinner } from '../../../../../core/components/spinner'
 
 interface Props {
-  branches: BranchWithId[]
+  stores: StoreWithId[]
 }
 
-export const BranchSelector = forwardRef<HTMLInputElement, Props>(
+export const StoreSelector = forwardRef<HTMLInputElement, Props>(
   (props, ref) => {
-    const { branches } = props
+    const { stores } = props
 
-    const [selected, setSelected] = useState(branches[0])
+    const [selected, setSelected] = useState(stores[0])
     const [locationStatus, setLocationStatus] =
       useState<'def' | 'success' | 'fail' | 'progress'>('def')
 
@@ -44,21 +44,21 @@ export const BranchSelector = forwardRef<HTMLInputElement, Props>(
         const position = await getCurrentPosition()
 
         // caculate distances
-        const closetBranch = branches
-          .map(branch => ({
-            id: branch.id,
+        const closetStore = stores
+          .map(store => ({
+            id: store.id,
             distance:
               getDistance(
                 {
-                  lat: branch.data.location.latitude,
-                  lon: branch.data.location.longitude,
+                  lat: store.data.location.latitude,
+                  lon: store.data.location.longitude,
                 },
                 { lat: position.latitude, lon: position.longitude }
               ) / 1000,
           }))
           .sort((a, b) => (a.distance > b.distance ? 1 : -1))[0]
 
-        setSelected(branches.find(o => o.id === closetBranch.id))
+        setSelected(stores.find(o => o.id === closetStore.id))
 
         setLocationStatus('success')
       } catch {
@@ -72,7 +72,7 @@ export const BranchSelector = forwardRef<HTMLInputElement, Props>(
         <Listbox value={selected} onChange={setSelected}>
           {({ open }) => (
             <>
-              <Listbox.Label className="sr-only">Branch</Listbox.Label>
+              <Listbox.Label className="sr-only">Store</Listbox.Label>
               <div className="mt-1 relative w-full">
                 <Listbox.Button className="bg-white relative w-full border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                   <span className="block truncate">{selected.data.name}</span>
@@ -95,16 +95,18 @@ export const BranchSelector = forwardRef<HTMLInputElement, Props>(
                     static
                     className="absolute z-10 mt-1 w-full bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm"
                   >
-                    {branches.map(branch => (
+                    {stores.map(store => (
                       <Listbox.Option
-                        key={branch.id}
+                        key={store.id}
                         className={({ active }) =>
                           classNames(
-                            active ? 'text-white bg-indigo-600' : 'text-gray-900',
+                            active
+                              ? 'text-white bg-indigo-600'
+                              : 'text-gray-900',
                             'cursor-default select-none relative py-2 pl-3 pr-9'
                           )
                         }
-                        value={branch}
+                        value={store}
                       >
                         {({ selected, active }) => (
                           <>
@@ -114,7 +116,7 @@ export const BranchSelector = forwardRef<HTMLInputElement, Props>(
                                 'block truncate'
                               )}
                             >
-                              {branch.data.name}
+                              {store.data.name}
                             </span>
 
                             {selected ? (

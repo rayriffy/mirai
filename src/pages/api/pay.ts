@@ -49,8 +49,8 @@ const api: NextApiHandler = async (req, res) => {
           > = {
             arcadeId: arcadeDoc.id,
             arcadeName: arcadeData.name,
-            branchId: arcadeData.branchId,
-            branchName: arcadeData.branchName,
+            storeId: arcadeData.storeId,
+            storeName: arcadeData.storeName,
             userId: uid,
             token: token,
             value: targetPrice.price,
