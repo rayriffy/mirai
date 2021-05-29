@@ -13,7 +13,9 @@ export const AppLayout: FunctionComponent = props => {
   useAuth()
   const { asPath, push } = useRouter()
 
-  const { user: { auth } } = useStoreon('user')
+  const {
+    user: { auth },
+  } = useStoreon('user')
 
   useEffect(() => {
     if (

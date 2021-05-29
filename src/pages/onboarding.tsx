@@ -48,7 +48,13 @@ const Page: NextPage = () => {
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white shadow sm:rounded-lg">
-          {step === 1 ? <Step1 {...{ input, setInput, onNext }} /> : step === 2 ? <Step2 {...{ input, setInput, onPrev, onNext }} /> : <Step3 {...{ input }} />}
+          {step === 1 ? (
+            <Step1 {...{ input, setInput, onNext }} />
+          ) : step === 2 ? (
+            <Step2 {...{ input, setInput, onPrev, onNext }} />
+          ) : (
+            <Step3 {...{ input }} />
+          )}
         </div>
       </div>
     </div>

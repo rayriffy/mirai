@@ -19,5 +19,4 @@ export const BranchSelection = forwardRef<HTMLInputElement>((_, ref) => {
       )}
     </Fragment>
   )
-
 })

@@ -12,7 +12,12 @@ import { signOut, getAuth } from 'firebase/auth'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
 export const DesktopUser = memo(() => {
-  const { user: { auth: { email }, metadata: { emailHash, displayName } } } = useStoreon('user')
+  const {
+    user: {
+      auth: { email },
+      metadata: { emailHash, displayName },
+    },
+  } = useStoreon('user')
 
   const onLogout = useCallback(() => {
     signOut(getAuth(createFirebaseInstance()))

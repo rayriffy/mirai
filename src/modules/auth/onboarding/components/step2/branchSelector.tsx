@@ -1,9 +1,4 @@
-import {
-  forwardRef,
-  Fragment,
-  useCallback,
-  useState,
-} from 'react'
+import { forwardRef, Fragment, useCallback, useState } from 'react'
 
 import { Listbox, Transition } from '@headlessui/react'
 import {
@@ -49,13 +44,19 @@ export const BranchSelector = forwardRef<HTMLInputElement, Props>(
         const position = await getCurrentPosition()
 
         // caculate distances
-        const closetBranch = branches.map(branch => ({
-          id: branch.id,
-          distance: getDistance(
-            { lat: branch.data.location.latitude, lon: branch.data.location.longitude },
-            { lat: position.latitude, lon: position.longitude },
-          ) / 1000
-        })).sort((a, b) => a.distance > b.distance ? 1 : -1)[0]
+        const closetBranch = branches
+          .map(branch => ({
+            id: branch.id,
+            distance:
+              getDistance(
+                {
+                  lat: branch.data.location.latitude,
+                  lon: branch.data.location.longitude,
+                },
+                { lat: position.latitude, lon: position.longitude }
+              ) / 1000,
+          }))
+          .sort((a, b) => (a.distance > b.distance ? 1 : -1))[0]
 
         setSelected(branches.find(o => o.id === closetBranch.id))
 
@@ -99,9 +100,7 @@ export const BranchSelector = forwardRef<HTMLInputElement, Props>(
                         key={branch.id}
                         className={({ active }) =>
                           classNames(
-                            active
-                              ? 'text-white bg-cyan-600'
-                              : 'text-gray-900',
+                            active ? 'text-white bg-cyan-600' : 'text-gray-900',
                             'cursor-default select-none relative py-2 pl-3 pr-9'
                           )
                         }

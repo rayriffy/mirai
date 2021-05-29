@@ -1,12 +1,15 @@
-import { ReactText } from "react"
+import { ReactText } from 'react'
 
 import { useRouter } from 'next/router'
 
 type Language = 'en' | 'th'
 
-type Input = Record<Language, {
-  [key: string]: ReactText
-}>
+type Input = Record<
+  Language,
+  {
+    [key: string]: ReactText
+  }
+>
 
 export const useLocale = (input: Input) => {
   const { locale: detectedLocale } = useRouter()

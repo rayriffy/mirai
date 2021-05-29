@@ -10,18 +10,26 @@ export const useArcade = (arcadeId: string) => {
   const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
-    getDoc(doc(collection(getFirestore(createFirebaseInstance()), 'arcades'), arcadeId)).then(doc => {
-      if (doc.exists()) {
-        setData(doc.data() as Arcade)
-        setError(false)
-      } else {
+    getDoc(
+      doc(
+        collection(getFirestore(createFirebaseInstance()), 'arcades'),
+        arcadeId
+      )
+    )
+      .then(doc => {
+        if (doc.exists()) {
+          setData(doc.data() as Arcade)
+          setError(false)
+        } else {
+          setError(true)
+        }
+      })
+      .catch(() => {
         setError(true)
-      }
-    }).catch(() => {
-      setError(true)
-    }).finally(() => {
-      setLoading(false)
-    })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
 
   return {

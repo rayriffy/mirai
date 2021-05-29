@@ -60,7 +60,12 @@ const projects = [
 ]
 
 const Page: NextPage = () => {
-  const { user: { auth: { uid }, metadata: { favoriteArcades, balance } } } = useStoreon('user')
+  const {
+    user: {
+      auth: { uid },
+      metadata: { favoriteArcades, balance },
+    },
+  } = useStoreon('user')
 
   return (
     <Fragment>
@@ -94,13 +99,11 @@ const Page: NextPage = () => {
               Qr Profile
             </h2>
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
-              <Image
-                src={`/api/qr/${uid}`}
-                width={768}
-                height={768}
-              />
+              <Image src={`/api/qr/${uid}`} width={768} height={768} />
               {/* <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} /> */}
-              <dd className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">{uid}</dd>
+              <dd className="md:text-sm lg:text-xs text-center font-mono pt-2 break-words">
+                {uid}
+              </dd>
             </div>
           </div>
           <div className="">
@@ -108,7 +111,9 @@ const Page: NextPage = () => {
               Balance
             </h2>
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
-              <dd className="text-3xl font-semibold text-gray-900">฿{balance.toLocaleString()}</dd>
+              <dd className="text-3xl font-semibold text-gray-900">
+                ฿{balance.toLocaleString()}
+              </dd>
               {/* <button className="p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500">
                 <PlusIcon className="w-6 h-6 text-gray-500" />
               </button> */}
