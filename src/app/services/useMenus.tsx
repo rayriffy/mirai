@@ -1,21 +1,24 @@
-import { getDoc, getFirestore, doc, collection } from 'firebase/firestore'
-import { GlobeIcon, HomeIcon, LocationMarkerIcon } from '@heroicons/react/outline'
-import React, { useMemo, ReactText, Fragment, useState, useEffect } from 'react'
-import { useStoreon } from '../../context/storeon'
+import { ReactNode, FunctionComponent, SVGProps, useMemo, Fragment, useState, useEffect } from 'react'
+
+import { GlobeIcon, HomeIcon, LocationMarkerIcon, PuzzleIcon } from '@heroicons/react/outline'
+
 import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
+import { getDoc, getFirestore, doc, collection } from 'firebase/firestore'
+
+import { useStoreon } from '../../context/storeon'
 import { useLocale } from '../../core/services/useLocale'
 
 export interface Menu {
-  icon: React.FC<React.SVGProps<SVGSVGElement>>
+  icon: FunctionComponent<SVGProps<SVGSVGElement>>
   link: string
-  name: React.ReactNode
+  name: ReactNode
   match: string[]
 }
 
 export const useMenus = () => {
   const {
     user: {
-      metadata: { preferredBranch },
+      metadata: { preferredBranch, role },
     },
   } = useStoreon('user')
 
@@ -24,11 +27,13 @@ export const useMenus = () => {
       home: 'Home',
       arcades: 'Arcades',
       branches: 'Stores',
+      staff: 'Staff mode',
     },
     th: {
       home: 'หน้าหลัก',
       arcades: 'ตู้เกม',
       branches: 'สาขาร้าน',
+      staff: 'ระบบสำหรับพนักงาน',
     },
   })
 
@@ -74,8 +79,16 @@ export const useMenus = () => {
         name: locale('branches'),
         match: ['/dashboard/branches'],
       },
+      ...(role !== 'default' ? [
+        {
+          icon: PuzzleIcon,
+          link: '/staff',
+          name: locale('staff'),
+          match: ['/dashboard/branches'],
+        }
+      ] : [])
     ],
-    [detectedLocale, branchName]
+    [detectedLocale, branchName, role]
   )
 
   return {
