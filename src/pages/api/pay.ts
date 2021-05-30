@@ -65,6 +65,7 @@ const api: NextApiHandler = async (req, res) => {
             .doc(uid)
             .update({
               balance: balance - targetPrice.price,
+              updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
 
           // inject tansaction

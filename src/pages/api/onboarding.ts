@@ -20,7 +20,7 @@ const api: NextApiHandler = async (req, res) => {
 
       const { preferredStore, displayName } = req.body
 
-      const payload: User = {
+      const payload: Omit<User, 'createdAt' | 'updatedAt'> = {
         displayName,
         preferredStore,
         emailHash: crypto
@@ -36,7 +36,11 @@ const api: NextApiHandler = async (req, res) => {
         .firestore()
         .collection('users')
         .doc(userData.auth.uid)
-        .set(payload)
+        .set({
+          ...payload,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        })
 
       return res.send({
         success: true,

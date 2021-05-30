@@ -29,6 +29,7 @@ const api: NextApiHandler = async (req, res) => {
 
       await firebase.firestore().collection('users').doc(uid).update({
         favoriteArcades: processedResult,
+        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
       })
 
       return res.send({

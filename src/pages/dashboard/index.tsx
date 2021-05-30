@@ -76,7 +76,7 @@ const Page: NextPage = () => {
             Home
           </h1>
         </div>
-        <div className="mt-4 flex sm:mt-0 sm:ml-4">
+        {/* <div className="mt-4 flex sm:mt-0 sm:ml-4">
           <button
             type="button"
             className="order-1 ml-3 inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:order-0 sm:ml-0"
@@ -89,7 +89,7 @@ const Page: NextPage = () => {
           >
             Create
           </button>
-        </div>
+        </div> */}
       </div>
       {/* Pinned projects */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
@@ -127,7 +127,7 @@ const Page: NextPage = () => {
           <ul className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-4 mt-3">
             {(favoriteArcades ?? []).length === 0 ? (
               <li className="col-span-1">
-                <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500">
+                <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500 px-4">
                   Add favorite arcade for faster access
                 </div>
               </li>
