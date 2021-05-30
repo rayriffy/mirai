@@ -10,12 +10,20 @@ import { useRecentTransactions } from '../services/useRecentTransactions'
 import { StatusBadge } from './txTable/statusBadge'
 import { TableHeader } from './txTable/tableHeader'
 import { TableItem } from './txTable/tableItem'
+import { useLocale } from '../../../../core/services/useLocale'
 
 dayjs.extend(relativeTime)
 
 export const TransactionHistory = memo(() => {
   const { data, loading } = useRecentTransactions()
-  console.log({ data, loading })
+  const { locale, detectedLocale } = useLocale({
+    en: {
+      topup: 'Topup',
+    },
+    th: {
+      topup: 'เติมเงิน',
+    },
+  })
 
   return (
     <Fragment>
@@ -35,21 +43,16 @@ export const TransactionHistory = memo(() => {
               >
                 <span className="flex items-center truncate space-x-3">
                   <span className="font-medium truncate text-sm leading-6">
-                    {transaction.data.type === 'payment' ? (
-                      <Fragment>
-                        {transaction.data.arcadeName}{' '}
-                        <span className="truncate font-normal text-gray-500">
-                          at {transaction.data.storeName}
-                        </span>
-                      </Fragment>
-                    ) : (
-                      'Topup'
-                    )}
+                    {transaction.data.type === 'payment'
+                      ? transaction.data.arcadeName
+                      : locale('topup')}
                   </span>
                 </span>
                 <div className="flex space-x-4">
                   <span className="text-sm text-gray-500">
-                    {dayjs(transaction.data.updatedAt.toDate()).fromNow()}
+                    {dayjs(transaction.data.updatedAt.toDate())
+                      .locale(detectedLocale)
+                      .fromNow()}
                   </span>
                   <StatusBadge status={transaction.data.status} />
                   <div>
