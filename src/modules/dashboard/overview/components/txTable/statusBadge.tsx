@@ -3,7 +3,7 @@ import { memo, useMemo } from 'react'
 import { useLocale } from '../../../../../core/services/useLocale'
 import { classNames } from '../../../../../core/services/classNames'
 
-import { Transaction } from "../../../../../core/@types/firebase/Transaction"
+import { Transaction } from '../../../../../core/@types/firebase/Transaction'
 
 interface Props {
   status: Transaction['status']
@@ -42,7 +42,12 @@ export const StatusBadge = memo<Props>(props => {
   }, [status])
 
   return (
-    <span className={classNames(color, "inline-flex items-center px-2 py-0.5 rounded text-xs font-medium")}>
+    <span
+      className={classNames(
+        color,
+        'inline-flex items-center px-2 py-0.5 rounded text-xs font-medium'
+      )}
+    >
       {locale(status)}
     </span>
   )

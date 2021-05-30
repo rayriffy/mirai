@@ -21,7 +21,9 @@ const Page: NextPage<Props> = props => {
             <Link href={`/dashboard/arcades/${store.id}`}>
               <a>
                 <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
-                  <h1 className="text-gray-800 font-semibold text-xl">{store.data.name}</h1>
+                  <h1 className="text-gray-800 font-semibold text-xl">
+                    {store.data.name}
+                  </h1>
                 </div>
               </a>
             </Link>
@@ -65,8 +67,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
 
     return {
       props: {
-        storesWithId
-      }
+        storesWithId,
+      },
     }
   } catch (e) {
     console.error(e)

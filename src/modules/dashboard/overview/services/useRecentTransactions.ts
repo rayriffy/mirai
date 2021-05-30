@@ -28,7 +28,7 @@ export const useRecentTransactions = () => {
         collection(getFirestore(createFirebaseInstance()), 'transactions'),
         where('userId', '==', uid),
         orderBy('updatedAt', 'desc'),
-        limit(20),
+        limit(20)
       ),
       snapshot => {
         const transactionsWithId = snapshot.docs.map(doc => {

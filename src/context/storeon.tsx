@@ -16,14 +16,16 @@ export const store = createStoreon<
   title,
   user,
   startup,
-  ...(typeof window !== 'undefined' ? [
-    persistState(['startup'], {
-      storage: sessionStorage,
-    }),
-    crossTab({
-      filter: (event, data) => event.toString().startsWith('title/'),
-    }),
-  ] : []),
+  ...(typeof window !== 'undefined'
+    ? [
+        persistState(['startup'], {
+          storage: sessionStorage,
+        }),
+        crossTab({
+          filter: (event, data) => event.toString().startsWith('title/'),
+        }),
+      ]
+    : []),
 ])
 
 const StoreonContext = createContext(store)

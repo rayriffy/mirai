@@ -13,7 +13,8 @@ import {
   MinusIcon,
   ArrowRightIcon,
   LocationMarkerIcon,
-  CheckCircleIcon, XCircleIcon
+  CheckCircleIcon,
+  XCircleIcon,
 } from '@heroicons/react/outline'
 
 import { getCalculatedPrice } from '../../../core/services/getCalculatedPrice'
@@ -135,9 +136,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 {result === 'success' ? 'Success' : 'Failed'}
               </h1>
               <p className="text-gray-700 text-center py-1 mb-2">
-                {result === 'success'
-                  ? 'successMessage'
-                  : 'failMessage'}
+                {result === 'success' ? 'successMessage' : 'failMessage'}
               </p>
             </Fragment>
           ) : (
