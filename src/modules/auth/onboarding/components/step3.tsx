@@ -1,6 +1,5 @@
 import { Fragment, FunctionComponent, useEffect, useState } from 'react'
 
-import axios from 'axios'
 import Link from 'next/link'
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/outline'
 
