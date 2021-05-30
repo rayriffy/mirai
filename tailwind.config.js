@@ -11,6 +11,9 @@ module.exports = {
     './src/**/*.js',
   ],
   theme: {
+    colors: {
+      ...defaultTheme.colors,
+    },
     extend: {
       fontFamily: {
         sans: ['Niramit', ...defaultTheme.fontFamily.sans],

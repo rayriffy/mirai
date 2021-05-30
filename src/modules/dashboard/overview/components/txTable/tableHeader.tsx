@@ -1,10 +1,9 @@
-import { locale } from 'dayjs'
 import { memo } from 'react'
 
 import { useLocale } from '../../../../../core/services/useLocale'
 
 export const TableHeader = memo(() => {
-  const {} = useLocale({
+  const { locale } = useLocale({
     en: {
       transaction: 'Transaction',
       token: 'Token',

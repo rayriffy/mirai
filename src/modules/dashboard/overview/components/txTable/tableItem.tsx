@@ -1,4 +1,4 @@
-import { memo, Fragment } from 'react'
+import { memo, Fragment, useState } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
@@ -15,6 +15,9 @@ import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { StatusBadge } from './statusBadge'
 import { TransactionWithId } from '../../../../../core/@types/TransactionWithId'
+import { useLocale } from '../../../../../core/services/useLocale'
+
+import 'dayjs/locale/th'
 
 dayjs.extend(relativeTime)
 
@@ -25,8 +28,19 @@ interface Props {
 export const TableItem = memo<Props>(props => {
   const { transaction } = props
 
+  const { locale, detectedLocale } = useLocale({
+    en: {
+      at: 'at',
+      topup: 'Topup',
+    },
+    th: {
+      at: 'ที่',
+      topup: 'เติมเงิน',
+    },
+  })
+
   return (
-    <tr key={`desktop-recent-tx-${transaction.id}`}>
+    <tr>
       <td className="px-6 py-3 max-w-0 w-full whitespace-nowrap text-sm font-medium text-gray-900">
         <div className="flex items-center space-x-3 lg:pl-2">
           <span className="truncate hover:text-gray-600">
@@ -34,11 +48,11 @@ export const TableItem = memo<Props>(props => {
               <Fragment>
                 {transaction.data.arcadeName}{' '}
                 <span className="text-gray-500 font-normal">
-                  at {transaction.data.storeName}
+                  {locale('at')} {transaction.data.storeName}
                 </span>
               </Fragment>
             ) : (
-              'Topup'
+              locale('topup')
             )}
           </span>
         </div>
@@ -53,7 +67,9 @@ export const TableItem = memo<Props>(props => {
         <StatusBadge status={transaction.data.status} />
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-        {dayjs(transaction.data.updatedAt.toDate()).fromNow()}
+        {dayjs(transaction.data.updatedAt.toDate())
+          .locale(detectedLocale)
+          .fromNow()}
       </td>
       <td className="pr-6">
         <Menu as="div" className="relative flex justify-end items-center">
