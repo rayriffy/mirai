@@ -24,7 +24,9 @@ const Page: NextPage<Props> = props => {
             <Link href={`/pay/${arcade.id}`}>
               <a>
                 <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
-                  <h1 className="text-gray-800 font-semibold text-xl">{arcade.data.name}</h1>
+                  <h1 className="text-gray-800 font-semibold text-xl">
+                    {arcade.data.name}
+                  </h1>
                   <h2 className="text-gray-500">{arcade.data.storeName}</h2>
                 </div>
               </a>
