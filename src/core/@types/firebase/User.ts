@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore'
+
 import { Role } from '../Role'
 export interface User {
   displayName: string
@@ -6,4 +8,6 @@ export interface User {
   role: Role
   favoriteArcades: string[]
   balance: number
+  createdAt: Timestamp
+  updatedAt: Timestamp
 }

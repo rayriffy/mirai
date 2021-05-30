@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import { collection, doc, getFirestore, getDoc } from '@firebase/firestore'
+import { collection, doc, getFirestore, getDoc } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 import { Arcade } from '../../../../core/@types/firebase/Arcade'
 
