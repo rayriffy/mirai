@@ -15,6 +15,7 @@ import { useRecentTransactions } from '../services/useRecentTransactions'
 
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
+import { StatusBadge } from './txTable/statusBadge'
 
 dayjs.extend(relativeTime)
 
@@ -40,19 +41,23 @@ export const TransactionHistory = memo(() => {
               >
                 <span className="flex items-center truncate space-x-3">
                   <span className="font-medium truncate text-sm leading-6">
-                    {transaction.data.arcadeName}{' '}
-                    <span className="truncate font-normal text-gray-500">
-                      at {transaction.data.storeName}
-                    </span>
+                    {transaction.data.type === 'payment' ? (
+                      <Fragment>
+                        {transaction.data.arcadeName}{' '}
+                        <span className="truncate font-normal text-gray-500">
+                          at {transaction.data.storeName}
+                        </span>
+                      </Fragment>
+                    ) : (
+                      'Topup'
+                    )}
                   </span>
                 </span>
                 <div className="flex space-x-4">
                   <span className="text-sm text-gray-500">
                     {dayjs(transaction.data.updatedAt.toDate()).fromNow()}
                   </span>
-                  <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
-                    {transaction.data.status}
-                  </span>
+                  <StatusBadge status={transaction.data.status} />
                   <div>
                     {transaction.data.status === 'pending' ? (
                       <ChevronRightIcon
@@ -77,7 +82,7 @@ export const TransactionHistory = memo(() => {
             <thead>
               <tr className="border-t border-gray-200">
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  <span className="lg:pl-2">Arcade</span>
+                  <span className="lg:pl-2">Transaction</span>
                 </th>
                 <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Token
@@ -100,10 +105,16 @@ export const TransactionHistory = memo(() => {
                   <td className="px-6 py-3 max-w-0 w-full whitespace-nowrap text-sm font-medium text-gray-900">
                     <div className="flex items-center space-x-3 lg:pl-2">
                       <span className="truncate hover:text-gray-600">
-                        {transaction.data.arcadeName}{' '}
-                        <span className="text-gray-500 font-normal">
-                          at {transaction.data.storeName}
-                        </span>
+                        {transaction.data.type === 'payment' ? (
+                          <Fragment>
+                            {transaction.data.arcadeName}{' '}
+                            <span className="text-gray-500 font-normal">
+                              at {transaction.data.storeName}
+                            </span>
+                          </Fragment>
+                        ) : (
+                          'Topup'
+                        )}
                       </span>
                     </div>
                   </td>
@@ -114,9 +125,7 @@ export const TransactionHistory = memo(() => {
                     ฿{transaction.data.value.toLocaleString()}
                   </td>
                   <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-indigo-100 text-indigo-800">
-                      {transaction.data.status}
-                    </span>
+                    <StatusBadge status={transaction.data.status} />
                   </td>
                   <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
                     {dayjs(transaction.data.updatedAt.toDate()).fromNow()}

@@ -47,6 +47,7 @@ const api: NextApiHandler = async (req, res) => {
             Transaction,
             'createdAt' | 'updatedAt'
           > = {
+            type: 'payment',
             arcadeId: arcadeDoc.id,
             arcadeName: arcadeData.name,
             storeId: arcadeData.storeId,
