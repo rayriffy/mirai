@@ -1,14 +1,10 @@
 import { NextApiHandler } from 'next'
 
-import { getCalculatedPrice } from '../../core/services/getCalculatedPrice'
-
 import firebase from 'firebase-admin'
 import { initializeFirebase } from '../../modules/api/services/initializeFirebase'
 import { getUserAndFilterAuth } from '../../modules/api/services/getUserAndFilterAuth'
 
-import { Arcade } from '../../core/@types/firebase/Arcade'
 import { Transaction } from '../../core/@types/firebase/Transaction'
-import { FaSmileBeam } from 'react-icons/fa'
 
 const api: NextApiHandler = async (req, res) => {
   if (req.method.toLowerCase() === 'post') {
