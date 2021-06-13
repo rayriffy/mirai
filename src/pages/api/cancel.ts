@@ -45,12 +45,13 @@ const api: NextApiHandler = async (req, res) => {
         })
       } else {
         // cancel transaction
-        await transactionRef.update({
+        const transactionJob = transactionRef.update({
           status: 'cancelled',
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         })
+
         // refund money
-        await firebase
+        const userJob = firebase
           .firestore()
           .collection('users')
           .doc(uid)
@@ -58,6 +59,8 @@ const api: NextApiHandler = async (req, res) => {
             balance: balance + transactionData.value,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
+
+        await Promise.all([transactionJob, userJob])
 
         return res.status(200).send({
           success: true,
