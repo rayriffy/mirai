@@ -3,61 +3,21 @@ import { Fragment } from 'react'
 import { NextPage } from 'next'
 import Image from 'next/image'
 
-import { Menu, Transition } from '@headlessui/react'
-import {
-  ChevronRightIcon,
-  DotsVerticalIcon,
-  DuplicateIcon,
-  PencilAltIcon,
-  TrashIcon,
-  UserAddIcon,
-} from '@heroicons/react/outline'
-import { classNames } from '../../core/services/classNames'
+// import { Menu, Transition } from '@headlessui/react'
+// import {
+//   ChevronRightIcon,
+//   DotsVerticalIcon,
+//   DuplicateIcon,
+//   PencilAltIcon,
+//   TrashIcon,
+//   UserAddIcon,
+// } from '@heroicons/react/outline'
+// import { classNames } from '../../core/services/classNames'
 
 import { FavoriteArcadeItem } from '../../modules/dashboard/overview/components/favoriteArcadeItem'
 import { TransactionHistory } from '../../modules/dashboard/overview/components/transactionHistory'
 
 import { useStoreon } from '../../context/storeon'
-
-const projects = [
-  {
-    id: 1,
-    title: 'GraphQL API',
-    initials: 'GA',
-    team: 'Engineering',
-    members: [
-      {
-        name: 'Dries Vincent',
-        handle: 'driesvincent',
-        imageUrl:
-          'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Lindsay Walton',
-        handle: 'lindsaywalton',
-        imageUrl:
-          'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Courtney Henry',
-        handle: 'courtneyhenry',
-        imageUrl:
-          'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-      {
-        name: 'Tom Cook',
-        handle: 'tomcook',
-        imageUrl:
-          'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-      },
-    ],
-    totalMembers: 12,
-    lastUpdated: 'March 17, 2020',
-    pinned: true,
-    bgColorClass: 'bg-pink-600',
-  },
-  // More projects...
-]
 
 const Page: NextPage = () => {
   const {
@@ -99,7 +59,7 @@ const Page: NextPage = () => {
               Qr Profile
             </h2>
             <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
-              <Image src={`/api/qr/${uid}`} width={768} height={768} />
+              <Image src={`/api/qr/${uid}`} width={768} height={768} alt="Profile QR" />
               {/* <div className="w-full aspect-w-1 aspect-h-1" dangerouslySetInnerHTML={{ __html: data }} /> */}
               <dd className="text-sm lg:text-xs text-center font-mono pt-2 break-words">
                 {uid}

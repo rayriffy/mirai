@@ -1,11 +1,14 @@
 import { memo } from 'react'
 
-import { XIcon } from '@heroicons/react/outline'
+import Image from 'next/image'
 
+import { XIcon } from '@heroicons/react/outline'
 import { Transition } from '@headlessui/react'
 
 import { MobileNavbar } from './navbar/mobile'
 import { Offline } from './offline'
+
+import fullLogo from '../../../../public/static/workflow-logo-purple-500-mark-gray-700-text.svg'
 
 interface Props {
   show?: boolean
@@ -66,3 +69,5 @@ export const MobileOverlay = memo<Props>(props => {
     </div>
   )
 })
+
+MobileOverlay.displayName = 'MobileOverlay'
