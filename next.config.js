@@ -20,9 +20,6 @@ module.exports = withPlugins(
     env: {
       buildNumber: dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD.HH'),
     },
-    future: {
-      webpack5: true,
-    },
     i18n: {
       locales: ['en', 'th'],
       defaultLocale: 'en',
