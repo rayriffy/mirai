@@ -2,22 +2,26 @@ import { memo, useState, Fragment } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 
 import { Listbox, Transition } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
 
 import { classNames } from '../../core/services/classNames'
 
+import enFlag from '../../../public/static/flags/US.png'
+import thFlag from '../../../public/static/flags/TH.png'
+
 const languages = [
   {
     id: 'en',
     name: 'English',
-    flag: 'US',
+    flag: enFlag,
   },
   {
     id: 'th',
     name: 'ไทย',
-    flag: 'TH',
+    flag: thFlag,
   },
 ]
 
@@ -36,11 +40,12 @@ export const LangaugeSelector = memo(() => {
           <div className="mt-1 relative w-36">
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center">
-                <img
-                  src={getFlagResource(selected.flag)}
-                  alt=""
-                  className="h-auto w-6"
-                />
+                <span className="h-auto w-6 flex items-center">
+                  <Image
+                    src={selected.flag}
+                    alt={selected.name}
+                  />
+                </span>
                 <span className="ml-3 block truncate">{selected.name}</span>
               </span>
               <span className="ml-3 absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
@@ -76,11 +81,12 @@ export const LangaugeSelector = memo(() => {
                     {({ selected }) => (
                       <Link href={asPath} locale={language.id}>
                         <a className="flex items-center cursor-default py-2 pl-3 pr-9">
-                          <img
-                            src={getFlagResource(language.flag)}
-                            alt=""
-                            className="flex-shrink-0 h-auto w-6"
-                          />
+                          <span className="h-auto w-6 flex items-center flex-shrink-0">
+                            <Image
+                              src={language.flag}
+                              alt={language.name}
+                            />
+                          </span>
                           <span
                             className={classNames(
                               selected ? 'font-semibold' : 'font-normal',
@@ -102,3 +108,5 @@ export const LangaugeSelector = memo(() => {
     </Listbox>
   )
 })
+
+LangaugeSelector.displayName = 'LangaugeSelector'

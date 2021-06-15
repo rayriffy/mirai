@@ -24,8 +24,8 @@ const Page: NextPage = () => {
   })
 
   const [step, setStep] = useState<number>(1)
-  const onNext = useCallback(() => setStep(o => o + 1), [step])
-  const onPrev = useCallback(() => setStep(o => o - 1), [step])
+  const onNext = useCallback(() => setStep(o => o + 1), [])
+  const onPrev = useCallback(() => setStep(o => o - 1), [])
 
   const [input, setInput] = useState<Input>({
     displayName: '',

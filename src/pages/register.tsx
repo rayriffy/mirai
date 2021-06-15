@@ -2,6 +2,9 @@ import { FormEventHandler, useCallback, useRef, useState } from 'react'
 
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
+
+import logo from '../../public/static/workflow-mark-indigo-600.svg'
 
 import { XCircleIcon } from '@heroicons/react/outline'
 
@@ -63,17 +66,21 @@ const Page: NextPage = () => {
         setIsOperation(false)
       }
     },
-    [emailRef, passwordRef]
+    [emailRef, passwordRef, push]
   )
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-          alt="Workflow"
-        />
+        <div className="flex justify-center">
+          <Image
+            className="mx-auto h-12 w-auto"
+            src={logo}
+            width={48}
+            height={48}
+            alt="Workflow"
+          />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {locale('signUpHead')}
         </h2>

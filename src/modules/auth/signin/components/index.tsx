@@ -9,7 +9,10 @@ import {
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Image from 'next/image'
 import { useLocale } from '../../../../core/services/useLocale'
+
+import logo from '../../../../../public/static/workflow-mark-indigo-600.svg'
 
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 import { useAuthReader } from '../../../../app/services/useAuthReader'
@@ -78,26 +81,29 @@ export const SigninModule: FunctionComponent = () => {
         setIsOperation(false)
       }
     },
-    [emailRef, passwordRef]
+    [emailRef, passwordRef, push]
   )
 
-  const onProviderAuth = (provider: AuthProvider) =>
-    useCallback(async () => {
-      setIsOperation(true)
-      setError(null)
+  const onProviderAuth = async (provider: AuthProvider) => {
+    setIsOperation(true)
+    setError(null)
 
-      const instance = createFirebaseInstance()
-      await signInWithRedirect(getAuth(instance), provider)
-    }, [provider])
+    const instance = createFirebaseInstance()
+    await signInWithRedirect(getAuth(instance), provider)
+  }
 
   return (
     <Fragment>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <img
-          className="mx-auto h-12 w-auto"
-          src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
-          alt="Workflow"
-        />
+        <div className="flex justify-center">
+          <Image
+            className="mx-auto h-12 w-auto"
+            src={logo}
+            width={48}
+            height={48}
+            alt="Workflow"
+          />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           {locale('signInHead')}
         </h2>
@@ -215,7 +221,7 @@ export const SigninModule: FunctionComponent = () => {
                 <div key={`auth-provider-${id}`}>
                   <button
                     disabled={isOperation}
-                    onClick={onProviderAuth(provider)}
+                    onClick={() => onProviderAuth(provider)}
                     className="transition w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:bg-gray-200 disabled:cursor-wait"
                   >
                     <span className="sr-only">Sign in with {id}</span>
