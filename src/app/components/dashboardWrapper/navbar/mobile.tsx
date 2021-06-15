@@ -7,10 +7,10 @@ import { Menu, useMenus } from '../../../services/useMenus'
 import { classNames } from '../../../../core/services/classNames'
 
 const MobileMenuLink = memo<Menu>(props => {
-  const { name, link } = props
+  const { match, name, link } = props
 
   const { pathname } = useRouter()
-  const isMatch = useMemo(() => props.match.includes(pathname), [pathname])
+  const isMatch = useMemo(() => match.includes(pathname), [pathname, match])
 
   return (
     <Link href={link}>

@@ -30,8 +30,6 @@ export const LangaugeSelector = memo(() => {
 
   const [selected, setSelected] = useState(languages.find(o => o.id === locale))
 
-  const getFlagResource = (flag: string) => `/static/flags/${flag}.png`
-
   return (
     <Listbox value={selected} onChange={setSelected}>
       {({ open }) => (
@@ -108,5 +106,3 @@ export const LangaugeSelector = memo(() => {
     </Listbox>
   )
 })
-
-LangaugeSelector.displayName = 'LangaugeSelector'
