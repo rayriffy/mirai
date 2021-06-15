@@ -1,11 +1,10 @@
-import { FunctionComponent, Fragment, useEffect } from 'react'
+import { FunctionComponent, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
 import { useStoreon } from '../../context/storeon'
 import { useAuth } from '../../core/services/useAuth'
 
-import { Footer } from './footer'
 import { isAgentiOS } from '../../core/services/isAgentiOS'
 
 export const AppLayout: FunctionComponent = props => {
@@ -22,7 +21,7 @@ export const AppLayout: FunctionComponent = props => {
       dispatch('startup/init')
       window.location.reload()
     }
-  }, [])
+  }, [startup])
 
   useAuth()
   const { asPath, push } = useRouter()

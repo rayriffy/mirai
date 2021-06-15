@@ -66,7 +66,7 @@ const Page: NextPage = () => {
         setIsOperation(false)
       }
     },
-    [emailRef, passwordRef, push]
+    [emailRef, passwordRef]
   )
 
   return (

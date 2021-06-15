@@ -7,8 +7,9 @@ import { Menu, useMenus } from '../../../services/useMenus'
 import { classNames } from '../../../../core/services/classNames'
 
 const DesktopMenuLink = memo<Menu>(props => {
+  const { match, name } = props
   const { pathname } = useRouter()
-  const isMatch = useMemo(() => props.match.includes(pathname), [pathname])
+  const isMatch = useMemo(() => match.includes(pathname), [pathname, match])
 
   return (
     <Link href={props.link}>
@@ -26,7 +27,7 @@ const DesktopMenuLink = memo<Menu>(props => {
             'mr-3 h-6 w-6 group-hover:text-gray-500 group-focus:text-gray-600 transition ease-in-out duration-150'
           )}
         />
-        {props.name}
+        {name}
       </a>
     </Link>
   )

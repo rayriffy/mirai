@@ -25,5 +25,3 @@ export const DesktopHeader = memo(() => {
     </div>
   )
 })
-
-DesktopHeader.displayName = 'DesktopHeader'

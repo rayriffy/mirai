@@ -81,7 +81,7 @@ export const SigninModule: FunctionComponent = () => {
         setIsOperation(false)
       }
     },
-    [emailRef, passwordRef, push]
+    [emailRef, passwordRef]
   )
 
   const onProviderAuth = async (provider: AuthProvider) => {

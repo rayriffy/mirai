@@ -57,17 +57,6 @@ export const HeadTitle: FunctionComponent<Props> = props => {
         content={description}
       />
 
-      <link
-        key="google-font-preconnect"
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-      />
-      <link
-        key="google-font-stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Niramit:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Prompt:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
-
       {children}
     </Head>
   )
