@@ -1,4 +1,5 @@
 import { NextApiHandler } from 'next'
+import { omit } from 'lodash'
 
 import { getCalculatedPrice } from '../../core/services/getCalculatedPrice'
 
@@ -43,10 +44,7 @@ const api: NextApiHandler = async (req, res) => {
         )
 
         if (balance - targetPrice.price >= 0) {
-          const transactionPayload: Omit<
-            Transaction,
-            'createdAt' | 'updatedAt'
-          > = {
+          const transactionPayload: Transaction = {
             type: 'payment',
             arcadeId: arcadeDoc.id,
             arcadeName: arcadeData.name,
@@ -56,6 +54,8 @@ const api: NextApiHandler = async (req, res) => {
             token: token,
             value: targetPrice.price,
             status: 'pending',
+            createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
+            updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
           }
 
           // deduct money
@@ -73,7 +73,7 @@ const api: NextApiHandler = async (req, res) => {
             .firestore()
             .collection('transactions')
             .add({
-              ...transactionPayload,
+              ...omit(transactionPayload, ['createdAt', 'updatedAt']),
               createdAt: firebase.firestore.FieldValue.serverTimestamp(),
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })

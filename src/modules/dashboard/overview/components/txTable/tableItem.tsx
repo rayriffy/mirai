@@ -1,4 +1,4 @@
-import { memo, Fragment, useMemo, useState } from 'react'
+import { memo, Fragment, useState } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
@@ -65,7 +65,7 @@ export const TableItem = memo<Props>(props => {
         </div>
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-        {transaction.data.token.toLocaleString()}
+        {transaction.data.type === 'payment' ? transaction.data.token.toLocaleString() : '-'}
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         ฿{transaction.data.value.toLocaleString()}
@@ -121,7 +121,7 @@ export const TableItem = memo<Props>(props => {
                       )}
                     </Menu.Item>
                   </div>
-                  {transaction.data.status === 'pending' && (
+                  {transaction.data.type === 'payment' && transaction.data.status === 'pending' && (
                     <div className="py-1">
                       <Menu.Item>
                         {({ active }) => (
