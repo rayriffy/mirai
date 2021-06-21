@@ -1,13 +1,17 @@
-import { Timestamp } from 'firebase/firestore'
+import { Timestamp } from '@google-cloud/firestore'
 
-export interface Transaction {
-  type: 'payment' | 'topup'
+export type Transaction = ({
+  type: 'topup'
+  createdBy: string
+} | {
+  type: 'payment'
   arcadeId: string
   arcadeName: string
   storeId: string
   storeName: string
-  userId: string
   token: number
+}) & {
+  userId: string
   value: number
   status: 'pending' | 'processing' | 'success' | 'failed' | 'cancelled'
   createdAt: Timestamp
