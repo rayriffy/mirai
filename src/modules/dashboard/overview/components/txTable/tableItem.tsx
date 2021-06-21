@@ -1,4 +1,4 @@
-import { memo, Fragment, useState } from 'react'
+import { memo, Fragment, useState, useEffect } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
@@ -8,18 +8,13 @@ import {
 } from '@heroicons/react/outline'
 
 import { classNames } from '../../../../../core/services/classNames'
-
-import dayjs from 'dayjs'
-import relativeTime from 'dayjs/plugin/relativeTime'
-import { StatusBadge } from './statusBadge'
-import { TransactionWithId } from '../../../../../core/@types/TransactionWithId'
 import { useLocale } from '../../../../../core/services/useLocale'
+
 import { CancelDialog } from './cancelDialog'
+import { StatusBadge } from './statusBadge'
+import { RelativeTime } from './relativeTime'
 
-import 'dayjs/locale/th'
-import { useEffect } from 'react'
-
-dayjs.extend(relativeTime)
+import { TransactionWithId } from '../../../../../core/@types/TransactionWithId'
 
 interface Props {
   transaction: TransactionWithId
@@ -28,7 +23,7 @@ interface Props {
 export const TableItem = memo<Props>(props => {
   const { transaction } = props
 
-  const { locale, detectedLocale } = useLocale({
+  const { locale } = useLocale({
     en: {
       at: 'at',
       topup: 'Topup',
@@ -74,9 +69,7 @@ export const TableItem = memo<Props>(props => {
         <StatusBadge status={transaction.data.status} />
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-        {dayjs(transaction.data.updatedAt.toDate())
-          .locale(detectedLocale)
-          .fromNow()}
+        <RelativeTime datetime={transaction.data.updatedAt.toDate()} />
       </td>
       <td className="pr-6">
         <Menu as="div" className="relative flex justify-end items-center">
