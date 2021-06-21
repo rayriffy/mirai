@@ -1,12 +1,10 @@
-import { memo, Fragment } from 'react'
+import { memo, Fragment, useMemo, useState } from 'react'
 
 import { Menu, Transition } from '@headlessui/react'
 import {
   DotsVerticalIcon,
-  PencilAltIcon,
-  DuplicateIcon,
-  UserAddIcon,
-  TrashIcon,
+  InformationCircleIcon,
+  XIcon,
 } from '@heroicons/react/outline'
 
 import { classNames } from '../../../../../core/services/classNames'
@@ -16,8 +14,10 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import { StatusBadge } from './statusBadge'
 import { TransactionWithId } from '../../../../../core/@types/TransactionWithId'
 import { useLocale } from '../../../../../core/services/useLocale'
+import { CancelDialog } from './cancelDialog'
 
 import 'dayjs/locale/th'
+import { useEffect } from 'react'
 
 dayjs.extend(relativeTime)
 
@@ -38,6 +38,13 @@ export const TableItem = memo<Props>(props => {
       topup: 'เติมเงิน',
     },
   })
+
+  const [cancelOpen, setCancelOpen] = useState(false)
+  useEffect(() => {
+    if (transaction.data.status !== 'pending') {
+      setCancelOpen(false)
+    }
+  }, [transaction.data.status])
 
   return (
     <tr>
@@ -105,79 +112,49 @@ export const TableItem = memo<Props>(props => {
                             'group flex items-center px-4 py-2 text-sm'
                           )}
                         >
-                          <PencilAltIcon
+                          <InformationCircleIcon
                             className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                             aria-hidden="true"
                           />
-                          Edit
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-700',
-                            'group flex items-center px-4 py-2 text-sm'
-                          )}
-                        >
-                          <DuplicateIcon
-                            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                            aria-hidden="true"
-                          />
-                          Duplicate
-                        </a>
-                      )}
-                    </Menu.Item>
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-700',
-                            'group flex items-center px-4 py-2 text-sm'
-                          )}
-                        >
-                          <UserAddIcon
-                            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                            aria-hidden="true"
-                          />
-                          Share
+                          Information
                         </a>
                       )}
                     </Menu.Item>
                   </div>
-                  <div className="py-1">
-                    <Menu.Item>
-                      {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-700',
-                            'group flex items-center px-4 py-2 text-sm'
-                          )}
-                        >
-                          <TrashIcon
-                            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                            aria-hidden="true"
-                          />
-                          Delete
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
+                  {transaction.data.status === 'pending' && (
+                    <div className="py-1">
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            onClick={() => setCancelOpen(true)}
+                            className={classNames(
+                              active
+                                ? 'bg-gray-100 text-gray-900'
+                                : 'text-gray-700',
+                              'group flex items-center px-4 py-2 text-sm w-full'
+                            )}
+                          >
+                            <XIcon
+                              className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                              aria-hidden="true"
+                            />
+                            Cancel
+                          </button>
+                        )}
+                      </Menu.Item>
+                    </div>
+                  )}
                 </Menu.Items>
               </Transition>
             </>
           )}
         </Menu>
+        <CancelDialog
+          open={cancelOpen}
+          onClose={() => setCancelOpen(false)}
+          transactionId={transaction.id}
+          transactionValue={transaction.data.value}
+        />
       </td>
     </tr>
   )

@@ -28,7 +28,7 @@ const api: NextApiHandler = async (req, res) => {
       // get transaction
       const transactionRef = firebase
         .firestore()
-        .collection('transaction')
+        .collection('transactions')
         .doc(transactionId)
       const transactionDoc = await transactionRef.get()
       const transactionData = transactionDoc.data() as Transaction
@@ -37,6 +37,11 @@ const api: NextApiHandler = async (req, res) => {
         return res.status(400).send({
           success: false,
           message: 'transaction not found',
+        })
+      } else if (transactionData.userId !== uid) {
+        return res.status(400).send({
+          success: false,
+          message: 'not transaction owner',
         })
       } else if (transactionData.status !== 'pending') {
         return res.status(400).send({

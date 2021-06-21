@@ -5,7 +5,7 @@ import { User } from '../../../core/@types/firebase/User'
 
 export const getUserAndFilterAuth = async (
   authHeader: string,
-  allowRoles: Role[],
+  allowedRoles: Role[],
   ignoreAuthCheck = false
 ) => {
   const extractedToken = /Bearer (.+)/.exec(authHeader)[1] ?? ''
@@ -19,9 +19,7 @@ export const getUserAndFilterAuth = async (
     .get()
     .then(o => o.data())) as User
 
-  console.log(decodedToken.uid)
-
-  if (ignoreAuthCheck || allowRoles.includes(userMetadata?.role)) {
+  if (ignoreAuthCheck || allowedRoles.includes(userMetadata?.role)) {
     return {
       auth: userAuth,
       metadata: userMetadata,
