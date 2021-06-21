@@ -38,6 +38,11 @@ const api: NextApiHandler = async (req, res) => {
           success: false,
           message: 'transaction not found',
         })
+      } else if (transactionData.type !== 'payment') {
+        return res.status(400).send({
+          success: false,
+          message: 'invalid transaction type',
+        })
       } else if (transactionData.userId !== uid) {
         return res.status(400).send({
           success: false,
