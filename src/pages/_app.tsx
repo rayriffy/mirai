@@ -12,6 +12,7 @@ import { Footer } from '../app/components/footer'
 import { AuthWrapper } from '../app/components/authWrapper'
 import { DashboardWrapper } from '../app/components/dashboardWrapper'
 
+import '../styles/nprogress.css'
 import '../styles/tailwind.css'
 
 const NextApp: NextPage<AppProps> = props => {

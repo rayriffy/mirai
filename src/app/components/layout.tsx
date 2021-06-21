@@ -2,6 +2,8 @@ import { FunctionComponent, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
+import NProgress from 'nprogress'
+
 import { useStoreon } from '../../context/storeon'
 import { useAuth } from '../../core/services/useAuth'
 
@@ -24,7 +26,28 @@ export const AppLayout: FunctionComponent = props => {
   }, [startup])
 
   useAuth()
-  const { asPath, push } = useRouter()
+  const { asPath, push, events } = useRouter()
+
+  const routeChangeStart = () => {
+    NProgress.configure({ minimum: 0.3 })
+    NProgress.start()
+  }
+
+  const routeChangeEnd = () => {
+    NProgress.done()
+  }
+
+  useEffect(() => {
+    events.on('routeChangeStart', routeChangeStart)
+    events.on('routeChangeComplete', routeChangeEnd)
+    events.on('routeChangeError', routeChangeEnd)
+
+    return () => {
+      events.off('routeChangeStart', routeChangeStart)
+      events.off('routeChangeComplete', routeChangeEnd)
+      events.off('routeChangeError', routeChangeEnd)
+    }
+  }, [])
 
   useEffect(() => {
     if (
