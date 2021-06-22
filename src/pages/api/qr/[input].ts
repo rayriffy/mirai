@@ -12,7 +12,7 @@ const api: NextApiHandler = async (req, res) => {
   })
 
   res.setHeader('Content-Type', 'image/png')
-  res.setHeader('Cache-Control', 'public, max-age=15552000')
+  res.setHeader('Cache-Control', 's-maxage=15552000')
   return res.end(result)
 }
 
