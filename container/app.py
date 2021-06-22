@@ -5,10 +5,10 @@ import time
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-from gpiozero import LED, Button
+# from gpiozero import LED, Button
 
-outputPin = LED(24)
-inputPin = Button(12)
+# outputPin = LED(24)
+# inputPin = Button(12)
 
 arcadeId = os.environ.get('MIRAI_ARCADE_ID')
 serviceAccountPath = os.environ.get('MIRAI_SERVICE_ACCOUNT')
