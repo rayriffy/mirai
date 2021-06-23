@@ -46,7 +46,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   const { initializeFirebase } = await import(
     '../../../modules/api/services/initializeFirebase'
   )
-  const { default: omit } = await import('lodash/omit')
 
   try {
     initializeFirebase()
@@ -58,7 +57,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
         props: {
           transactionWithId: {
             id: transactionDoc.id,
-            data: omit(transactionDoc.data(), ['updatedAt', 'createdAt']) as Transaction,
+            data: JSON.parse(JSON.stringify(transactionDoc.data())) as Transaction,
           }
         }
       }
