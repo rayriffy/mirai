@@ -12,6 +12,7 @@ import { useRecentTransactions } from '../services/useRecentTransactions'
 import { StatusBadge } from './txTable/statusBadge'
 import { TableHeader } from './txTable/tableHeader'
 import { TableItem } from './txTable/tableItem'
+import { RelativeTime } from './txTable/relativeTime'
 import { useLocale } from '../../../../core/services/useLocale'
 
 dayjs.extend(relativeTime)
@@ -52,20 +53,14 @@ export const TransactionHistory = memo(() => {
                 </span>
                 <div className="flex space-x-4">
                   <span className="text-sm text-gray-500">
-                    {dayjs(transaction.data.updatedAt.toDate())
-                      .locale(detectedLocale)
-                      .fromNow()}
+                    <RelativeTime datetime={transaction.data.updatedAt.toDate()} />
                   </span>
                   <StatusBadge status={transaction.data.status} />
                   <div>
-                    {transaction.data.status === 'pending' ? (
-                      <ChevronRightIcon
-                        className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                    ) : (
-                      <div className="w-5 h-5" />
-                    )}
+                    <ChevronRightIcon
+                      className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                      aria-hidden="true"
+                    />
                   </div>
                 </div>
               </a>

@@ -103,7 +103,7 @@ export const useMenus = () => {
           ]
         : []),
     ],
-    [storeName, role, preferredStore]
+    [storeName, role, preferredStore, detectedLocale]
   )
 
   return {

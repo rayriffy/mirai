@@ -29,10 +29,14 @@ export const TableItem = memo<Props>(props => {
     en: {
       at: 'at',
       topup: 'Topup',
+      info: 'Information',
+      cancel: 'Cancel'
     },
     th: {
       at: 'ที่',
       topup: 'เติมเงิน',
+      info: 'ดูข้อมูลเพิ่มเติม',
+      cancel: 'ยกเลิกคำสั่งซื้อ'
     },
   })
 
@@ -49,7 +53,7 @@ export const TableItem = memo<Props>(props => {
         <div className="flex items-center space-x-3 lg:pl-2">
           <span className="truncate hover:text-gray-600">
             {transaction.data.type === 'payment' ? (
-              <Link href={`/dashboard/transaction/${transaction.id}`}>
+              <Link href={`/pay/${transaction.data.arcadeId}`}>
                 <a>
                   {transaction.data.arcadeName}{' '}
                   <span className="text-gray-500 font-normal">
@@ -115,7 +119,7 @@ export const TableItem = memo<Props>(props => {
                               className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                               aria-hidden="true"
                             />
-                            Information
+                            {locale('info')}
                           </a>
                         </Link>
                       )}
@@ -139,7 +143,7 @@ export const TableItem = memo<Props>(props => {
                                 className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                                 aria-hidden="true"
                               />
-                              Cancel
+                              {locale('cancel')}
                             </button>
                           )}
                         </Menu.Item>
