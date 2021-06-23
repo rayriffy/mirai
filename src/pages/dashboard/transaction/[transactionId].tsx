@@ -9,12 +9,14 @@ import { collection, onSnapshot, getFirestore, doc } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
 import { Transaction } from '../../../core/@types/firebase/Transaction'
 
-// interface Props {
-//   transaction: TransactionWithId
-// }
+interface Props {
+  transactionWithId: TransactionWithId
+}
 
-const Page: NextPage = props => {
-  const [transaction, setTransaction] = useState<TransactionWithId | null>(null)
+const Page: NextPage<Props> = props => {
+  const { transactionWithId } = props
+
+  const [transaction, setTransaction] = useState<TransactionWithId>(transactionWithId)
   const { query } = useRouter()
 
   useEffect(() => {
@@ -35,6 +37,40 @@ const Page: NextPage = props => {
   return (
     <>{JSON.stringify(transaction)}</>
   )
+}
+
+export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
+  const { transactionId } = ctx.params
+
+  const { default: firebase } = await import('firebase-admin')
+  const { initializeFirebase } = await import(
+    '../../../modules/api/services/initializeFirebase'
+  )
+  const { default: omit } = await import('lodash/omit')
+
+  try {
+    initializeFirebase()
+
+    const transactionDoc = await firebase.firestore().collection('transactions').doc(transactionId as string).get()
+
+    if (transactionDoc.exists) {
+      return {
+        props: {
+          transactionWithId: {
+            id: transactionDoc.id,
+            data: omit(transactionDoc.data(), ['updatedAt', 'createdAt']) as Transaction,
+          }
+        }
+      }
+    } else {
+      throw 'no-data'
+    }
+  } catch (e) {
+    console.error(e)
+    return {
+      notFound: true,
+    }
+  }
 }
 
 export default Page

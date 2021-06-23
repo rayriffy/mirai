@@ -9,6 +9,7 @@ import { classNames } from '../../../../core/services/classNames'
 import { useArcade } from '../services/useArcade'
 import { createApiInstance } from '../../../../core/services/createApiInstance'
 import { useStoreon } from '../../../../context/storeon'
+import { useLocale } from '../../../../core/services/useLocale'
 
 interface Props {
   arcadeId: string
@@ -16,6 +17,17 @@ interface Props {
 
 export const FavoriteArcadeItem = memo<Props>(props => {
   const { arcadeId } = props
+
+  const { locale } = useLocale({
+    en: {
+      view: 'View',
+      remove: 'Remove from favorite',
+    },
+    th: {
+      view: 'เปิดดู',
+      remove: 'นำออกจากรายการโปรด',
+    },
+  })
 
   const {
     user: { auth },
@@ -89,7 +101,7 @@ export const FavoriteArcadeItem = memo<Props>(props => {
                                 'block px-4 py-2 text-sm'
                               )}
                             >
-                              View
+                              {locale('view')}
                             </a>
                           </Link>
                         )}
@@ -108,7 +120,7 @@ export const FavoriteArcadeItem = memo<Props>(props => {
                               'block px-4 py-2 text-sm w-full text-left disabled:bg-gray-50 disabled:cursor-wait'
                             )}
                           >
-                            Remove from favorite
+                            {locale('remove')}
                           </button>
                         )}
                       </Menu.Item>
