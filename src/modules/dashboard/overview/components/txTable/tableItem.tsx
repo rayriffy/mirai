@@ -1,5 +1,7 @@
 import { memo, Fragment, useState, useEffect } from 'react'
 
+import Link from 'next/link'
+
 import { Menu, Transition } from '@headlessui/react'
 import {
   DotsVerticalIcon,
@@ -47,12 +49,14 @@ export const TableItem = memo<Props>(props => {
         <div className="flex items-center space-x-3 lg:pl-2">
           <span className="truncate hover:text-gray-600">
             {transaction.data.type === 'payment' ? (
-              <Fragment>
-                {transaction.data.arcadeName}{' '}
-                <span className="text-gray-500 font-normal">
-                  {locale('at')} {transaction.data.storeName}
-                </span>
-              </Fragment>
+              <Link href={`/dashboard/transaction/${transaction.id}`}>
+                <a>
+                  {transaction.data.arcadeName}{' '}
+                  <span className="text-gray-500 font-normal">
+                    {locale('at')} {transaction.data.storeName}
+                  </span>
+                </a>
+              </Link>
             ) : (
               locale('topup')
             )}
@@ -60,7 +64,9 @@ export const TableItem = memo<Props>(props => {
         </div>
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-        {transaction.data.type === 'payment' ? transaction.data.token.toLocaleString() : '-'}
+        {transaction.data.type === 'payment'
+          ? transaction.data.token.toLocaleString()
+          : '-'}
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         ฿{transaction.data.value.toLocaleString()}
@@ -96,47 +102,49 @@ export const TableItem = memo<Props>(props => {
                   <div className="py-1">
                     <Menu.Item>
                       {({ active }) => (
-                        <a
-                          href="#"
-                          className={classNames(
-                            active
-                              ? 'bg-gray-100 text-gray-900'
-                              : 'text-gray-700',
-                            'group flex items-center px-4 py-2 text-sm'
-                          )}
-                        >
-                          <InformationCircleIcon
-                            className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                            aria-hidden="true"
-                          />
-                          Information
-                        </a>
-                      )}
-                    </Menu.Item>
-                  </div>
-                  {transaction.data.type === 'payment' && transaction.data.status === 'pending' && (
-                    <div className="py-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
-                            onClick={() => setCancelOpen(true)}
+                        <Link href={`/dashboard/transaction/${transaction.id}`}>
+                          <a
                             className={classNames(
                               active
                                 ? 'bg-gray-100 text-gray-900'
                                 : 'text-gray-700',
-                              'group flex items-center px-4 py-2 text-sm w-full'
+                              'group flex items-center px-4 py-2 text-sm'
                             )}
                           >
-                            <XIcon
+                            <InformationCircleIcon
                               className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
                               aria-hidden="true"
                             />
-                            Cancel
-                          </button>
-                        )}
-                      </Menu.Item>
-                    </div>
-                  )}
+                            Information
+                          </a>
+                        </Link>
+                      )}
+                    </Menu.Item>
+                  </div>
+                  {transaction.data.type === 'payment' &&
+                    transaction.data.status === 'pending' && (
+                      <div className="py-1">
+                        <Menu.Item>
+                          {({ active }) => (
+                            <button
+                              onClick={() => setCancelOpen(true)}
+                              className={classNames(
+                                active
+                                  ? 'bg-gray-100 text-gray-900'
+                                  : 'text-gray-700',
+                                'group flex items-center px-4 py-2 text-sm w-full'
+                              )}
+                            >
+                              <XIcon
+                                className="mr-3 h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                                aria-hidden="true"
+                              />
+                              Cancel
+                            </button>
+                          )}
+                        </Menu.Item>
+                      </div>
+                    )}
                 </Menu.Items>
               </Transition>
             </>

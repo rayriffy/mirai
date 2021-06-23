@@ -1,5 +1,7 @@
 import { memo, Fragment } from 'react'
 
+import Link from 'next/link'
+
 import { ChevronRightIcon } from '@heroicons/react/outline'
 
 import dayjs from 'dayjs'
@@ -37,8 +39,8 @@ export const TransactionHistory = memo(() => {
         <ul className="mt-3 border-t border-gray-200 divide-y divide-gray-100">
           {data.map(transaction => (
             <li key={`mobile-recent-tx-${transaction.id}`}>
+              <Link href={`/dashboard/transaction/${transaction.id}`}>
               <a
-                href="#"
                 className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
               >
                 <span className="flex items-center truncate space-x-3">
@@ -67,6 +69,7 @@ export const TransactionHistory = memo(() => {
                   </div>
                 </div>
               </a>
+              </Link>
             </li>
           ))}
         </ul>

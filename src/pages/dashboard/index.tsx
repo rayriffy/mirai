@@ -3,17 +3,6 @@ import { Fragment } from 'react'
 import { NextPage } from 'next'
 import Image from 'next/image'
 
-// import { Menu, Transition } from '@headlessui/react'
-// import {
-//   ChevronRightIcon,
-//   DotsVerticalIcon,
-//   DuplicateIcon,
-//   PencilAltIcon,
-//   TrashIcon,
-//   UserAddIcon,
-// } from '@heroicons/react/outline'
-// import { classNames } from '../../core/services/classNames'
-
 import { FavoriteArcadeItem } from '../../modules/dashboard/overview/components/favoriteArcadeItem'
 import { TransactionHistory } from '../../modules/dashboard/overview/components/transactionHistory'
 
