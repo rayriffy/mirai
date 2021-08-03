@@ -1,5 +1,5 @@
 import { FunctionComponent, memo } from 'react'
-import { useLocale } from '../../../../core/services/useLocale'
+import { useLocale } from '../services/useLocale'
 
 interface Props {
   current: number

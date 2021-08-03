@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 
 import { NextPage } from 'next'
 
-import { Step } from '../modules/auth/onboarding/components/step'
+import { Step } from '../core/components/step'
 import { useLocale } from '../core/services/useLocale'
 
 import { Step1 } from '../modules/auth/onboarding/components/step1'
