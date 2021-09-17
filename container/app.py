@@ -5,10 +5,19 @@ import time
 from firebase_admin import credentials
 from firebase_admin import firestore
 
-# from gpiozero import LED, Button
+import RPi.GPIO as GPIO
 
-# outputPin = LED(24)
+# Prepare GPIO
+GPIO.setmode(GPIO.BCM)
+
+# Define pin
+outputPin = 23
 # inputPin = Button(12)
+blinkingRate = 0.1
+
+# Prepare modes
+GPIO.setup(outputPin, GPIO.OUT)
+
 
 arcadeId = os.environ.get('MIRAI_ARCADE_ID')
 serviceAccountPath = os.environ.get('MIRAI_SERVICE_ACCOUNT')
@@ -35,9 +44,12 @@ def processTransaction(transaction):
 
   # insert coin (firing signal)
   for i in range(transactionData.get('token')):
-    time.sleep(0.1)
+    print('insert coin')
+    GPIO.output(outputPin, GPIO.HIGH)
+    time.sleep(blinkingRate / 2)
+    GPIO.output(outputPin, GPIO.LOW)
+    time.sleep(blinkingRate / 2)
     numberCoin = i + 1
-    print(f'insert coin {numberCoin}')
 
   # success
   db.collection(u'transactions').document(transaction.document.id).update({
@@ -53,12 +65,4 @@ def onSnapshot(col_snapshot, transactions, read_time):
 listener = db.collection(u'transactions').where(u'type', u'==', u'payment').where(u'arcadeId', u'==', arcadeId).where(u'status', u'==', u'pending').order_by(u'createdAt', u'DESCENDING').on_snapshot(onSnapshot)
 
 while True:
-  # if inputPin.is_pressed:
-  #   db.collection(u'transactions').add({
-  #     u'arcadeId': arcadeId,
-  #     u'value': 1,
-  #     u'status': 'success',
-  #     u'createdAt': firestore.SERVER_TIMESTAMP,
-  #     u'updatedAt': firestore.SERVER_TIMESTAMP,
-  #   })
   time.sleep(1)
