@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 import { NextPage } from 'next'
 import { AppProps } from 'next/app'
@@ -12,6 +12,10 @@ import { Footer } from '../app/components/footer'
 import { AuthWrapper } from '../app/components/authWrapper'
 import { DashboardWrapper } from '../app/components/dashboardWrapper'
 
+import { getPerformance } from 'firebase/performance'
+import { getAnalytics } from 'firebase/analytics'
+import { createFirebaseInstance } from '../core/services/createFirebaseInstance'
+
 import '../styles/nprogress.css'
 import '../styles/tailwind.css'
 
@@ -19,6 +23,13 @@ const NextApp: NextPage<AppProps> = props => {
   const { Component, pageProps } = props
 
   const { asPath } = useRouter()
+
+  useEffect(() => {
+    const instance = createFirebaseInstance()
+
+    getPerformance(instance)
+    getAnalytics(instance)
+  }, [])
 
   return (
     <Context>
