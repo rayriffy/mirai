@@ -53,13 +53,16 @@ const api: NextApiHandler = async (req, res) => {
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         })
 
-        await Promise.all([updatePromise, transactionPromise])
+      await Promise.all([updatePromise, transactionPromise]).then(([updateUser, transaction]) => {
+        console.log(transaction.id)
+      })
 
       return res.send({
         success: true,
         message: 'balance added',
       })
     } catch (e) {
+      console.error(e)
       return res.status(403).send({
         succcess: false,
         message: 'unauthorized',

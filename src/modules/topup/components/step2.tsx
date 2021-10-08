@@ -5,6 +5,9 @@ import Image from 'next/image'
 import { UserWithId } from '../../../core/@types/UserWIthId'
 import { classNames } from '../../../core/services/classNames'
 
+import { useStoreon } from '../../../context/storeon'
+import { createApiInstance } from '../../../core/services/createApiInstance'
+
 interface Props {
   targetUser: UserWithId
   onPrev(): void
@@ -18,6 +21,25 @@ export const Step2: FunctionComponent<Props> = props => {
 
   const [error, setError] = useState<string | null>(null)
   const [inProgress, setInProgress] = useState(false)
+
+  const {
+    user: { auth },
+  } = useStoreon('user')
+
+  const handleSubmit = async () => {
+    setInProgress(true)
+    try {
+      const apiInstance = await createApiInstance(auth)
+      await apiInstance.post('/api/topup', {
+        userId: targetUser.id,
+        amount: Number(inputRef.current.value),
+      })
+    } catch(e) {
+      console.error(e)
+    } finally {
+      setInProgress(false)
+    }
+  }
 
   return (
     <div className="border border-gray-200 bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
@@ -66,17 +88,19 @@ export const Step2: FunctionComponent<Props> = props => {
         <div className="pt-4 flex justify-center space-x-4">
           <button
             type="button"
+            onClick={onPrev}
             className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             Previous
           </button>
           <button
             type="button"
-            // onClick={handleSubmit}
+            onClick={handleSubmit}
+            // onClick={onNext}
             disabled={inProgress}
             className={classNames(
               inProgress
-                ? 'bg-indigo-400 hover:bg-indigo-500'
+                ? 'bg-indigo-400 hover:bg-indigo-500 cursor-not-allowed'
                 : 'bg-indigo-600 hover:bg-indigo-700',
               'transition inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             )}
