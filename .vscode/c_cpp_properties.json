@@ -5,6 +5,7 @@
             "name": "Arduino",
             "includePath": [
               "/Applications/Arduino.app/Contents/Java/hardware/**",
+              "/Applications/Arduino.app/Contents/Java/libraries/**",
               "/Users/rayriffy/Library/Arduino15/packages/**",
               "${workspaceRoot}/container-v2/esp32/websocket/src/**",
               "${workspaceRoot}/container-v2/esp32/json/src/**"
@@ -13,6 +14,7 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "path": [
                     "/Applications/Arduino.app/Contents/Java/hardware/**",
+                    "/Applications/Arduino.app/Contents/Java/libraries/**",
                     "/Users/rayriffy/Library/Arduino15/packages/**",
                     "${workspaceRoot}/container-v2/esp32/websocket/src/**",
                     "${workspaceRoot}/container-v2/esp32/json/src/**"
