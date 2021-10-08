@@ -1,0 +1,6 @@
+[submodule "container-v2/esp32/websocket"]
+	path = container-v2/esp32/websocket
+	url = git@github.com:Links2004/arduinoWebSockets.git
+[submodule "container-v2/esp32/json"]
+	path = container-v2/esp32/json
+	url = git@github.com:bblanchon/ArduinoJson.git

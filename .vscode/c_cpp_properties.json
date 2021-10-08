@@ -1,0 +1,31 @@
+{
+    "version": 4,
+    "configurations": [
+        {
+            "name": "Arduino",
+            "includePath": [
+              "/Applications/Arduino.app/Contents/Java/hardware/**",
+              "/Users/rayriffy/Library/Arduino15/packages/**",
+              "${workspaceRoot}/container-v2/esp32/websocket/src/**",
+              "${workspaceRoot}/container-v2/esp32/json/src/**"
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "/Applications/Arduino.app/Contents/Java/hardware/**",
+                    "/Users/rayriffy/Library/Arduino15/packages/**",
+                    "${workspaceRoot}/container-v2/esp32/websocket/src/**",
+                    "${workspaceRoot}/container-v2/esp32/json/src/**"
+                ]
+            },
+            "intelliSenseMode": "clang-x64",
+            "macFrameworkPath": [
+                "/System/Library/Frameworks",
+                "/Library/Frameworks"
+            ],
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c17",
+            "cppStandard": "c++98"
+        }
+    ]
+}
