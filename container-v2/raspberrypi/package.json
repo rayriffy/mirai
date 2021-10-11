@@ -1,0 +1,22 @@
+{
+  "name": "raspberrypi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "pkg": {
+    "scripts": "build/**/*.js",
+    "assets": "views/**/*",
+    "targets": [ "node14-linux-arm64" ],
+    "outputPath": "dist"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "firebase-admin": "^9.12.0",
+    "socket.io": "^4.2.0"
+  }
+}
