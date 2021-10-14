@@ -3,10 +3,13 @@ import { Fragment } from 'react'
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 
+import { ExternalLinkIcon } from '@heroicons/react/outline'
+
 import { Arcade } from '../../../core/@types/firebase/Arcade'
 import { Store } from '../../../core/@types/firebase/Store'
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { StoreWithId } from '../../../core/@types/StoreWithId'
+import { useLocale } from '../../../core/services/useLocale'
 
 interface Props {
   arcadesWithId: ArcadeWithId[]
@@ -14,11 +17,44 @@ interface Props {
 }
 
 const Page: NextPage<Props> = props => {
-  const { arcadesWithId } = props
+  const { arcadesWithId, storeWithId } = props
+
+  const { locale } = useLocale({
+    en: {
+      machine: 'Machines',
+      maps: 'Maps',
+      discounted: 'coins for',
+    },
+    th: {
+      machine: 'ตู้',
+      maps: 'แผนที่',
+      discounted: 'เหรียญต่อ',
+    },
+  })
+
   return (
-    <Fragment>
-      <div>{JSON.stringify(props)}</div>
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+    <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
+      <div className="mb-6 mt-8">
+        <h1 className="text-4xl font-bold">{storeWithId.data.name}</h1>
+        <p className="flex text-sm text-gray-600">
+          <span>
+            {arcadesWithId.length} {locale('machine')}
+          </span>
+          <span className="mx-2">·</span>
+          <span className="flex items-center">
+            <a
+              href={`https://www.google.com/maps?q=loc:${storeWithId.data.location.latitude},${storeWithId.data.location.longitude}`}
+              className="flex items-center"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <ExternalLinkIcon className="w-3.5 h-3.5 mr-0.5" />
+              Google {locale('maps')}
+            </a>
+          </span>
+        </p>
+      </div>
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
         {arcadesWithId.map(arcade => (
           <div className="" key={arcade.id}>
             <Link href={`/pay/${arcade.id}`}>
@@ -27,14 +63,19 @@ const Page: NextPage<Props> = props => {
                   <h1 className="text-gray-800 font-semibold text-xl">
                     {arcade.data.name}
                   </h1>
-                  <h2 className="text-gray-500">{arcade.data.storeName}</h2>
+                  <div className="mt-0.5">
+                    <h2 className="text-gray-500 text-sm">
+                      {arcade.data.tokenPerCredit} {locale('discounted')} ฿
+                      {arcade.data.discountedPrice.toLocaleString()}
+                    </h2>
+                  </div>
                 </div>
               </a>
             </Link>
           </div>
         ))}
       </div>
-    </Fragment>
+    </div>
   )
 }
 
