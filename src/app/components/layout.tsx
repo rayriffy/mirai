@@ -15,8 +15,11 @@ export const AppLayout: FunctionComponent = props => {
   const {
     dispatch,
     startup,
+    next: { path },
     user: { auth },
-  } = useStoreon('user', 'startup')
+  } = useStoreon('user', 'startup', 'next')
+
+  console.log({ path })
 
   useEffect(() => {
     if (isAgentiOS() && !startup) {
@@ -55,7 +58,13 @@ export const AppLayout: FunctionComponent = props => {
       auth !== undefined &&
       auth !== null
     ) {
-      push('/dashboard')
+      if (path === undefined) {
+        push('/dashboard')
+      } else {
+        const targetPath = path
+        dispatch('next/unset')
+        push(targetPath)
+      }
     }
   }, [asPath, auth])
 

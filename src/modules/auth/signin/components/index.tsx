@@ -10,6 +10,7 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Image from 'next/image'
+
 import { useLocale } from '../../../../core/services/useLocale'
 
 import logo from '../../../../../public/static/workflow-mark-indigo-600.svg'
@@ -25,11 +26,16 @@ import {
 import { ssoProviders } from '../constants/ssoProviders'
 
 import { XCircleIcon } from '@heroicons/react/outline'
+import { useStoreon } from '../../../../context/storeon'
 
 export const SigninModule: FunctionComponent = () => {
   useAuthReader()
 
   const { push } = useRouter()
+  const {
+    next: { path },
+    dispatch,
+  } = useStoreon('next')
   const { locale } = useLocale({
     en: {
       signInHead: 'Sign in to your account',
@@ -74,7 +80,14 @@ export const SigninModule: FunctionComponent = () => {
       try {
         const instance = createFirebaseInstance()
         await signInWithEmailAndPassword(getAuth(instance), email, password)
-        push('/dashboard')
+
+        if (path === undefined) {
+          push('/dashboard')
+        } else {
+          const targetPath = path
+          dispatch('next/unset')
+          push(targetPath)
+        }
       } catch (e) {
         const { message } = e
         setError(message)

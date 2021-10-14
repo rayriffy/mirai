@@ -7,13 +7,15 @@ import { CenterSpinner } from '../../core/components/centerSpinner'
 import { useUserMetadata } from '../services/useUserMetadata'
 
 export const AuthWrapper: FunctionComponent = props => {
-  const { push } = useRouter()
+  const { push, asPath } = useRouter()
   const {
     user: { auth },
-  } = useStoreon('user')
+    dispatch,
+  } = useStoreon('user', 'next')
 
   useEffect(() => {
     if (auth === undefined) {
+      dispatch('next/set', asPath)
       push('/')
     }
   }, [auth])

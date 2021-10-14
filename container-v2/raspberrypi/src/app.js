@@ -8,22 +8,24 @@ const { STORE_ID } = process.env
 
 const wait = duration => new Promise(res => setTimeout(res, duration))
 
-// initialize socket.io server
-const io = new Server(11451, {
-  path: '/mirai-tx',
-  pingInterval: 10000,
-  pingTimeout: 5000,
-  cookie: false,
-  origins: '*:*',
-})
-
-// initialize firebase
-firebase.initializeApp({
-  credential: firebase.credential.cert(serviceAccount),
-})
 ;(async () => {
   console.log('[system]: booting')
   await wait(50000000)
+
+  // initialize socket.io server
+  const io = new Server(11451, {
+    path: '/mirai-tx',
+    pingInterval: 10000,
+    pingTimeout: 5000,
+    cookie: false,
+    origins: '*:*',
+  })
+
+  // initialize firebase
+  firebase.initializeApp({
+    credential: firebase.credential.cert(serviceAccount),
+  })
+
 
   // list all ipv4
   const allPossibleIps = Object.entries(networkInterfaces())
@@ -83,6 +85,34 @@ firebase.initializeApp({
     )
 
     io.emit(eventName, payload)
+
+    // at 1 minute mark, check tx again if tx still processing then update to failed
+    setTimeout(async () => {
+      const transactionRefetched = await transaction.ref.get()
+
+      if (transactionRefetched.data().status === 'processing') {
+        console.log(`[system]: transaction ${transactionRefetched.id} timed-out! canceling order`)
+
+        // update transaction
+        const transactionJob = transactionRefetched.ref.update({
+          status: 'failed',
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+
+        // refund money to user
+        const userJob = firebase
+          .firestore()
+          .collection('users')
+          .doc(transactionRefetched.data().userId)
+          .update({
+            balance: firebase.firestore.FieldValue.increment(Math.abs(transactionRefetched.data().value)),
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+          
+        await Promise.all([transactionJob, userJob])
+        console.log(`[system]: refunded ${Math.abs(transactionRefetched.data().value)}THB user ${transactionRefetched.data().userId}`)
+      }
+    }, 60 * 1000)
   }
 
   io.on('connection', socket => {
@@ -108,4 +138,7 @@ firebase.initializeApp({
       }
     })
   })
-})()
+})().catch(e => {
+  console.error(e)
+  process.exit(1)
+})
