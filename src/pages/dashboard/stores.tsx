@@ -4,7 +4,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 
 import { Spinner } from '../../core/components/spinner'
-import { ExternalLinkIcon, LocationMarkerIcon } from '@heroicons/react/outline'
+import { ExternalLinkIcon, LocationMarkerIcon, ArrowLeftIcon } from '@heroicons/react/outline'
 
 import { classNames } from '../../core/services/classNames'
 import getDistance from 'geolib/es/getDistance'
@@ -22,10 +22,16 @@ const Page: NextPage<Props> = props => {
 
   const { locale } = useLocale({
     en: {
-      locationWording: 'Cannot find store? Try to find it by your location'
+      closest: 'Closest',
+      km: 'km',
+      maps: 'Maps',
+      locationWording: 'Cannot find store? Try to find it by your location',
     },
     th: {
-      locationWording: 'หาร้านไม่เจอ? ลองหาตามตำแหนงที่ใกล้ที่สุดดูสิ',
+      closest: 'ใกล้ที่สุด',
+      km: 'กม.',
+      maps: 'แผนที่',
+      locationWording: 'หาร้านไม่เจอ? ลองหาตามตำแหน่งที่ใกล้ที่สุดดูสิ',
     },
   })
 
@@ -93,7 +99,9 @@ const Page: NextPage<Props> = props => {
               {locationStatus !== 'def' && (
                 <span
                   className={classNames(
-                    locationStatus === 'success' ? 'bg-green-500' : 'bg-red-500',
+                    locationStatus === 'success'
+                      ? 'bg-green-500'
+                      : 'bg-red-500',
                     'absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full text-white shadow-solid'
                   )}
                 />
@@ -101,15 +109,15 @@ const Page: NextPage<Props> = props => {
             </div>
           )}
         </button>
-        <p className="text-gray-800">{locale('locationWording')}</p>
+        <p className="text-gray-800 flex items-center"><ArrowLeftIcon className="w-4 h-4 mr-2" />{locale('locationWording')}</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {displayStores.map((store, i) => (
           <div className="" key={store.id}>
             <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
               {store.distance !== -1 && i === 0 ? (
-                <p className="pb-1.5 text-sm uppercase font-medium text-gray-600">
-                  Closest
+                <p className="pb-1.5 text-sm uppercase font-medium text-red-600">
+                  {locale('closest')}
                 </p>
               ) : null}
               <Link href={`/dashboard/arcades/${store.id}`}>
@@ -123,7 +131,9 @@ const Page: NextPage<Props> = props => {
                 <p className="text-gray-500 text-sm flex">
                   {store.distance !== -1 && (
                     <Fragment>
-                      <span>{store.distance.toFixed(2)} km</span>
+                      <span>
+                        {store.distance.toFixed(2)} {locale('km')}
+                      </span>
                       <span className="mx-1">|</span>
                     </Fragment>
                   )}
@@ -133,8 +143,8 @@ const Page: NextPage<Props> = props => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <ExternalLinkIcon className="w-3.5 h-3.5 mr-0.5" /> Google
-                    Maps
+                    <ExternalLinkIcon className="w-3.5 h-3.5 mr-0.5" /> Google&nbsp;
+                    {locale('maps')}
                   </a>
                 </p>
               </div>
