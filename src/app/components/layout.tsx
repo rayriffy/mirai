@@ -19,8 +19,6 @@ export const AppLayout: FunctionComponent = props => {
     user: { auth },
   } = useStoreon('user', 'startup', 'next')
 
-  console.log({ path })
-
   useEffect(() => {
     if (isAgentiOS() && !startup) {
       dispatch('startup/init')
