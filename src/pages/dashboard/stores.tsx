@@ -1,10 +1,17 @@
-import { Fragment } from 'react'
+import { Fragment, useState, useCallback } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 
+import { Spinner } from '../../core/components/spinner'
+import { ExternalLinkIcon, LocationMarkerIcon } from '@heroicons/react/outline'
+
+import { classNames } from '../../core/services/classNames'
+import getDistance from 'geolib/es/getDistance'
+
 import { Store } from '../../core/@types/firebase/Store'
 import { StoreWithId } from '../../core/@types/StoreWithId'
+import { useLocale } from '../../core/services/useLocale'
 
 interface Props {
   storesWithId: StoreWithId[]
@@ -12,25 +19,130 @@ interface Props {
 
 const Page: NextPage<Props> = props => {
   const { storesWithId } = props
+
+  const { locale } = useLocale({
+    en: {
+      locationWording: 'Cannot find store? Try to find it by your location'
+    },
+    th: {
+      locationWording: 'หาร้านไม่เจอ? ลองหาตามตำแหนงที่ใกล้ที่สุดดูสิ',
+    },
+  })
+
+  const [displayStores, setDisplayStores] = useState<
+    (StoreWithId & { distance: number })[]
+  >(storesWithId.map(o => ({ ...o, distance: -1 })))
+
+  const [locationStatus, setLocationStatus] = useState<
+    'def' | 'success' | 'fail' | 'progress'
+  >('def')
+
+  const getLocation = useCallback(async () => {
+    // const getDistance = await import('geolib/es/getDistance').then(o => o.default)
+
+    const getCurrentPosition = () =>
+      new Promise<GeolocationCoordinates>((res, rej) => {
+        navigator.geolocation.getCurrentPosition(
+          r => res(r.coords),
+          e => rej(e)
+        )
+      })
+
+    setLocationStatus('progress')
+
+    try {
+      // get gps location
+      const position = await getCurrentPosition()
+
+      // caculate distances
+      const closetStore = storesWithId
+        .map(store => ({
+          ...store,
+          distance:
+            getDistance(
+              {
+                lat: store.data.location.latitude,
+                lon: store.data.location.longitude,
+              },
+              { lat: position.latitude, lon: position.longitude }
+            ) / 1000,
+        }))
+        .sort((a, b) => (a.distance > b.distance ? 1 : -1))
+
+      setDisplayStores(closetStore)
+      setLocationStatus('success')
+    } catch {
+      setLocationStatus('fail')
+    }
+  }, [])
+
   return (
-    <Fragment>
-      <div>{JSON.stringify(props)}</div>
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {storesWithId.map(store => (
+    <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
+      <div className="flex items-center space-x-4">
+        <button
+          type="button"
+          onClick={getLocation}
+          disabled={locationStatus === 'progress'}
+          className="transition bg-white inline-flex items-center p-2 h-10 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-gray-100 disabled:cursor-wait"
+        >
+          {locationStatus === 'progress' ? (
+            <Spinner />
+          ) : (
+            <div className="inline-block relative">
+              <LocationMarkerIcon className="w-6 h-6" />
+              {locationStatus !== 'def' && (
+                <span
+                  className={classNames(
+                    locationStatus === 'success' ? 'bg-green-500' : 'bg-red-500',
+                    'absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full text-white shadow-solid'
+                  )}
+                />
+              )}
+            </div>
+          )}
+        </button>
+        <p className="text-gray-800">{locale('locationWording')}</p>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        {displayStores.map((store, i) => (
           <div className="" key={store.id}>
-            <Link href={`/dashboard/arcades/${store.id}`}>
-              <a>
-                <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
+            <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
+              {store.distance !== -1 && i === 0 ? (
+                <p className="pb-1.5 text-sm uppercase font-medium text-gray-600">
+                  Closest
+                </p>
+              ) : null}
+              <Link href={`/dashboard/arcades/${store.id}`}>
+                <a>
                   <h1 className="text-gray-800 font-semibold text-xl">
                     {store.data.name}
                   </h1>
-                </div>
-              </a>
-            </Link>
+                </a>
+              </Link>
+              <div className="pt-0.5">
+                <p className="text-gray-500 text-sm flex">
+                  {store.distance !== -1 && (
+                    <Fragment>
+                      <span>{store.distance.toFixed(2)} km</span>
+                      <span className="mx-1">|</span>
+                    </Fragment>
+                  )}
+                  <a
+                    href={`https://www.google.com/maps?q=loc:${store.data.location.latitude},${store.data.location.longitude}`}
+                    className="flex items-center"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <ExternalLinkIcon className="w-3.5 h-3.5 mr-0.5" /> Google
+                    Maps
+                  </a>
+                </p>
+              </div>
+            </div>
           </div>
         ))}
       </div>
-    </Fragment>
+    </div>
   )
 }
 

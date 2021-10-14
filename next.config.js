@@ -30,6 +30,10 @@ module.exports = withPlugins(
       //   {
       //     domain: 'มิไร.ริฟฟี่.ไทย',
       //     defaultLocale: 'th',
+      //   },
+      //   {
+      //     domain: 'ミライ.リッフィー.みんな',
+      //     defaultLocale: 'jp',
       //   }
       // ]
     },

@@ -25,6 +25,7 @@ import { FavoriteButton } from './favoriteButton'
 
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { StoreWithId } from '../../../core/@types/StoreWithId'
+import { useLocale } from '../../../core/services/useLocale'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -44,6 +45,31 @@ export const InputDialog: FunctionComponent<Props> = props => {
       metadata: { balance },
     },
   } = useStoreon('user')
+
+  const { locale } = useLocale({
+    en: {
+      pay: 'Pay',
+      back: 'Back to dashboard',
+      before: 'Before',
+      after: 'After',
+      token: 'Token',
+      success: 'Success',
+      failed: 'Failed',
+      successMessage: 'Your order was successful. Track your order status in dashboard.',
+      failedMessage: 'Your order failed. Please try again.',
+    },
+    th: {
+      pay: 'จ่าย',
+      back: 'กลับไปหน้าหลัก',
+      before: 'ก่อน',
+      after: 'หลัง',
+      token: 'จำนวนเหรียญ',
+      success: 'สำเร็จ',
+      failed: 'ไม่สำเร็จ',
+      successMessage: 'คำสั่งซื้อถูกสร้างแล้ว สามารถติดตามสถานะคำสั่งซื้อได้ที่หน้าหลัก',
+      failedMessage: 'คำสั่งซื้อถูกสร้างไม่สำเร็จ กรุณาลองอีกครั้ง',
+    },
+  })
 
   const [paymentProcessing, setPaymentProcessing] = useState<boolean>(false)
   const [result, setResult] = useState<'success' | 'failed' | undefined>()
@@ -133,10 +159,10 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 )}
               </div>
               <h1 className="font-bold text-xl text-center text-gray-900 pt-2">
-                {result === 'success' ? 'Success' : 'Failed'}
+                {locale(result === 'success' ? 'success' : 'failed')}
               </h1>
               <p className="text-gray-700 text-center py-1 mb-2">
-                {result === 'success' ? 'successMessage' : 'failMessage'}
+                {locale(result === 'success' ? 'successMessage' : 'failedMessage')}
               </p>
             </Fragment>
           ) : (
@@ -159,7 +185,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     htmlFor="inputToken"
                     className="block text-sm font-medium text-gray-700 text-left"
                   >
-                    Token
+                    {locale('token')}
                   </label>
                   <div className="mt-1 flex rounded-md shadow-sm">
                     <div className="relative flex items-stretch flex-grow focus-within:z-10">
@@ -221,7 +247,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
               <div className="mt-4 py-4 max-w-xs mx-auto">
                 <div className="space-x-4 flex items-center justify-center">
                   <div className="text-center">
-                    <h1>Before</h1>
+                    <h1>{locale('before')}</h1>
                     <h2 className="text-xl font-semibold">
                       ฿{balance.toLocaleString()}
                     </h2>
@@ -230,7 +256,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <ArrowRightIcon className="w-6 h-6" />
                   </div>
                   <div className="text-center">
-                    <h1>After</h1>
+                    <h1>{locale('after')}</h1>
                     <h2 className="text-xl font-semibold">
                       ฿{calculatedPostBalance.toLocaleString()}
                     </h2>
@@ -256,7 +282,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
             )}
             onClick={onPayment}
           >
-            Pay
+            {locale('pay')}
           </button>
         )}
         <div className="flex space-x-2 mt-2">
@@ -269,7 +295,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 'inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm'
               )}
             >
-              Back to dashboard
+              {locale('back')}
             </a>
           </Link>
           <FavoriteButton
