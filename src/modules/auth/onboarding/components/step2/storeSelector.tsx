@@ -23,8 +23,9 @@ export const StoreSelector = forwardRef<HTMLInputElement, Props>(
     const { stores } = props
 
     const [selected, setSelected] = useState(stores[0])
-    const [locationStatus, setLocationStatus] =
-      useState<'def' | 'success' | 'fail' | 'progress'>('def')
+    const [locationStatus, setLocationStatus] = useState<
+      'def' | 'success' | 'fail' | 'progress'
+    >('def')
 
     const getLocation = useCallback(async () => {
       // const getDistance = await import('geolib/es/getDistance').then(o => o.default)

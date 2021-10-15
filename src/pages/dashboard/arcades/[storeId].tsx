@@ -54,7 +54,7 @@ const Page: NextPage<Props> = props => {
           </span>
         </p>
       </div>
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-8">
+      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {arcadesWithId.map(arcade => (
           <div className="" key={arcade.id}>
             <Link href={`/pay/${arcade.id}`}>

@@ -41,29 +41,29 @@ export const TransactionHistory = memo(() => {
           {data.map(transaction => (
             <li key={`mobile-recent-tx-${transaction.id}`}>
               <Link href={`/dashboard/transaction/${transaction.id}`}>
-              <a
-                className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6"
-              >
-                <span className="flex items-center truncate space-x-3">
-                  <span className="font-medium truncate text-sm leading-6">
-                    {transaction.data.type === 'payment'
-                      ? transaction.data.arcadeName
-                      : locale('topup')}
+                <a className="group flex items-center justify-between px-4 py-4 hover:bg-gray-50 sm:px-6">
+                  <span className="flex items-center truncate space-x-3">
+                    <span className="font-medium truncate text-sm leading-6">
+                      {transaction.data.type === 'payment'
+                        ? transaction.data.arcadeName
+                        : locale('topup')}
+                    </span>
                   </span>
-                </span>
-                <div className="flex space-x-4">
-                  <span className="text-sm text-gray-500">
-                    <RelativeTime datetime={transaction.data.updatedAt.toDate()} />
-                  </span>
-                  <StatusBadge status={transaction.data.status} />
-                  <div>
-                    <ChevronRightIcon
-                      className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
-                      aria-hidden="true"
-                    />
+                  <div className="flex space-x-4">
+                    <span className="text-sm text-gray-500">
+                      <RelativeTime
+                        datetime={transaction.data.updatedAt.toDate()}
+                      />
+                    </span>
+                    <StatusBadge status={transaction.data.status} />
+                    <div>
+                      <ChevronRightIcon
+                        className="h-5 w-5 text-gray-400 group-hover:text-gray-500"
+                        aria-hidden="true"
+                      />
+                    </div>
                   </div>
-                </div>
-              </a>
+                </a>
               </Link>
             </li>
           ))}

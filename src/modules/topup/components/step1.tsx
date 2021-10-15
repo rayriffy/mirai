@@ -1,4 +1,10 @@
-import { Dispatch, SetStateAction, FunctionComponent, useRef, useState } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  FunctionComponent,
+  useRef,
+  useState,
+} from 'react'
 
 import { doc, collection, getFirestore, getDoc } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
@@ -26,7 +32,7 @@ export const Step1: FunctionComponent<Props> = props => {
   const handleSubmit = async () => {
     setError(null)
     setInProgress(true)
-  
+
     try {
       const targetUserId = inputRef.current.value
 
@@ -35,8 +41,13 @@ export const Step1: FunctionComponent<Props> = props => {
       const firebaseUidRegex = /^\w{28}$/
       if (firebaseUidRegex.test(targetUserId)) {
         // get user document
-        const userDoc = await getDoc(doc(collection(getFirestore(createFirebaseInstance()), 'users'), targetUserId))
-    
+        const userDoc = await getDoc(
+          doc(
+            collection(getFirestore(createFirebaseInstance()), 'users'),
+            targetUserId
+          )
+        )
+
         // check if user exists
         if (userDoc.exists()) {
           setTargetUser({
@@ -82,7 +93,10 @@ export const Step1: FunctionComponent<Props> = props => {
         <input
           type="text"
           ref={inputRef}
-          className={classNames(inProgress ? 'bg-gray-200' : 'bg-white', "shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md")}
+          className={classNames(
+            inProgress ? 'bg-gray-200' : 'bg-white',
+            'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
+          )}
           placeholder="User id"
         />
         <div className="pt-4 flex justify-center space-x-4">
@@ -97,7 +111,12 @@ export const Step1: FunctionComponent<Props> = props => {
             type="button"
             onClick={handleSubmit}
             disabled={inProgress}
-            className={classNames(inProgress ? 'bg-indigo-400 hover:bg-indigo-500' : 'bg-indigo-600 hover:bg-indigo-700', "transition inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500")}
+            className={classNames(
+              inProgress
+                ? 'bg-indigo-400 hover:bg-indigo-500'
+                : 'bg-indigo-600 hover:bg-indigo-700',
+              'transition inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
+            )}
           >
             Next
           </button>

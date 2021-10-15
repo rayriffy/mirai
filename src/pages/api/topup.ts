@@ -53,9 +53,11 @@ const api: NextApiHandler = async (req, res) => {
           updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
         })
 
-      await Promise.all([updatePromise, transactionPromise]).then(([updateUser, transaction]) => {
-        console.log(transaction.id)
-      })
+      await Promise.all([updatePromise, transactionPromise]).then(
+        ([updateUser, transaction]) => {
+          console.log(transaction.id)
+        }
+      )
 
       return res.send({
         success: true,

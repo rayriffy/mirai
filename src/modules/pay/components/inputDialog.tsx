@@ -55,7 +55,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
       token: 'Token',
       success: 'Success',
       failed: 'Failed',
-      successMessage: 'Your order was successful. Track your order status in dashboard.',
+      successMessage:
+        'Your order was successful. Track your order status in dashboard.',
       failedMessage: 'Your order failed. Please try again.',
     },
     th: {
@@ -66,7 +67,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
       token: 'จำนวนเหรียญ',
       success: 'สำเร็จ',
       failed: 'ไม่สำเร็จ',
-      successMessage: 'คำสั่งซื้อถูกสร้างแล้ว สามารถติดตามสถานะคำสั่งซื้อได้ที่หน้าหลัก',
+      successMessage:
+        'คำสั่งซื้อถูกสร้างแล้ว สามารถติดตามสถานะคำสั่งซื้อได้ที่หน้าหลัก',
       failedMessage: 'คำสั่งซื้อถูกสร้างไม่สำเร็จ กรุณาลองอีกครั้ง',
     },
   })
@@ -147,7 +149,9 @@ export const InputDialog: FunctionComponent<Props> = props => {
           </h3>
           <div className="flex justify-center py-2">
             <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" />
-            <span className="text-gray-500">{storeWithId.data.name}</span>
+            <Link href={`/dashboard/arcades/${storeWithId.id}`}>
+              <a className="text-gray-500">{storeWithId.data.name}</a>
+            </Link>
           </div>
           {result !== undefined ? (
             <Fragment>
@@ -162,7 +166,9 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 {locale(result === 'success' ? 'success' : 'failed')}
               </h1>
               <p className="text-gray-700 text-center py-1 mb-2">
-                {locale(result === 'success' ? 'successMessage' : 'failedMessage')}
+                {locale(
+                  result === 'success' ? 'successMessage' : 'failedMessage'
+                )}
               </p>
             </Fragment>
           ) : (

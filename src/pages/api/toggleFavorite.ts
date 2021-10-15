@@ -15,7 +15,6 @@ const api: NextApiHandler = async (req, res) => {
         true
       )
 
-      // todo: remove favorite
       const { targetArcade } = req.body
       const {
         auth: { uid },

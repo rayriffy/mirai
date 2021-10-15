@@ -9,7 +9,7 @@ export const Balance = memo(() => {
       balance: 'Balance',
     },
     th: {
-      balance: 'คงเหลือ'
+      balance: 'คงเหลือ',
     },
   })
 

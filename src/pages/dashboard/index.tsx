@@ -15,7 +15,7 @@ const Page: NextPage = () => {
       home: 'Home',
     },
     th: {
-      home: 'หน้าหลัก'
+      home: 'หน้าหลัก',
     },
   })
 

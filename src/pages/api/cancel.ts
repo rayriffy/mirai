@@ -19,11 +19,8 @@ const api: NextApiHandler = async (req, res) => {
 
       const {
         auth: { uid },
-        metadata: { balance },
       } = userData
       const { transactionId } = req.body
-
-      // todo: cancel transaction
 
       // get transaction
       const transactionRef = firebase
@@ -66,7 +63,9 @@ const api: NextApiHandler = async (req, res) => {
           .collection('users')
           .doc(uid)
           .update({
-            balance: firebase.firestore.FieldValue.increment(Math.abs(transactionData.value)),
+            balance: firebase.firestore.FieldValue.increment(
+              Math.abs(transactionData.value)
+            ),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
 

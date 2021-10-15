@@ -24,27 +24,26 @@ export const FavoriteArcades = memo(() => {
   } = useStoreon('user')
 
   return (
-
     <div className="col-span-1 md:col-span-1 lg:col-span-3 xl:col-span-4 px-4 mt-6 sm:px-6 lg:px-8">
-    <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
-      {locale('title')}
-    </h2>
-    <ul className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-4 mt-3">
-      {(favoriteArcades ?? []).length === 0 ? (
-        <li className="col-span-1">
-          <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500 px-4">
-            {locale('noArcade')}
-          </div>
-        </li>
-      ) : (
-        (favoriteArcades ?? []).map(arcade => (
-          <FavoriteArcadeItem
-            key={`favoriteArcade-${arcade}`}
-            arcadeId={arcade}
-          />
-        ))
-      )}
-    </ul>
-  </div>
+      <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
+        {locale('title')}
+      </h2>
+      <ul className="grid grid-cols-1 gap-4 sm:gap-6 lg:grid-cols-2 xl:grid-cols-4 mt-3">
+        {(favoriteArcades ?? []).length === 0 ? (
+          <li className="col-span-1">
+            <div className="border-2 border-gray-400 border-dotted rounded-md h-14 flex justify-center items-center text-sm text-gray-500 px-4">
+              {locale('noArcade')}
+            </div>
+          </li>
+        ) : (
+          (favoriteArcades ?? []).map(arcade => (
+            <FavoriteArcadeItem
+              key={`favoriteArcade-${arcade}`}
+              arcadeId={arcade}
+            />
+          ))
+        )}
+      </ul>
+    </div>
   )
 })

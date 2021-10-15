@@ -34,7 +34,7 @@ export const Step2: FunctionComponent<Props> = props => {
         userId: targetUser.id,
         amount: Number(inputRef.current.value),
       })
-    } catch(e) {
+    } catch (e) {
       console.error(e)
     } finally {
       setInProgress(false)

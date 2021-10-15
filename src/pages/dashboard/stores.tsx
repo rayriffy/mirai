@@ -4,7 +4,11 @@ import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
 
 import { Spinner } from '../../core/components/spinner'
-import { ExternalLinkIcon, LocationMarkerIcon, ArrowLeftIcon } from '@heroicons/react/outline'
+import {
+  ExternalLinkIcon,
+  LocationMarkerIcon,
+  ArrowLeftIcon,
+} from '@heroicons/react/outline'
 
 import { classNames } from '../../core/services/classNames'
 import getDistance from 'geolib/es/getDistance'
@@ -109,7 +113,10 @@ const Page: NextPage<Props> = props => {
             </div>
           )}
         </button>
-        <p className="text-gray-800 flex items-center"><ArrowLeftIcon className="w-4 h-4 mr-2" />{locale('locationWording')}</p>
+        <p className="text-gray-800 flex items-center">
+          <ArrowLeftIcon className="w-4 h-4 mr-2" />
+          {locale('locationWording')}
+        </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {displayStores.map((store, i) => (
@@ -143,7 +150,8 @@ const Page: NextPage<Props> = props => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <ExternalLinkIcon className="w-3.5 h-3.5 mr-0.5" /> Google&nbsp;
+                    <ExternalLinkIcon className="w-3.5 h-3.5 mr-0.5" />{' '}
+                    Google&nbsp;
                     {locale('maps')}
                   </a>
                 </p>

@@ -47,7 +47,7 @@ export const CancelDialog: FunctionComponent<Props> = props => {
         static
         className="fixed z-10 inset-0 overflow-y-auto"
         open={open}
-        onClose={() => !processing ? onClose() : null}
+        onClose={() => (!processing ? onClose() : null)}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -95,7 +95,9 @@ export const CancelDialog: FunctionComponent<Props> = props => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      Are you sure you want to cancael this transaction? <b>฿{transactionValue}</b> will be returned to your balance. This action cannot be undone.
+                      Are you sure you want to cancael this transaction?{' '}
+                      <b>฿{transactionValue}</b> will be returned to your
+                      balance. This action cannot be undone.
                     </p>
                   </div>
                 </div>
@@ -107,7 +109,7 @@ export const CancelDialog: FunctionComponent<Props> = props => {
                   className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm disabled:bg-red-500 disabled:hover:bg-red-600 disabled:focus:ring-red-400"
                   onClick={onCancel}
                 >
-                  Deactivate
+                  Cancel order
                 </button>
                 <button
                   type="button"
@@ -115,7 +117,7 @@ export const CancelDialog: FunctionComponent<Props> = props => {
                   className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm disabled:bg-gray-100"
                   onClick={onClose}
                 >
-                  Cancel
+                  No, go back
                 </button>
               </div>
             </div>

@@ -39,10 +39,7 @@ export const LangaugeSelector = memo(() => {
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center">
                 <span className="h-auto w-6 flex items-center">
-                  <Image
-                    src={selected.flag}
-                    alt={selected.name}
-                  />
+                  <Image src={selected.flag} alt={selected.name} />
                 </span>
                 <span className="ml-3 block truncate">{selected.name}</span>
               </span>
@@ -80,10 +77,7 @@ export const LangaugeSelector = memo(() => {
                       <Link href={asPath} locale={language.id}>
                         <a className="flex items-center cursor-default py-2 pl-3 pr-9">
                           <span className="h-auto w-6 flex items-center flex-shrink-0">
-                            <Image
-                              src={language.flag}
-                              alt={language.name}
-                            />
+                            <Image src={language.flag} alt={language.name} />
                           </span>
                           <span
                             className={classNames(

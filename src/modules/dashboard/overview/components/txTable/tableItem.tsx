@@ -30,13 +30,13 @@ export const TableItem = memo<Props>(props => {
       at: 'at',
       topup: 'Topup',
       info: 'Information',
-      cancel: 'Cancel'
+      cancel: 'Cancel',
     },
     th: {
       at: 'ที่',
       topup: 'เติมเงิน',
       info: 'ดูข้อมูลเพิ่มเติม',
-      cancel: 'ยกเลิกคำสั่งซื้อ'
+      cancel: 'ยกเลิกคำสั่งซื้อ',
     },
   })
 
