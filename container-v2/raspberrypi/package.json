@@ -6,7 +6,9 @@
   "pkg": {
     "scripts": "build/**/*.js",
     "assets": "views/**/*",
-    "targets": [ "node14-linux-arm64" ],
+    "targets": [
+      "node14-linux-arm64"
+    ],
     "outputPath": "dist"
   },
   "scripts": {
@@ -16,6 +18,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "firebase-admin": "^9.12.0",
     "socket.io": "^4.2.0"
   }

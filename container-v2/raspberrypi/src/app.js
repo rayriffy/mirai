@@ -1,17 +1,15 @@
 const { Server } = require('socket.io')
 const firebase = require('firebase-admin')
 const { networkInterfaces } = require('os')
-
-const serviceAccount = require('./mirai.json')
+const dotenv = require('dotenv')
 
 const { STORE_ID } = process.env
+
+dotenv.config()
 
 const wait = duration => new Promise(res => setTimeout(res, duration))
 
 ;(async () => {
-  console.log('[system]: booting')
-  await wait(50000000)
-
   // initialize socket.io server
   const io = new Server(11451, {
     path: '/mirai-tx',
@@ -21,9 +19,16 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     origins: '*:*',
   })
 
+  console.log('[system]: booting')
+  await wait(50000000)
+
   // initialize firebase
   firebase.initializeApp({
-    credential: firebase.credential.cert(serviceAccount),
+    credential: firebase.credential.cert({
+      projectId: process.env.PROJECT_ID,
+      clientEmail: process.env.CLIENT_EMAIL,
+      privateKey: process.env.PRIVATE_KEY,
+    }),
   })
 
 
