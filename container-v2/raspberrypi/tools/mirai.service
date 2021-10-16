@@ -1,0 +1,12 @@
+[Unit]
+Description=Mirai
+After=network.target
+
+[Service]
+WorkingDirectory=/home/pi/mirai/container-v2/raspberrypi
+ExecStart=/usr/bin/npm start
+Restart=on-failure
+User=pi
+
+[Install]
+WantedBy=multi-user.target
