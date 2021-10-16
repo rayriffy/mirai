@@ -176,6 +176,10 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
           })
       }
     })
+
+    socket.onAny((event, txId) => {
+      console.log(`got ${event}: ${txId}`);
+    })
   })
 })().catch(e => {
   console.error(e)
