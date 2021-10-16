@@ -3,9 +3,14 @@ const firebase = require('firebase-admin')
 const { networkInterfaces } = require('os')
 const dotenv = require('dotenv')
 
-const { STORE_ID } = process.env
-
 dotenv.config()
+
+const {
+  STORE_ID,
+  PROJECT_ID,
+  CLIENT_EMAIL,
+  PRIVATE_KEY,
+} = process.env
 
 const wait = duration => new Promise(res => setTimeout(res, duration))
 
@@ -25,9 +30,9 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
   // initialize firebase
   firebase.initializeApp({
     credential: firebase.credential.cert({
-      projectId: process.env.PROJECT_ID,
-      clientEmail: process.env.CLIENT_EMAIL,
-      privateKey: process.env.PRIVATE_KEY,
+      projectId: PROJECT_ID,
+      clientEmail: CLIENT_EMAIL,
+      privateKey: PRIVATE_KEY,
     }),
   })
 
