@@ -1,4 +1,5 @@
 const { Server } = require('socket.io')
+const { io: client } = require("socket.io-client")
 const firebase = require('firebase-admin')
 const { networkInterfaces } = require('os')
 const dotenv = require('dotenv')
@@ -126,7 +127,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
   }
 
   // listen for reply from arcade
-  console.log('[system]: ready to listen for transaction reply')
+  // console.log('[system]: ready to listen for transaction reply')
   // io.on('tx-reply', async transactionId => {
   //   console.log(`[system]: putting ${transactionId} to success`)
   //   // update transaction status to success
@@ -148,8 +149,29 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
   //   }
   // })
 
-  io.onAny((event, ...args) => {
-    console.log(`got ${event}`);
+  const socket = client('ws://localhost:11451/mirai-tx', {
+    reconnectionDelayMax: 10000,
+  })
+  console.log('[system]: ready to listen for transaction reply')
+  socket.on('tx-reply', async transactionId => {
+    console.log(`[system]: putting ${transactionId} to success`)
+    // update transaction status to success
+    const transaction = await firebase
+      .firestore()
+      .collection('transactions')
+      .doc(transactionId)
+      .get()
+
+    if (transaction.data().status === 'processing') {
+      await firebase
+        .firestore()
+        .collection('transactions')
+        .doc(transactionId)
+        .update({
+          status: 'success',
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+    }
   })
 
   // io.on('connection', socket => {
