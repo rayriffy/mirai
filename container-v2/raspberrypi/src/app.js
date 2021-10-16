@@ -127,25 +127,29 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
 
   // listen for reply from arcade
   console.log('[system]: ready to listen for transaction reply')
-  io.on('tx-reply', async transactionId => {
-    console.log(`[system]: putting ${transactionId} to success`)
-    // update transaction status to success
-    const transaction = await firebase
-      .firestore()
-      .collection('transactions')
-      .doc(transactionId)
-      .get()
+  // io.on('tx-reply', async transactionId => {
+  //   console.log(`[system]: putting ${transactionId} to success`)
+  //   // update transaction status to success
+  //   const transaction = await firebase
+  //     .firestore()
+  //     .collection('transactions')
+  //     .doc(transactionId)
+  //     .get()
 
-    if (transaction.data().status === 'processing') {
-      await firebase
-        .firestore()
-        .collection('transactions')
-        .doc(transactionId)
-        .update({
-          status: 'success',
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-    }
+  //   if (transaction.data().status === 'processing') {
+  //     await firebase
+  //       .firestore()
+  //       .collection('transactions')
+  //       .doc(transactionId)
+  //       .update({
+  //         status: 'success',
+  //         updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  //       })
+  //   }
+  // })
+
+  io.onAny((event, ...args) => {
+    console.log(`got ${event}`);
   })
 
   // io.on('connection', socket => {
