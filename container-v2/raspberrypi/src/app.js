@@ -127,6 +127,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
 
   io.on('connection', socket => {
     // listen for incoming transaction reply
+    console.log('[system]: ready to listen for transaction reply')
     socket.on('tx-reply', async transactionId => {
       console.log(`[system]: putting ${transactionId} to success`)
       // update transaction status to success
