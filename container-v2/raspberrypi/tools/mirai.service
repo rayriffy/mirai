@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/home/pi/mirai/container-v2/raspberrypi
-ExecStart=/usr/bin/npm start
+ExecStart=/usr/local/bin/pnpm start
 Restart=on-failure
 User=pi
 
