@@ -23,6 +23,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     pingTimeout: 5000,
     cookie: false,
     origins: '*:*',
+    allowEIO3: true,
   })
 
   console.log('[system]: booting')
@@ -126,9 +127,12 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     }, 60 * 1000)
   }
 
-  // listen for reply from arcade
+
+  // const socket = client('ws://localhost:11451/mirai-tx', {
+  //   reconnectionDelayMax: 10000,
+  // })
   // console.log('[system]: ready to listen for transaction reply')
-  // io.on('tx-reply', async transactionId => {
+  // socket.on('tx-reply', async transactionId => {
   //   console.log(`[system]: putting ${transactionId} to success`)
   //   // update transaction status to success
   //   const transaction = await firebase
@@ -149,34 +153,30 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
   //   }
   // })
 
-  const socket = client('ws://localhost:11451/mirai-tx', {
-    reconnectionDelayMax: 10000,
-  })
-  console.log('[system]: ready to listen for transaction reply')
-  socket.on('tx-reply', async transactionId => {
-    console.log(`[system]: putting ${transactionId} to success`)
-    // update transaction status to success
-    const transaction = await firebase
-      .firestore()
-      .collection('transactions')
-      .doc(transactionId)
-      .get()
-
-    if (transaction.data().status === 'processing') {
-      await firebase
+  io.on('connection', socket => {
+    // listen for reply from arcade
+    console.log('[system]: ready to listen for transaction reply')
+    socket.on('tx-reply', async transactionId => {
+      console.log(`[system]: putting ${transactionId} to success`)
+      // update transaction status to success
+      const transaction = await firebase
         .firestore()
         .collection('transactions')
         .doc(transactionId)
-        .update({
-          status: 'success',
-          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-        })
-    }
+        .get()
+  
+      if (transaction.data().status === 'processing') {
+        await firebase
+          .firestore()
+          .collection('transactions')
+          .doc(transactionId)
+          .update({
+            status: 'success',
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          })
+      }
+    })
   })
-
-  // io.on('connection', socket => {
-  //   // listen for incoming transaction reply
-  // })
 })().catch(e => {
   console.error(e)
   process.exit(1)
