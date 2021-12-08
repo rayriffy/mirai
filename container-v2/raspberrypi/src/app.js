@@ -8,7 +8,14 @@ const { networkInterfaces } = require('os')
 const { Server } = require("socket.io")
 const dotenv = require('dotenv')
 
-dotenv.config()
+const expectedEnv = '/boot/mirai.credentials'
+const backupEnv = path.join(__dirname, '..', '.env')
+
+logger('server', 'using credentials file from %s', fs.existsSync(expectedEnv) ? expectedEnv : backupEnv)
+
+dotenv.config({
+  path: fs.existsSync(expectedEnv) ? expectedEnv : backupEnv
+})
 
 const logger = (unit, ...args) => debug(`mirai:${unit}`)(...args)
 const wait = duration => new Promise(res => setTimeout(res, duration))
