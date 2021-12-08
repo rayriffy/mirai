@@ -3,7 +3,6 @@ const path = require('path')
 
 const http = require('http')
 const server = http.createServer()
-const debug = require('debug')
 
 const firebase = require('firebase-admin')
 const { networkInterfaces } = require('os')
@@ -12,15 +11,17 @@ const { Server } = require("socket.io")
 const dotenv = require('dotenv')
 
 const expectedEnv = '/boot/mirai.credentials'
-const backupEnv = path.join(__dirname, '..', '.env')
+const backupEnv = path.join(process.cwd(), '..', '.env')
 
-const logger = (unit, ...args) => debug(`mirai:${unit}`)(...args)
+const targetEnv = fs.existsSync(expectedEnv) ? expectedEnv : backupEnv
 
-logger('server', 'using credentials file from %s', fs.existsSync(expectedEnv) ? expectedEnv : backupEnv)
+console.log(`using configuration from ${targetEnv}`)
 
 dotenv.config({
-  path: fs.existsSync(expectedEnv) ? expectedEnv : backupEnv
+  path: targetEnv
 })
+
+const logger = (unit, ...args) => require('debug')(`mirai:${unit}`)(...args)
 const wait = duration => new Promise(res => setTimeout(res, duration))
 
 const {

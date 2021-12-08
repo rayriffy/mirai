@@ -1,2 +1,0 @@
-firebase-admin==5.0.1
-gpiozero==1.6.2

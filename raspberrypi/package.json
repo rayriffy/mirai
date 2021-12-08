@@ -1,17 +1,20 @@
 {
-  "name": "raspberrypi",
+  "name": "@mirai/raspberrypi",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/app.js",
+  "bin": "src/app.js",
   "pkg": {
     "scripts": "build/**/*.js",
     "assets": "views/**/*",
     "targets": [
-      "node14-linux-arm64"
+      "node16-linux-arm64",
+      "node16-macos-arm64"
     ],
     "outputPath": "dist"
   },
   "scripts": {
+    "build": "pkg --out-path dist src/app.js",
     "start": "DEBUG=mirai:* node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,5 +27,8 @@
     "express": "^4.17.1",
     "firebase-admin": "^10.0.0",
     "socket.io": "^4.4.0"
+  },
+  "devDependencies": {
+    "pkg": "^5.5.1"
   }
 }
