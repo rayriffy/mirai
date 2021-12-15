@@ -3,10 +3,11 @@ Description=Mirai
 After=network.target
 
 [Service]
-WorkingDirectory=/home/pi/mirai
-ExecStart=/home/pi/mirai/app-linux
+WorkingDirectory=/boot
+ExecStart=/boot/app-linux
 Restart=on-failure
 User=pi
+Environment="DEBUG=mirai:*"
 
 [Install]
 WantedBy=multi-user.target

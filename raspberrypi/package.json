@@ -4,17 +4,9 @@
   "description": "",
   "main": "src/app.js",
   "bin": "src/app.js",
-  "pkg": {
-    "scripts": "build/**/*.js",
-    "assets": "views/**/*",
-    "targets": [
-      "node16-linux-arm64",
-      "node16-macos-arm64"
-    ],
-    "outputPath": "dist"
-  },
   "scripts": {
-    "build": "pkg --out-path dist src/app.js",
+    "build:mac": "pkg -t node16-macos-x64 --out-path dist src/app.js",
+    "build:rasp": "exit 1",
     "start": "DEBUG=mirai:* node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
