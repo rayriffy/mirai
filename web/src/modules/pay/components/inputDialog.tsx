@@ -36,7 +36,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const { arcadeWithId, storeWithId } = props
 
   const targetSystem = {
-    maxToken: 600,
+    maxToken: 20,
   }
 
   const {
@@ -77,8 +77,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const [result, setResult] = useState<'success' | 'failed' | undefined>()
 
   const [inputToken, setInputToken] = useState<number>(
-    // arcadeWithId.data.tokenPerCredit
-    600
+    arcadeWithId.data.tokenPerCredit
+    // 600
   )
   const { price, isDiscounted, original } = useMemo(
     () =>

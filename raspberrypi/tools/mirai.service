@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 WorkingDirectory=/boot
-ExecStart=/boot/app-linux
+ExecStart=/boot/app
 Restart=on-failure
 User=pi
 Environment="DEBUG=mirai:*"
