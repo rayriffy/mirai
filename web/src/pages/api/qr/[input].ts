@@ -2,7 +2,7 @@ import { NextApiHandler } from 'next'
 
 import { toBuffer } from 'qrcode'
 
-const api: NextApiHandler = async (req, res) => {
+const api = async (req, res) => {
   const { input } = req.query
 
   const result = await toBuffer(input as string, {

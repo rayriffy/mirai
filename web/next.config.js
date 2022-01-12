@@ -4,7 +4,6 @@ const timezone = require('dayjs/plugin/timezone')
 
 const withPlugins = require('next-compose-plugins')
 
-const withPreact = require('next-plugin-preact')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -13,9 +12,8 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 
 module.exports = withPlugins(
-  [[withPreact], [withBundleAnalyzer]],
+  [[withBundleAnalyzer]],
   {
-    target: 'serverless',
     env: {
       buildNumber: dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD.HH'),
     },

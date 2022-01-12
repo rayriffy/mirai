@@ -1,9 +1,8 @@
 const defaultTheme = require('tailwindcss/defaultTheme')
-const colors = require('tailwindcss/colors')
 
 module.exports = {
   mode: 'jit',
-  purge: [
+  content: [
     './src/**/*.html',
     './src/**/*.tsx',
     './src/**/*.ts',
@@ -11,16 +10,12 @@ module.exports = {
     './src/**/*.js',
   ],
   theme: {
-    colors: {
-      ...defaultTheme.colors,
-    },
     extend: {
       fontFamily: {
         sans: ['Niramit', ...defaultTheme.fontFamily.sans],
       },
     },
   },
-  variants: {},
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
