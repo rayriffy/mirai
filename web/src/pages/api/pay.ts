@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 
 import { getCalculatedPrice } from '../../core/services/getCalculatedPrice'
 

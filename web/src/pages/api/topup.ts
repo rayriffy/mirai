@@ -1,5 +1,5 @@
 import { NextApiHandler } from 'next'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 
 import firebase from 'firebase-admin'
 import { initializeFirebase } from '../../modules/api/services/initializeFirebase'
