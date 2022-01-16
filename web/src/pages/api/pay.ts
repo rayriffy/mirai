@@ -1,8 +1,6 @@
 import { NextApiHandler } from 'next'
 import omit from 'lodash/omit'
 
-import { getCalculatedPrice } from '../../core/services/getCalculatedPrice'
-
 import firebase from 'firebase-admin'
 import { initializeFirebase } from '../../modules/api/services/initializeFirebase'
 import { getUserAndFilterAuth } from '../../modules/api/services/getUserAndFilterAuth'
@@ -37,13 +35,7 @@ const api: NextApiHandler = async (req, res) => {
       if (arcadeDoc.exists) {
         const arcadeData = arcadeDoc.data() as Arcade
 
-        const targetPrice = getCalculatedPrice(
-          token,
-          arcadeData.tokenPerCredit,
-          arcadeData.discountedPrice ?? arcadeData.tokenPerCredit
-        )
-
-        if (balance - targetPrice.price >= 0) {
+        if (balance - token >= 0) {
           const transactionPayload: Transaction = {
             type: 'payment',
             arcadeId: arcadeDoc.id,
@@ -52,7 +44,6 @@ const api: NextApiHandler = async (req, res) => {
             storeName: arcadeData.storeName,
             userId: uid,
             token: token,
-            value: targetPrice.price,
             status: 'pending',
             createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
             updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -65,7 +56,7 @@ const api: NextApiHandler = async (req, res) => {
             .doc(uid)
             .update({
               balance: firebase.firestore.FieldValue.increment(
-                -Math.abs(targetPrice.price)
+                -Math.abs(token)
               ),
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })

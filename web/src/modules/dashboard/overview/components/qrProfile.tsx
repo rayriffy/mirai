@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { memo } from 'react'
 
 import Image from 'next/image'
@@ -27,7 +28,7 @@ export const QRProfile = memo(() => {
         {locale('qr')}
       </h2>
       <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
-        <Image
+        <img
           src={`/api/qr/${uid}`}
           width={768}
           height={768}

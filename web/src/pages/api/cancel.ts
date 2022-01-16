@@ -64,7 +64,7 @@ const api: NextApiHandler = async (req, res) => {
           .doc(uid)
           .update({
             balance: firebase.firestore.FieldValue.increment(
-              Math.abs(transactionData.value)
+              Math.abs(transactionData.token)
             ),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           })

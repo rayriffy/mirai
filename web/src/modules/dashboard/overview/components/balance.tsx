@@ -1,5 +1,8 @@
 import { memo } from 'react'
 
+import { BiCoin } from 'react-icons/bi'
+import { FaCoins } from 'react-icons/fa'
+
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
 
@@ -25,8 +28,8 @@ export const Balance = memo(() => {
         {locale('balance')}
       </h2>
       <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
-        <dd className="text-3xl font-semibold text-gray-900">
-          ฿{balance.toLocaleString()}
+        <dd className="text-3xl font-semibold text-gray-900 flex items-center">
+          {balance.toLocaleString()}<FaCoins className="ml-2" />
         </dd>
       </div>
     </div>

@@ -27,7 +27,7 @@ const api: NextApiHandler = async (req, res) => {
         type: 'topup',
         createdBy: uid,
         userId,
-        value: amount,
+        token: amount,
         status: 'success',
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),

@@ -3,6 +3,7 @@ import { memo, Fragment, useState, useEffect } from 'react'
 import Link from 'next/link'
 
 import { Menu, Transition } from '@headlessui/react'
+import { FaCoins } from 'react-icons/fa'
 import {
   DotsVerticalIcon,
   InformationCircleIcon,
@@ -69,11 +70,10 @@ export const TableItem = memo<Props>(props => {
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         {transaction.data.type === 'payment'
-          ? transaction.data.token.toLocaleString()
+          ? (
+            <div className="flex items-center">{transaction.data.token.toLocaleString()}<FaCoins className="ml-2" /></div>
+          )
           : '-'}
-      </td>
-      <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
-        ฿{transaction.data.value.toLocaleString()}
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         <StatusBadge status={transaction.data.status} />
@@ -158,7 +158,7 @@ export const TableItem = memo<Props>(props => {
           open={cancelOpen}
           onClose={() => setCancelOpen(false)}
           transactionId={transaction.id}
-          transactionValue={transaction.data.value}
+          transactionValue={transaction.data.token}
         />
       </td>
     </tr>

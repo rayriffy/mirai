@@ -16,8 +16,8 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/outline'
+import { FaCoins } from 'react-icons/fa'
 
-import { getCalculatedPrice } from '../../../core/services/getCalculatedPrice'
 import { useStoreon } from '../../../context/storeon'
 import { classNames } from '../../../core/services/classNames'
 import { createApiInstance } from '../../../core/services/createApiInstance'
@@ -78,19 +78,9 @@ export const InputDialog: FunctionComponent<Props> = props => {
 
   const [inputToken, setInputToken] = useState<number>(
     arcadeWithId.data.tokenPerCredit
-    // 600
-  )
-  const { price, isDiscounted, original } = useMemo(
-    () =>
-      getCalculatedPrice(
-        inputToken,
-        arcadeWithId.data.tokenPerCredit,
-        arcadeWithId.data.discountedPrice
-      ),
-    [inputToken]
   )
 
-  const calculatedPostBalance = useMemo(() => balance - price, [balance, price])
+  const calculatedPostBalance = useMemo(() => balance - inputToken, [balance, inputToken])
 
   const isIncreaseDisabled = useMemo(
     () =>
@@ -174,7 +164,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
             </Fragment>
           ) : (
             <Fragment>
-              <div className="my-6 text-center flex justify-center">
+              {/* <div className="my-6 text-center flex justify-center">
                 <div className="relative mt-2">
                   <h1 className="text-3xl font-bold">
                     ฿{price.toLocaleString()}
@@ -185,7 +175,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     </h2>
                   )}
                 </div>
-              </div>
+              </div> */}
               <div className="my-2 mx-6">
                 <div className="">
                   <label
@@ -255,8 +245,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
                 <div className="space-x-4 flex items-center justify-center">
                   <div className="text-center">
                     <h1>{locale('before')}</h1>
-                    <h2 className="text-xl font-semibold">
-                      ฿{balance.toLocaleString()}
+                    <h2 className="text-xl font-semibold flex items-center">
+                      {balance.toLocaleString()}<FaCoins className="ml-2" />
                     </h2>
                   </div>
                   <div>
@@ -264,8 +254,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
                   </div>
                   <div className="text-center">
                     <h1>{locale('after')}</h1>
-                    <h2 className="text-xl font-semibold">
-                      ฿{calculatedPostBalance.toLocaleString()}
+                    <h2 className="text-xl font-semibold flex items-center">
+                      {calculatedPostBalance.toLocaleString()}<FaCoins className="ml-2" />
                     </h2>
                   </div>
                 </div>

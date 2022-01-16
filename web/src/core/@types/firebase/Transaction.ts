@@ -12,7 +12,6 @@ export type Transaction = (
       arcadeName: string
       storeId: string
       storeName: string
-      token: number
       userId: string
     }
   | {
@@ -20,7 +19,7 @@ export type Transaction = (
       arcadeId: string
     }
 ) & {
-  value: number
+  token: number
   status: 'pending' | 'processing' | 'success' | 'failed' | 'cancelled'
   createdAt: Timestamp
   updatedAt: Timestamp

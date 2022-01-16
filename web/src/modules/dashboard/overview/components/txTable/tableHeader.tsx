@@ -7,14 +7,12 @@ export const TableHeader = memo(() => {
     en: {
       transaction: 'Transaction',
       token: 'Token',
-      value: 'Value',
       status: 'Status',
       updated: 'Last updated',
     },
     th: {
       transaction: 'รายการใช้งาน',
       token: 'จำนวนเหรียญ',
-      value: 'ราคา',
       status: 'สถานะ',
       updated: 'อัพเดตล่าสุดเมื่อ',
     },
@@ -26,9 +24,6 @@ export const TableHeader = memo(() => {
       </th>
       <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
         {locale('token')}
-      </th>
-      <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-        {locale('value')}
       </th>
       <th className="px-6 py-3 border-b border-gray-200 bg-gray-50 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
         {locale('status')}

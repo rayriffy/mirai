@@ -23,12 +23,12 @@ const Page: NextPage<Props> = props => {
     en: {
       machine: 'Machines',
       maps: 'Maps',
-      discounted: 'coins for',
+      pergame: 'coins per game',
     },
     th: {
       machine: 'ตู้',
       maps: 'แผนที่',
-      discounted: 'เหรียญต่อ',
+      pergame: 'เหรียญต่อการเข้าเล่นหนึ่งรอบ',
     },
   })
 
@@ -65,8 +65,7 @@ const Page: NextPage<Props> = props => {
                   </h1>
                   <div className="mt-0.5">
                     <h2 className="text-gray-500 text-sm">
-                      {arcade.data.tokenPerCredit} {locale('discounted')} ฿
-                      {arcade.data.discountedPrice.toLocaleString()}
+                      {arcade.data.tokenPerCredit} {locale('pergame')}
                     </h2>
                   </div>
                 </div>
