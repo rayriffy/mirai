@@ -1,13 +1,11 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
 
 import { TransactionWithId } from '../../../core/@types/TransactionWithId'
-import { useEffect } from 'react'
-import { collection, onSnapshot, getFirestore, doc } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
 import { Transaction } from '../../../core/@types/firebase/Transaction'
+import { useLocale } from '../../../core/services/useLocale'
+import { RelativeTime } from '../../../modules/dashboard/overview/components/txTable/relativeTime'
 
 interface Props {
   transactionWithId: TransactionWithId
@@ -16,34 +14,36 @@ interface Props {
 const Page: NextPage<Props> = props => {
   const { transactionWithId } = props
 
-  const [transaction, setTransaction] =
-    useState<TransactionWithId>(transactionWithId)
-  const { query } = useRouter()
+  const { locale } = useLocale({
+    en: {
+      type_topup: 'Topup',
+      type_payment: 'Payment',
+    },
+    th: {
+      type_topup: 'เติมเงิน',
+      type_payment: 'ชำระเงิน',
+    },
+  })
 
-  useEffect(() => {
-    const listener = onSnapshot(
-      doc(
-        collection(getFirestore(createFirebaseInstance()), 'transactions'),
-        query.transactionId as string
-      ),
-      doc => {
-        if (doc.exists()) {
-          setTransaction({
-            id: doc.id,
-            data: doc.data() as Transaction,
-          })
-        }
-      }
-    )
-
-    return () => {
-      listener()
-    }
-  }, [])
+  console.log(transactionWithId)
 
   return (
-    <div className="px-4 mt-6 sm:px-6 lg:px-8">
-      {JSON.stringify(transaction)}
+    <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
+      <div className="mb-6 mt-8">
+        <h1 className="text-4xl font-bold">{locale(`type_${transactionWithId.data.type}`)}</h1>
+        <p className="flex text-sm text-gray-600">
+          <span>
+            {transactionWithId.id}
+          </span>
+          <span className="mx-2">·</span>
+          <span className="flex items-center">
+            <RelativeTime datetime={new Date(transactionWithId.data.updatedAt as any)} />
+          </span>
+        </p>
+      </div>
+      <div>
+        {JSON.stringify(transactionWithId)}
+      </div>
     </div>
   )
 }
@@ -66,13 +66,16 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
       .get()
 
     if (transactionDoc.exists) {
+      const transactionData = transactionDoc.data() as Transaction
       return {
         props: {
           transactionWithId: {
             id: transactionDoc.id,
-            data: JSON.parse(
-              JSON.stringify(transactionDoc.data())
-            ) as Transaction,
+            data: {
+              ...transactionData,
+              createdAt: transactionData.createdAt.toDate().toISOString(),
+              updatedAt: transactionData.updatedAt.toDate().toISOString(),
+            } as unknown as Transaction,
           },
         },
       }
