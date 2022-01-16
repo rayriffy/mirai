@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { memo } from 'react'
 
 import { XIcon } from '@heroicons/react/outline'
@@ -49,8 +50,8 @@ export const MobileOverlay = memo<Props>(props => {
           <div className="flex-shrink-0 flex items-center px-4">
             <img
               className="h-8 w-auto"
-              src="https://tailwindui.com/img/logos/workflow-logo-purple-500-mark-gray-700-text.svg"
-              alt="Workflow"
+              src="/static/pamuse.svg"
+              alt="Pradit Amusement"
             />
           </div>
           <Offline />
