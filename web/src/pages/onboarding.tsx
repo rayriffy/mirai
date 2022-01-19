@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import { NextPage } from 'next'
 
@@ -10,6 +10,8 @@ import { Step2 } from '../modules/auth/onboarding/components/step2'
 import { Step3 } from '../modules/auth/onboarding/components/step3'
 
 import { Input } from '../modules/auth/onboarding/@types/Input'
+import { useStoreon } from '../context/storeon'
+import { useRouter } from 'next/router'
 
 const Page: NextPage = () => {
   const { locale } = useLocale({
@@ -31,6 +33,15 @@ const Page: NextPage = () => {
     displayName: '',
     preferredStore: '',
   })
+
+  const router = useRouter()
+
+  const { user: { metadata } } = useStoreon('user')
+  useEffect(() => {
+    if (metadata !== undefined || metadata !== null) {
+      router.push('/dashboard')
+    }
+  }, [metadata])
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
