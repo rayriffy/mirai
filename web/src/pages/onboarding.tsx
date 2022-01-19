@@ -38,7 +38,7 @@ const Page: NextPage = () => {
 
   const { user: { metadata } } = useStoreon('user')
   useEffect(() => {
-    if (metadata !== undefined || metadata !== null) {
+    if (metadata !== undefined && metadata !== null) {
       router.push('/dashboard')
     }
   }, [metadata])
