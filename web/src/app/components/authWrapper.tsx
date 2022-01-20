@@ -39,7 +39,7 @@ export const UserWrapper: FunctionComponent = props => {
     user: { auth, metadata: contextMeta },
     dispatch,
   } = useStoreon('user')
-  const metadata = useUserMetadata(auth?.uid ?? '')
+  const metadata = useUserMetadata(auth.uid ?? '')
   const [lock, setLock] = useState(true)
 
   useEffect(() => {

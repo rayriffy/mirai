@@ -34,14 +34,14 @@ const Page: NextPage = () => {
     preferredStore: '',
   })
 
-  const router = useRouter()
+  // const router = useRouter()
 
-  const { user: { metadata } } = useStoreon('user')
-  useEffect(() => {
-    if (metadata !== undefined && metadata !== null) {
-      router.push('/dashboard')
-    }
-  }, [metadata])
+  // const { user: { metadata } } = useStoreon('user')
+  // useEffect(() => {
+  //   if (metadata !== undefined && metadata !== null) {
+  //     router.push('/dashboard')
+  //   }
+  // }, [metadata])
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

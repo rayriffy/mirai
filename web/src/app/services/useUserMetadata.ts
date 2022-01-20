@@ -10,7 +10,7 @@ export const useUserMetadata = (uid: string) => {
 
   useEffect(() => {
     if (uid === '') {
-      setMetadata(null)
+      setMetadata(undefined)
     }
 
     const listener =
