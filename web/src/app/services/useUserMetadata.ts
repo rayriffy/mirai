@@ -36,7 +36,6 @@ export const useUserMetadata = (uid: string) => {
 
               if (data === undefined) {
                 setMetadata(null)
-                router.push('/onboarding')
               } else {
                 setMetadata(data)
               }
@@ -51,6 +50,10 @@ export const useUserMetadata = (uid: string) => {
 
   useEffect(() => {
     dispatch('user/metadata', metadata)
+
+    if (metadata === null) {
+      router.push('/onboarding')
+    }
   }, [metadata])
 
   return metadata
