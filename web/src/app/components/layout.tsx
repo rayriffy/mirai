@@ -22,7 +22,7 @@ export const AppLayout: FunctionComponent = props => {
   useEffect(() => {
     if (isAgentiOS() && !startup) {
       dispatch('startup/init')
-      window.location.reload()
+      // window.location.reload()
     }
   }, [startup])
 
