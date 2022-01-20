@@ -11,6 +11,8 @@ export const useUserMetadata = (uid: string) => {
   const isUIDVaid = useMemo(() => typeof uid === 'string' && uid.length > 10, [uid])
 
   useEffect(() => {
+    setMetadata(undefined)
+
     if (!isUIDVaid) {
       setMetadata(undefined)
     }
@@ -23,13 +25,17 @@ export const useUserMetadata = (uid: string) => {
               collection(getFirestore(createFirebaseInstance()), 'users'),
               uid
             ),
-            async snapshot => {
-              if (snapshot.exists()) {
+            snapshot => {
+              try {
                 const data = snapshot.data() as User
 
-                setMetadata(data)
-              } else {
-                setMetadata(null)
+                if (data === undefined) {
+                  setMetadata(null)
+                } else {
+                  setMetadata(data)
+                }
+              } catch {
+                throw new Error('cannot process user metadata')
               }
             }
           )
