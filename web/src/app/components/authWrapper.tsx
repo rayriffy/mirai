@@ -43,9 +43,7 @@ export const UserWrapper: FunctionComponent = props => {
   useUserMetadata(auth.uid)
 
   useEffect(() => {
-    if (contextMeta === null && asPath !== '/onboarding') {
-      push('/onboarding')
-    } else if (contextMeta === null && asPath === '/onboarding') {
+    if (contextMeta === null && asPath === '/onboarding') {
       setLock(false)
     }
   }, [contextMeta, asPath])
