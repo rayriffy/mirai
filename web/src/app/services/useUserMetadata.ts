@@ -8,15 +8,15 @@ import { User } from '../../core/@types/firebase/User'
 export const useUserMetadata = (uid: string) => {
   const [metadata, setMetadata] = useState<User | null>(undefined)
 
-  const isUIDVaid = useMemo(() => uid !== undefined && uid !== null && uid.length > 10, [uid])
+  const isUIDVaid = useMemo(() => typeof uid === 'string' && uid.length > 10, [uid])
 
   useEffect(() => {
-    if (isUIDVaid) {
+    if (!isUIDVaid) {
       setMetadata(undefined)
     }
 
     const listener =
-    isUIDVaid
+    !isUIDVaid
         ? () => {}
         : onSnapshot(
             doc(
