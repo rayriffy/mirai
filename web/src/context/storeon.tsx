@@ -7,16 +7,14 @@ import { crossTab } from '@storeon/crosstab'
 
 import { title, TitleStore, TitleEvent } from './store/title'
 import { user, UserStore, UserEvent } from './store/user'
-import { startup, StartupStore, StartupEvent } from './store/startup'
 import { next, NextStore, NextEvent } from './store/next'
 
 export const store = createStoreon<
-  TitleStore & UserStore & StartupStore & NextStore,
-  TitleEvent & UserEvent & StartupEvent & NextEvent
+  TitleStore & UserStore & NextStore,
+  TitleEvent & UserEvent & NextEvent
 >([
   title,
   user,
-  startup,
   next,
   ...(typeof window !== 'undefined'
     ? [

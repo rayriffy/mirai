@@ -7,24 +7,14 @@ import NProgress from 'nprogress'
 import { useStoreon } from '../../context/storeon'
 import { useAuth } from '../../core/services/useAuth'
 
-import { isAgentiOS } from '../../core/services/isAgentiOS'
-
 export const AppLayout: FunctionComponent = props => {
   const { children } = props
 
   const {
     dispatch,
-    startup,
     next: { path },
     user: { auth },
-  } = useStoreon('user', 'startup', 'next')
-
-  useEffect(() => {
-    if (isAgentiOS() && !startup) {
-      dispatch('startup/init')
-      // window.location.reload()
-    }
-  }, [startup])
+  } = useStoreon('user', 'next')
 
   useAuth()
   const { asPath, push, events } = useRouter()
