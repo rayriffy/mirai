@@ -37,16 +37,10 @@ export const UserWrapper: FunctionComponent = props => {
   const { asPath, push } = useRouter()
   const {
     user: { auth, metadata: contextMeta },
-    dispatch,
   } = useStoreon('user')
-  const metadata = useUserMetadata(auth.uid)
   const [lock, setLock] = useState(true)
 
-  useEffect(() => {
-    if (metadata !== undefined) {
-      dispatch('user/metadata', metadata)
-    }
-  }, [metadata])
+  useUserMetadata(auth.uid)
 
   useEffect(() => {
     if (contextMeta === null && asPath !== '/onboarding') {
