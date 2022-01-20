@@ -35,7 +35,7 @@ export const useUserMetadata = (uid: string) => {
           )
 
     return () => listener()
-  }, [uid])
+  }, [uid, isUIDVaid])
 
   return metadata
 }
