@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 import { onSnapshot, collection, doc, getFirestore } from 'firebase/firestore'
 import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
@@ -8,13 +8,15 @@ import { User } from '../../core/@types/firebase/User'
 export const useUserMetadata = (uid: string) => {
   const [metadata, setMetadata] = useState<User | null>(undefined)
 
+  const isUIDVaid = useMemo(() => uid !== undefined && uid !== null && uid.length > 10, [uid])
+
   useEffect(() => {
-    if (uid === '') {
+    if (isUIDVaid) {
       setMetadata(undefined)
     }
 
     const listener =
-      uid === ''
+    isUIDVaid
         ? () => {}
         : onSnapshot(
             doc(
