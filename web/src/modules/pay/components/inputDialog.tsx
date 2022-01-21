@@ -77,8 +77,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const [result, setResult] = useState<'success' | 'failed' | undefined>()
 
   const [inputToken, setInputToken] = useState<number>(
-    200
-    // arcadeWithId.data.tokenPerCredit
+    // 200
+    arcadeWithId.data.tokenPerCredit
   )
 
   const calculatedPostBalance = useMemo(() => balance - inputToken, [balance, inputToken])
