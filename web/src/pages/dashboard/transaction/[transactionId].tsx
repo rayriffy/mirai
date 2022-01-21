@@ -7,7 +7,7 @@ import { Transaction } from '../../../core/@types/firebase/Transaction'
 import { useLocale } from '../../../core/services/useLocale'
 import { RelativeTime } from '../../../modules/dashboard/overview/components/txTable/relativeTime'
 import { DetailedStep } from '../../../core/components/detailedStep'
-import { FaCoins } from 'react-icons/fa'
+import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
 interface Props {
   transactionWithId: TransactionWithId
@@ -20,10 +20,20 @@ const Page: NextPage<Props> = props => {
     en: {
       type_topup: 'Topup',
       type_payment: 'Payment',
+      step_payment_1: 'Order has been placed',
+      step_payment_2: 'Store has recived order',
+      step_payment_3: 'Coin has been inserted',
+      step_payment_cancel: 'Order has been cancelled',
+      step_payment_failed: 'Arcade offline',
     },
     th: {
       type_topup: 'เติมเงิน',
       type_payment: 'ชำระเงิน',
+      step_payment_1: 'ได้รับคำสั่งซื้อแล้ว',
+      step_payment_2: 'สาขารับคำสั่งซื้อแล้ว',
+      step_payment_3: 'เหรียญได้ถูกหยอดแล้ว',
+      step_payment_cancel: 'คำสั่งซื้อได้ถูกยกเลิกแล้ว',
+      step_payment_failed: 'ไม่สามารถเชื่อมต่อกับตู้เกมได้',
     },
   })
 
@@ -49,12 +59,32 @@ const Page: NextPage<Props> = props => {
             <div className="px-4 py-5 sm:p-6">
               <DetailedStep
                 details={[
-                  'Order has been placed',
-                  'Store inserting coins',
-                  'Coin has been inserted',
+                  locale('step_payment_1'),
+                  locale('step_payment_2'),
+                  locale(
+                    transactionWithId.data.status === 'cancelled'
+                      ? 'step_payment_cancel'
+                      : transactionWithId.data.status === 'failed'
+                      ? 'step_payment_failed'
+                      : 'step_payment_3'
+                  ),
                 ]}
-                currentIndex={1}
-                currentStatus="progress"
+                currentIndex={
+                  transactionWithId.data.status === 'pending'
+                    ? 0
+                    : transactionWithId.data.status === 'processing'
+                    ? 1
+                    : 2
+                }
+                currentStatus={
+                  ['cancelled', 'failed'].includes(
+                    transactionWithId.data.status
+                  )
+                    ? 'fail'
+                    : transactionWithId.data.status === 'success'
+                    ? 'success'
+                    : 'progress'
+                }
               />
             </div>
           </div>
@@ -75,7 +105,7 @@ const Page: NextPage<Props> = props => {
                   <div>
                     <h2 className="text-xl font-semibold flex items-center">
                       {transactionWithId.data.token.toLocaleString()}
-                      <FaCoins className="ml-2" />
+                      {transactionWithId.data.currency === 'coin' ? <FaCoins className="ml-2" /> : <FaProductHunt className="ml-2" />}
                     </h2>
                   </div>
                 </div>

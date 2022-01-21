@@ -16,7 +16,7 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/outline'
-import { FaCoins } from 'react-icons/fa'
+import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
 import { useStoreon } from '../../../context/storeon'
 import { classNames } from '../../../core/services/classNames'
@@ -29,11 +29,10 @@ import { useLocale } from '../../../core/services/useLocale'
 
 interface Props {
   arcadeWithId: ArcadeWithId
-  storeWithId: StoreWithId
 }
 
 export const InputDialog: FunctionComponent<Props> = props => {
-  const { arcadeWithId, storeWithId } = props
+  const { arcadeWithId } = props
 
   const targetSystem = {
     maxToken: 20,
@@ -42,7 +41,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const {
     user: {
       auth,
-      metadata: { balance },
+      metadata: { balance_coin, balance_buck = 0 },
     },
   } = useStoreon('user')
 
@@ -81,7 +80,15 @@ export const InputDialog: FunctionComponent<Props> = props => {
     arcadeWithId.data.tokenPerCredit
   )
 
-  const calculatedPostBalance = useMemo(() => balance - inputToken, [balance, inputToken])
+  const balance = useMemo(
+    () =>
+      arcadeWithId.data.storeCurrency === 'coin' ? balance_coin : balance_buck,
+    [balance_coin, balance_buck, arcadeWithId.data.storeCurrency]
+  )
+  const calculatedPostBalance = useMemo(
+    () => balance - inputToken,
+    [balance, inputToken]
+  )
 
   const isIncreaseDisabled = useMemo(
     () =>
@@ -141,8 +148,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
           </h3>
           <div className="flex justify-center py-2">
             <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" />
-            <Link href={`/dashboard/arcades/${storeWithId.id}`}>
-              <a className="text-gray-500">{storeWithId.data.name}</a>
+            <Link href={`/dashboard/arcades/${arcadeWithId.data.storeId}`}>
+              <a className="text-gray-500">{arcadeWithId.data.storeName}</a>
             </Link>
           </div>
           {result !== undefined ? (
@@ -247,7 +254,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
                   <div className="text-center">
                     <h1>{locale('before')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
-                      {balance.toLocaleString()}<FaCoins className="ml-2" />
+                      {balance.toLocaleString()}
+                      {arcadeWithId.data.storeCurrency === 'coin' ? <FaCoins className="ml-2" /> : <FaProductHunt className="ml-2" />}
                     </h2>
                   </div>
                   <div>
@@ -256,7 +264,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
                   <div className="text-center">
                     <h1>{locale('after')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
-                      {calculatedPostBalance.toLocaleString()}<FaCoins className="ml-2" />
+                      {calculatedPostBalance.toLocaleString()}
+                      {arcadeWithId.data.storeCurrency === 'coin' ? <FaCoins className="ml-2" /> : <FaProductHunt className="ml-2" />}
                     </h2>
                   </div>
                 </div>

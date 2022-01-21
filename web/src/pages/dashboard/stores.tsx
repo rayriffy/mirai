@@ -1,4 +1,4 @@
-import { Fragment, useState, useCallback } from 'react'
+import { Fragment, useState, useCallback, useMemo } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
@@ -16,9 +16,14 @@ import getDistance from 'geolib/es/getDistance'
 import { Store } from '../../core/@types/firebase/Store'
 import { StoreWithId } from '../../core/@types/StoreWithId'
 import { useLocale } from '../../core/services/useLocale'
+import { useStoreon } from '../../context/storeon'
 
 interface Props {
   storesWithId: StoreWithId[]
+}
+
+interface StoreWithDistance extends StoreWithId {
+  distance: number
 }
 
 const Page: NextPage<Props> = props => {
@@ -39,9 +44,56 @@ const Page: NextPage<Props> = props => {
     },
   })
 
-  const [displayStores, setDisplayStores] = useState<
-    (StoreWithId & { distance: number })[]
-  >(storesWithId.map(o => ({ ...o, distance: -1 })))
+  const {
+    user: {
+      metadata: { balance_buck = undefined },
+    },
+  } = useStoreon('user')
+
+  const [gpsLocation, setGpsLocation] = useState<GeolocationCoordinates>(null)
+  const renderedStores = useMemo<StoreWithDistance[]>(() => {
+    if (gpsLocation === null) {
+      return storesWithId
+        .map(store => ({
+          ...store,
+          distance: -1,
+        }))
+        .filter(store => {
+          if (
+            store.data.currency === 'buck' &&
+            balance_buck === undefined
+          ) {
+            return false
+          } else {
+            return true
+          }
+        })
+    } else {
+      return storesWithId
+        .map(store => ({
+          ...store,
+          distance:
+            getDistance(
+              {
+                lat: store.data.location.latitude,
+                lon: store.data.location.longitude,
+              },
+              { lat: gpsLocation.latitude, lon: gpsLocation.longitude }
+            ) / 1000,
+        }))
+        .sort((a, b) => (a.distance > b.distance ? 1 : -1))
+        .filter(store => {
+          if (
+            store.data.currency === 'buck' &&
+            balance_buck === undefined
+          ) {
+            return false
+          } else {
+            return true
+          }
+        })
+    }
+  }, [balance_buck, gpsLocation])
 
   const [locationStatus, setLocationStatus] = useState<
     'def' | 'success' | 'fail' | 'progress'
@@ -65,21 +117,7 @@ const Page: NextPage<Props> = props => {
       const position = await getCurrentPosition()
 
       // caculate distances
-      const closetStore = storesWithId
-        .map(store => ({
-          ...store,
-          distance:
-            getDistance(
-              {
-                lat: store.data.location.latitude,
-                lon: store.data.location.longitude,
-              },
-              { lat: position.latitude, lon: position.longitude }
-            ) / 1000,
-        }))
-        .sort((a, b) => (a.distance > b.distance ? 1 : -1))
-
-      setDisplayStores(closetStore)
+      setGpsLocation(position)
       setLocationStatus('success')
     } catch {
       setLocationStatus('fail')
@@ -119,7 +157,7 @@ const Page: NextPage<Props> = props => {
         </p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-        {displayStores.map((store, i) => (
+        {renderedStores.map((store, i) => (
           <div className="" key={store.id}>
             <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
               {store.distance !== -1 && i === 0 ? (

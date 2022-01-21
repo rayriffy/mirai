@@ -7,7 +7,8 @@ export interface User {
   preferredStore: string
   role: Role
   favoriteArcades: string[]
-  balance: number
+  balance_coin: number
+  balance_buck?: number
   createdAt: Timestamp
   updatedAt: Timestamp
 }

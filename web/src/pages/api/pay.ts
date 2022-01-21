@@ -21,7 +21,7 @@ const api: NextApiHandler = async (req, res) => {
 
       const {
         auth: { uid },
-        metadata: { balance },
+        metadata: { balance_coin, balance_buck = 0 },
       } = userData
       const { targetArcade, token } = req.body
 
@@ -35,6 +35,8 @@ const api: NextApiHandler = async (req, res) => {
       if (arcadeDoc.exists) {
         const arcadeData = arcadeDoc.data() as Arcade
 
+        const balance = arcadeData.storeCurrency === 'coin' ? balance_coin : balance_buck
+
         if (balance - token >= 0) {
           const transactionPayload: Transaction = {
             type: 'payment',
@@ -45,6 +47,7 @@ const api: NextApiHandler = async (req, res) => {
             userId: uid,
             token: token,
             status: 'pending',
+            currency: arcadeData.storeCurrency,
             createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
             updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
           }
@@ -55,9 +58,15 @@ const api: NextApiHandler = async (req, res) => {
             .collection('users')
             .doc(uid)
             .update({
-              balance: firebase.firestore.FieldValue.increment(
-                -Math.abs(token)
-              ),
+              ...(arcadeData.storeCurrency === 'coin' ? {
+                balance_coin: firebase.firestore.FieldValue.increment(
+                  -Math.abs(token)
+                ),
+              } : {
+                balance_buck: firebase.firestore.FieldValue.increment(
+                  -Math.abs(token)
+                ),
+              }),
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
 

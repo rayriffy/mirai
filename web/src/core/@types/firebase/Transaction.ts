@@ -20,6 +20,7 @@ export type Transaction = (
     }
 ) & {
   token: number
+  currency: 'coin' | 'buck'
   status: 'pending' | 'processing' | 'success' | 'failed' | 'cancelled'
   createdAt: Timestamp
   updatedAt: Timestamp

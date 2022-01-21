@@ -1,7 +1,6 @@
 import { memo } from 'react'
 
-import { BiCoin } from 'react-icons/bi'
-import { FaCoins } from 'react-icons/fa'
+import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
@@ -18,7 +17,7 @@ export const Balance = memo(() => {
 
   const {
     user: {
-      metadata: { balance },
+      metadata: { balance_coin, balance_buck = undefined },
     },
   } = useStoreon('user')
 
@@ -29,9 +28,16 @@ export const Balance = memo(() => {
       </h2>
       <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
         <dd className="text-3xl font-semibold text-gray-900 flex items-center">
-          {balance.toLocaleString()}<FaCoins className="ml-2" />
+          {balance_coin.toLocaleString()}<FaCoins className="ml-2" />
         </dd>
       </div>
+      {balance_buck !== undefined && (
+      <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
+        <dd className="text-3xl font-semibold text-gray-900 flex items-center">
+          {balance_buck.toLocaleString()}<FaProductHunt className="ml-2" />
+        </dd>
+      </div>
+      )}
     </div>
   )
 })

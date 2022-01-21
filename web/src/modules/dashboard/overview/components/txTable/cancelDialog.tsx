@@ -5,17 +5,18 @@ import { Transition, Dialog } from '@headlessui/react'
 
 import { createApiInstance } from '../../../../../core/services/createApiInstance'
 import { useStoreon } from '../../../../../context/storeon'
-import { FaCoins } from 'react-icons/fa'
+import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
 interface Props {
   transactionId: string
+  transactionCurrency: 'coin' | 'buck'
   transactionValue: number
   open: boolean
   onClose?(): void
 }
 
 export const CancelDialog: FunctionComponent<Props> = props => {
-  const { open, onClose = () => {}, transactionId, transactionValue } = props
+  const { open, onClose = () => {}, transactionId, transactionValue, transactionCurrency } = props
 
   const {
     user: { auth },
@@ -96,7 +97,7 @@ export const CancelDialog: FunctionComponent<Props> = props => {
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
                       Are you sure you want to cancael this transaction?{' '}
-                      <b className="inline-flex items-center">{transactionValue} <FaCoins className="ml-1" /></b> will be returned to your
+                      <b className="inline-flex items-center">{transactionValue} {transactionCurrency === 'coin' ? <FaCoins className="ml-1" /> : <FaProductHunt className="ml-1" />}</b> will be returned to your
                       balance. This action cannot be undone.
                     </p>
                   </div>

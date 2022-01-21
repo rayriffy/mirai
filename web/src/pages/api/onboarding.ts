@@ -29,7 +29,7 @@ const api: NextApiHandler = async (req, res) => {
           .digest('hex'),
         role: 'default',
         favoriteArcades: [],
-        balance: 0,
+        balance_coin: 0,
       }
 
       firebase

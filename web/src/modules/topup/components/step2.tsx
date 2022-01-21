@@ -71,7 +71,7 @@ export const Step2: FunctionComponent<Props> = props => {
                   </h1>
                   <p className="text-gray-500 text-sm">{targetUser.id}</p>
                 </div>
-                <span className="text-lg">{targetUser.data.balance}฿</span>
+                <span className="text-lg">{targetUser.data.balance_coin}฿</span>
               </div>
             </div>
           </div>
