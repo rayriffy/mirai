@@ -1,7 +1,5 @@
 import { memo, Fragment, useCallback } from 'react'
 
-import Image from 'next/image'
-
 import { Menu, Transition } from '@headlessui/react'
 
 import { classNames } from '../../../../core/services/classNames'
@@ -28,7 +26,7 @@ export const MobileUser = memo(() => {
           <div>
             <Menu.Button className="max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
               <span className="sr-only">Open user menu</span>
-              <Image
+              <img
                 className="h-8 w-8 rounded-full"
                 src={`https://www.gravatar.com/avatar/${emailHash}`}
                 width={32}

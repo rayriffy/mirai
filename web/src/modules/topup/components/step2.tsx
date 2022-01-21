@@ -1,7 +1,5 @@
 import { FunctionComponent, useRef, useState } from 'react'
 
-import Image from 'next/image'
-
 import { UserWithId } from '../../../core/@types/UserWIthId'
 import { classNames } from '../../../core/services/classNames'
 
@@ -56,7 +54,7 @@ export const Step2: FunctionComponent<Props> = props => {
           <div className="overflow-hidden rounded-lg border border-gray-300 bg-white">
             <div className="px-4 py-5 flex">
               <div className="w-10 h-10 flex items-center">
-                <Image
+                <img
                   className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
                   src={`https://www.gravatar.com/avatar/${targetUser.data.emailHash}`}
                   width={40}

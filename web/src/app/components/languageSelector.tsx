@@ -1,27 +1,24 @@
+/* eslint-disable @next/next/no-img-element */
 import { memo, useState, Fragment } from 'react'
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 
 import { Listbox, Transition } from '@headlessui/react'
 import { SelectorIcon } from '@heroicons/react/solid'
 
 import { classNames } from '../../core/services/classNames'
 
-import enFlag from '../../../public/static/flags/US.png'
-import thFlag from '../../../public/static/flags/TH.png'
-
 const languages = [
   {
     id: 'en',
     name: 'English',
-    flag: enFlag,
+    flag: '/static/flags/US.png',
   },
   {
     id: 'th',
     name: 'ไทย',
-    flag: thFlag,
+    flag: '/static/flags/TH.png',
   },
 ]
 
@@ -39,7 +36,7 @@ export const LangaugeSelector = memo(() => {
             <Listbox.Button className="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
               <span className="flex items-center">
                 <span className="h-auto w-6 flex items-center">
-                  <Image src={selected.flag} alt={selected.name} />
+                  <img src={selected.flag} alt={selected.name} />
                 </span>
                 <span className="ml-3 block truncate">{selected.name}</span>
               </span>
@@ -77,7 +74,7 @@ export const LangaugeSelector = memo(() => {
                       <Link href={asPath} locale={language.id}>
                         <a className="flex items-center cursor-default py-2 pl-3 pr-9">
                           <span className="h-auto w-6 flex items-center flex-shrink-0">
-                            <Image src={language.flag} alt={language.name} />
+                            <img src={language.flag} alt={language.name} />
                           </span>
                           <span
                             className={classNames(

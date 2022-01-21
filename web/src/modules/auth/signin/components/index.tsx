@@ -9,11 +9,8 @@ import {
 
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import Image from 'next/image'
 
 import { useLocale } from '../../../../core/services/useLocale'
-
-import logo from '../../../../../public/static/workflow-mark-indigo-600.svg'
 
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 import { useAuthReader } from '../../../../app/services/useAuthReader'
@@ -109,9 +106,9 @@ export const SigninModule: FunctionComponent = () => {
     <Fragment>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="flex justify-center">
-          <Image
+          <img
             className="mx-auto h-12 w-auto"
-            src={logo}
+            src='/static/pamuse.svg'
             width={48}
             height={48}
             alt="Workflow"

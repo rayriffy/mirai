@@ -1,7 +1,4 @@
-/* eslint-disable @next/next/no-img-element */
 import { memo } from 'react'
-
-import Image from 'next/image'
 
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
