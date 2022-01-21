@@ -174,12 +174,12 @@ const { STORE_ID, PROJECT_ID, CLIENT_EMAIL, PRIVATE_KEY } = process.env
             ...(transactionRefetched.data().currency === 'coin'
               ? {
                   balance_coin: firebase.firestore.FieldValue.increment(
-                    Math.abs(transactionRefetched.data().value)
+                    Math.abs(transactionRefetched.data().token)
                   ),
                 }
               : {
                   balance_buck: firebase.firestore.FieldValue.increment(
-                    Math.abs(transactionRefetched.data().value)
+                    Math.abs(transactionRefetched.data().token)
                   ),
                 }),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -190,7 +190,7 @@ const { STORE_ID, PROJECT_ID, CLIENT_EMAIL, PRIVATE_KEY } = process.env
         logger(
           'processor',
           'refunded %d THB to user %s',
-          Math.abs(transactionRefetched.data().value),
+          Math.abs(transactionRefetched.data().token),
           transactionRefetched.data().userId
         )
       }
