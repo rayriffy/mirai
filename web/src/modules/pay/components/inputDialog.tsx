@@ -24,7 +24,6 @@ import { createApiInstance } from '../../../core/services/createApiInstance'
 import { FavoriteButton } from './favoriteButton'
 
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
-import { StoreWithId } from '../../../core/@types/StoreWithId'
 import { useLocale } from '../../../core/services/useLocale'
 
 interface Props {
@@ -76,7 +75,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const [result, setResult] = useState<'success' | 'failed' | undefined>()
 
   const [inputToken, setInputToken] = useState<number>(
-    // 200
+    // 600
     arcadeWithId.data.tokenPerCredit
   )
 
@@ -172,18 +171,6 @@ export const InputDialog: FunctionComponent<Props> = props => {
             </Fragment>
           ) : (
             <Fragment>
-              {/* <div className="my-6 text-center flex justify-center">
-                <div className="relative mt-2">
-                  <h1 className="text-3xl font-bold">
-                    ฿{price.toLocaleString()}
-                  </h1>
-                  {isDiscounted && (
-                    <h2 className="absolute -right-8 -top-5 text-lg font-medium line-through text-gray-700">
-                      ฿{original.toLocaleString()}
-                    </h2>
-                  )}
-                </div>
-              </div> */}
               <div className="my-2 mx-6">
                 <div className="">
                   <label
