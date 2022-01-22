@@ -6,6 +6,7 @@ import { Transition } from '@headlessui/react'
 
 import { MobileNavbar } from './navbar/mobile'
 import { Offline } from './offline'
+import { getPamuseUrl } from '../../services/getPamuseUrl'
 
 interface Props {
   show?: boolean
@@ -50,7 +51,7 @@ export const MobileOverlay = memo<Props>(props => {
           <div className="flex-shrink-0 flex items-center px-4">
             <img
               className="h-8 w-auto"
-              src="/static/pamuse.svg"
+              src={getPamuseUrl()}
               alt="Pradit Amusement"
             />
           </div>

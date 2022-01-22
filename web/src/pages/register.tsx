@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
 
 import { useLocale } from '../core/services/useLocale'
 import { createFirebaseInstance } from '../core/services/createFirebaseInstance'
+import { getPamuseUrl } from '../app/services/getPamuseUrl'
 
 const Page: NextPage = () => {
   const { push } = useRouter()
@@ -72,7 +73,7 @@ const Page: NextPage = () => {
         <div className="flex justify-center">
           <img
             className="mx-auto h-12 w-auto"
-            src='/static/pamuse.svg'
+            src={getPamuseUrl()}
             width={48}
             height={48}
             alt="Workflow"

@@ -24,6 +24,7 @@ import { ssoProviders } from '../constants/ssoProviders'
 
 import { XCircleIcon } from '@heroicons/react/outline'
 import { useStoreon } from '../../../../context/storeon'
+import { getPamuseUrl } from '../../../../app/services/getPamuseUrl'
 
 export const SigninModule: FunctionComponent = () => {
   useAuthReader()
@@ -108,7 +109,7 @@ export const SigninModule: FunctionComponent = () => {
         <div className="flex justify-center">
           <img
             className="mx-auto h-12 w-auto"
-            src='/static/pamuse.svg'
+            src={getPamuseUrl()}
             width={48}
             height={48}
             alt="Workflow"

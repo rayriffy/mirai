@@ -5,6 +5,7 @@ import { DesktopNavbar } from '../navbar/desktop'
 import { DesktopUser } from '../user/desktop'
 
 import { Offline } from '../offline'
+import { getPamuseUrl } from '../../../services/getPamuseUrl'
 
 export const DesktopHeader = memo(() => {
   return (
@@ -13,7 +14,7 @@ export const DesktopHeader = memo(() => {
         <div className="flex items-center flex-shrink-0 px-6">
           <img
             className="h-8 w-auto"
-            src="/static/pamuse.svg"
+            src={getPamuseUrl()}
             alt="Pradit Amusement"
           />
         </div>
