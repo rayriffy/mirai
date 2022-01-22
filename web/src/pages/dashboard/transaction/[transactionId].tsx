@@ -38,7 +38,7 @@ const Page: NextPage<Props> = props => {
   })
 
   return (
-    <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
+    <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6 max-w-6xl mx-auto">
       <div className="mb-6 mt-8">
         <h1 className="text-4xl font-bold">
           {locale(`type_${transactionWithId.data.type}`)}
