@@ -43,7 +43,7 @@ const Page: NextPage<Props> = props => {
           <span className="mx-2">·</span>
           <span className="flex items-center">
             <a
-              href={`https://www.google.com/maps?q=loc:${storeWithId.data.location.latitude},${storeWithId.data.location.longitude}`}
+              href={`https://www.google.com/maps?q=${storeWithId.data.location.latitude},${storeWithId.data.location.longitude}`}
               className="flex items-center"
               target="_blank"
               rel="noopener noreferrer"

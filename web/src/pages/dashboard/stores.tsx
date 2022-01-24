@@ -183,7 +183,7 @@ const Page: NextPage<Props> = props => {
                     </Fragment>
                   )}
                   <a
-                    href={`https://www.google.com/maps?q=loc:${store.data.location.latitude},${store.data.location.longitude}`}
+                    href={`https://www.google.com/maps?q=${store.data.location.latitude},${store.data.location.longitude}`}
                     className="flex items-center"
                     target="_blank"
                     rel="noopener noreferrer"
