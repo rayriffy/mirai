@@ -2,8 +2,11 @@ import { Fragment, useState, useEffect, useMemo } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
-import dayjs from 'dayjs'
 import { FaCoins, FaProductHunt } from 'react-icons/fa'
+
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import 'dayjs/locale/th'
 
 import { useLocale } from '../../../core/services/useLocale'
 import { RelativeTime } from '../../../modules/dashboard/overview/components/txTable/relativeTime'
@@ -11,6 +14,8 @@ import { DetailedStep } from '../../../core/components/detailedStep'
 
 import { TransactionWithId } from '../../../core/@types/TransactionWithId'
 import { Transaction } from '../../../core/@types/firebase/Transaction'
+
+dayjs.extend(localizedFormat)
 
 interface Props {
   transactionWithId: TransactionWithId
@@ -36,6 +41,9 @@ const Page: NextPage<Props> = props => {
       key_amount: 'Amount',
       key_created: 'Created at',
       key_updated: 'Updated at',
+      wallet: 'Wallet',
+      tx_header: 'Transaction information',
+      tx_subheader: 'Detailed description of the transaction.',
     },
     th: {
       type_topup: 'เติมเงิน',
@@ -53,13 +61,16 @@ const Page: NextPage<Props> = props => {
       key_amount: 'จำนวนเหรียญ',
       key_created: 'สร้างเมื่อ',
       key_updated: 'อัพเดทเมื่อ',
+      wallet: 'กระเป๋าเหรียญ',
+      tx_header: 'ข้อมูลคำสั่งซื้อ',
+      tx_subheader: 'ข้อมูลเกี่ยวกับคำสั่งซื้อแบบละเอียด',
     },
   })
 
   const keyValues = useMemo(
     () => [
       [locale('key_ref'), transactionWithId.id],
-      [locale('key_type'), transactionWithId.data.type],
+      [locale('key_type'), locale(`type_${transactionWithId.data.type}`)],
       [locale('key_status'), transactionWithId.data.status],
       ...(transactionWithId.data.type === 'payment'
         ? [
@@ -82,11 +93,15 @@ const Page: NextPage<Props> = props => {
       ],
       [
         locale('key_created'),
-        dayjs(new Date(transactionWithId.data.createdAt as any)).toISOString(),
+        dayjs(new Date(transactionWithId.data.createdAt as any))
+          .locale(detectedLocale)
+          .format('LLL'),
       ],
       [
         locale('key_updated'),
-        dayjs(new Date(transactionWithId.data.updatedAt as any)).toISOString(),
+        dayjs(new Date(transactionWithId.data.updatedAt as any))
+          .locale(detectedLocale)
+          .format('LLL'),
       ],
     ],
     [detectedLocale]
@@ -112,48 +127,52 @@ const Page: NextPage<Props> = props => {
         <div className="col-span-1 space-y-4">
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="px-4 py-5 sm:p-6">
-              <DetailedStep
-                details={[
-                  locale('step_payment_1'),
-                  locale('step_payment_2'),
-                  locale(
-                    transactionWithId.data.status === 'cancelled'
-                      ? 'step_payment_cancel'
-                      : transactionWithId.data.status === 'failed'
-                      ? 'step_payment_failed'
-                      : 'step_payment_3'
-                  ),
-                ]}
-                currentIndex={
-                  transactionWithId.data.status === 'pending'
-                    ? 0
-                    : transactionWithId.data.status === 'processing'
-                    ? 1
-                    : 2
-                }
-                currentStatus={
-                  ['cancelled', 'failed'].includes(
-                    transactionWithId.data.status
-                  )
-                    ? 'fail'
-                    : transactionWithId.data.status === 'success'
-                    ? 'success'
-                    : 'progress'
-                }
-              />
+              {transactionWithId.data.type === 'payment' ? (
+                <DetailedStep
+                  details={[
+                    locale('step_payment_1'),
+                    locale('step_payment_2'),
+                    locale(
+                      transactionWithId.data.status === 'cancelled'
+                        ? 'step_payment_cancel'
+                        : transactionWithId.data.status === 'failed'
+                        ? 'step_payment_failed'
+                        : 'step_payment_3'
+                    ),
+                  ]}
+                  currentIndex={
+                    transactionWithId.data.status === 'pending'
+                      ? 0
+                      : transactionWithId.data.status === 'processing'
+                      ? 1
+                      : 2
+                  }
+                  currentStatus={
+                    ['cancelled', 'failed'].includes(
+                      transactionWithId.data.status
+                    )
+                      ? 'fail'
+                      : transactionWithId.data.status === 'success'
+                      ? 'success'
+                      : 'progress'
+                  }
+                />
+              ) : (
+                <>Topup detailed step</>
+              )}
             </div>
           </div>
-          {transactionWithId.data.type === 'payment' && (
+          {/* {transactionWithId.data.type === 'payment' && ( */}
             <div className="bg-white overflow-hidden shadow rounded-lg">
               <div className="p-6">
                 <div className="flex justify-between items-center">
                   <div>
                     <h1 className="text-gray-800 font-semibold text-xl">
-                      {transactionWithId.data.arcadeName}
+                      {transactionWithId.data.type === 'payment' ? transactionWithId.data.arcadeName : transactionWithId.data.type === 'topup' ? locale('wallet') : '#'}
                     </h1>
                     <div className="mt-0.5">
                       <h2 className="text-gray-500 text-sm">
-                        {transactionWithId.data.storeName}
+                      {transactionWithId.data.type === 'payment' ? transactionWithId.data.storeName : transactionWithId.data.type === 'topup' ? transactionWithId.data.userId : '#'}
                       </h2>
                     </div>
                   </div>
@@ -170,16 +189,16 @@ const Page: NextPage<Props> = props => {
                 </div>
               </div>
             </div>
-          )}
+          {/*  )} */}
         </div>
         <div className="col-span-1 md:col-span-2 lg:col-span-3">
           <div className="bg-white shadow overflow-hidden rounded-lg">
             <div className="px-4 py-5 sm:px-6">
               <h3 className="text-lg leading-6 font-medium text-gray-900">
-                Transaction information
+                {locale('tx_header')}
               </h3>
               <p className="mt-1 max-w-2xl text-sm text-gray-500">
-                Detailed description of the transaction.
+                {locale('tx_subheader')}
               </p>
             </div>
             <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
