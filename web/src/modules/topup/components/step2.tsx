@@ -5,6 +5,7 @@ import { classNames } from '../../../core/services/classNames'
 
 import { useStoreon } from '../../../context/storeon'
 import { createApiInstance } from '../../../core/services/createApiInstance'
+import { FaCoins } from 'react-icons/fa'
 
 interface Props {
   targetUser: UserWithId
@@ -53,23 +54,23 @@ export const Step2: FunctionComponent<Props> = props => {
         <div className="mb-4">
           <div className="overflow-hidden rounded-lg border border-gray-300 bg-white">
             <div className="px-4 py-5 flex">
-              <div className="w-10 h-10 flex items-center">
-                <img
-                  className="w-10 h-10 bg-gray-300 rounded-full flex-shrink-0"
-                  src={`https://www.gravatar.com/avatar/${targetUser.data.emailHash}`}
-                  width={40}
-                  height={40}
-                  alt=""
-                />
-              </div>
               <div className="w-full flex justify-between items-center ml-2">
-                <div>
+                <div className="flex items-center">
+                  <img
+                    className="w-10 h-10 bg-gray-300 rounded-full"
+                    src={`https://www.gravatar.com/avatar/${targetUser.data.emailHash}`}
+                    width={40}
+                    height={40}
+                    alt=""
+                  />
+                  <div className="ml-2">
                   <h1 className="font-semibold">
                     {targetUser.data.displayName}
                   </h1>
                   <p className="text-gray-500 text-sm">{targetUser.id}</p>
+                  </div>
                 </div>
-                <span className="text-lg">{targetUser.data.balance_coin}฿</span>
+                <span className="text-lg flex items-center">{targetUser.data.balance_coin} <FaCoins className="ml-2" /></span>
               </div>
             </div>
           </div>
