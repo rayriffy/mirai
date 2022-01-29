@@ -28,7 +28,7 @@ h6 {
 
 /* Styling for react-datepicker */
 .react-datepicker__input-container input {
-  @apply block w-full text-base md:text-sm bg-white border border-gray-300 rounded shadow-sm form-input
+  @apply block w-full text-base md:text-sm bg-white border border-gray-300 rounded shadow-sm
 }
 
 .react-datepicker-popper {
