@@ -29,6 +29,8 @@
     "@headlessui/react": "^1.4.3",
     "@heroicons/react": "^1.0.4",
     "@next/bundle-analyzer": "^12.0.8",
+    "@nivo/bar": "^0.79.1",
+    "@nivo/core": "^0.79.0",
     "@storeon/crosstab": "^1.0.2",
     "@storeon/localstorage": "^1.4.0",
     "@tailwindcss/aspect-ratio": "^0.4.0",
