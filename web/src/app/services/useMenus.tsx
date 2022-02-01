@@ -96,9 +96,19 @@ export const useMenus = () => {
         ? [
             {
               icon: PuzzleIcon,
-              link: '/staff',
+              link: '/dashboard/staff',
               name: locale('staff'),
               match: ['/dashboard/staff'],
+            },
+          ]
+        : []),
+      ...(role === 'admin'
+        ? [
+            {
+              icon: PuzzleIcon,
+              link: '/dashboard/admin',
+              name: locale('admin'),
+              match: ['/dashboard/admin'],
             },
           ]
         : []),

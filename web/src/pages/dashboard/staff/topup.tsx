@@ -2,11 +2,11 @@ import { Fragment, useState, useEffect } from 'react'
 
 import { NextPage } from 'next'
 
-import { Step } from '../../core/components/step'
-import { Step1 } from '../../modules/topup/components/step1'
-import { Step2 } from '../../modules/topup/components/step2'
+import { Step } from '../../../core/components/step'
+import { Step1 } from '../../../modules/topup/components/step1'
+import { Step2 } from '../../../modules/topup/components/step2'
 
-import { UserWithId } from '../../core/@types/UserWIthId'
+import { UserWithId } from '../../../core/@types/UserWIthId'
 
 const Page: NextPage = () => {
   const [targetUser, setTargetUser] = useState<UserWithId | null>(null)

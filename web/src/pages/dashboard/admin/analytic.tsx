@@ -5,12 +5,12 @@ import { GetServerSideProps, NextPage } from 'next'
 import dayjs from 'dayjs'
 import DatePicker from 'react-datepicker'
 
-import { startOfDay } from '../../modules/admin/analytic/services/startOfDay'
+import { startOfDay } from '../../../modules/admin/analytic/services/startOfDay'
 
-import { Store } from '../../core/@types/firebase/Store'
-import { endOfDay } from '../../modules/admin/analytic/services/endOfDay'
-import { StoreSelector } from '../../modules/admin/analytic/components/storeSelector'
-import { TransactionAnalytic } from '../../modules/admin/analytic/@types/TransactionAnalytic'
+import { Store } from '../../../core/@types/firebase/Store'
+import { endOfDay } from '../../../modules/admin/analytic/services/endOfDay'
+import { StoreSelector } from '../../../modules/admin/analytic/components/storeSelector'
+import { TransactionAnalytic } from '../../../modules/admin/analytic/@types/TransactionAnalytic'
 import {
   collection,
   getFirestore,
@@ -18,9 +18,9 @@ import {
   query,
   where,
 } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
-import { Transaction } from '../../core/@types/firebase/Transaction'
-import { BarRenderer } from '../../modules/admin/analytic/components/barRenderer'
+import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
+import { Transaction } from '../../../core/@types/firebase/Transaction'
+import { BarRenderer } from '../../../modules/admin/analytic/components/barRenderer'
 
 interface Props {
   stores: {
@@ -168,7 +168,7 @@ const Page: NextPage = props => {
 export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   const { default: firebase } = await import('firebase-admin')
   const { initializeFirebase } = await import(
-    '../../modules/api/services/initializeFirebase'
+    '../../../modules/api/services/initializeFirebase'
   )
 
   try {
