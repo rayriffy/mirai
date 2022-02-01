@@ -104,40 +104,56 @@ const Page: NextPage = props => {
       <div className="mb-6 mt-8">
         <h1 className="text-4xl font-bold">Analytics</h1>
       </div>
-      <div className="flex space-x-4">
+      <div className="block sm:flex space-y-4 sm:space-y-0 sm:space-x-4">
         <StoreSelector onSelect={storeId => setSelectedStoreId(storeId)} />
-        <div className="relative w-40">
-          <DatePicker
-            selected={selectedStartRange}
-            onChange={date => {
-              // if select start date after end date, set end date to 7 days ahead
-              if (startOfDay(date).isAfter(selectedEndRange)) {
-                setSelectedEndRange(
-                  endOfDay(dayjs(date).add(7, 'day')).toDate()
-                )
-              }
-              setSelectedStartRange(startOfDay(date).toDate())
-            }}
-            selectsStart
-            startDate={selectedStartRange}
-            endDate={selectedEndRange}
-            nextMonthButtonLabel=">"
-            previousMonthButtonLabel="<"
-            popperClassName="react-datepicker-left"
-          />
+        <div className="relative w-full sm:w-40">
+          <label
+            htmlFor="startRange"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Start date
+          </label>
+          <div className="mt-1">
+            <DatePicker
+              selected={selectedStartRange}
+              onChange={date => {
+                // if select start date after end date, set end date to 7 days ahead
+                if (startOfDay(date).isAfter(selectedEndRange)) {
+                  setSelectedEndRange(
+                    endOfDay(dayjs(date).add(7, 'day')).toDate()
+                  )
+                }
+                setSelectedStartRange(startOfDay(date).toDate())
+              }}
+              selectsStart
+              startDate={selectedStartRange}
+              endDate={selectedEndRange}
+              nextMonthButtonLabel=">"
+              previousMonthButtonLabel="<"
+              popperClassName="react-datepicker-left"
+            />
+          </div>
         </div>
-        <div className="relative w-40">
-          <DatePicker
-            selected={selectedEndRange}
-            onChange={date => setSelectedEndRange(endOfDay(date).toDate())}
-            selectsEnd
-            startDate={selectedStartRange}
-            endDate={selectedEndRange}
-            nextMonthButtonLabel=">"
-            previousMonthButtonLabel="<"
-            popperClassName="react-datepicker-right"
-            filterDate={date => startOfDay(date).isAfter(selectedStartRange)}
-          />
+        <div className="relative w-full sm:w-40">
+          <label
+            htmlFor="endRange"
+            className="block text-sm font-medium text-gray-700"
+          >
+            End date
+          </label>
+          <div className="mt-1">
+            <DatePicker
+              selected={selectedEndRange}
+              onChange={date => setSelectedEndRange(endOfDay(date).toDate())}
+              selectsEnd
+              startDate={selectedStartRange}
+              endDate={selectedEndRange}
+              nextMonthButtonLabel=">"
+              previousMonthButtonLabel="<"
+              popperClassName="react-datepicker-right"
+              filterDate={date => startOfDay(date).isAfter(selectedStartRange)}
+            />
+          </div>
         </div>
       </div>
       <div className="mt-4">
