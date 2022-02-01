@@ -40,13 +40,15 @@ export const useMenus = () => {
       home: 'Home',
       arcades: 'Arcades',
       stores: 'Stores',
-      staff: 'Staff mode',
+      staff: 'Staff dashboard',
+      admin: 'Admin dashboard',
     },
     th: {
       home: 'หน้าหลัก',
       arcades: 'ตู้เกม',
       stores: 'สาขาร้าน',
-      staff: 'สำหรับพนักงาน',
+      staff: 'แดชบอร์ดพนักงาน',
+      admin: 'แดชบอร์ดแอดมิน',
     },
   })
 

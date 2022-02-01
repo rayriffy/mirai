@@ -36,12 +36,12 @@ const Page: NextPage = props => {
   )
 
   const [selectedStartRange, setSelectedStartRange] = useState<Date>(
-    dayjs('2022-01-01').toDate()
-    // startOfDay(dayjs().subtract(7, 'day')).toDate()
+    // dayjs('2022-01-01').toDate()
+    startOfDay(dayjs().subtract(7, 'day')).toDate()
   )
   const [selectedEndRange, setSelectedEndRange] = useState<Date>(
-    dayjs('2022-01-31').toDate()
-    // endOfDay(dayjs()).toDate()
+    // dayjs('2022-01-31').toDate()
+    endOfDay(dayjs()).toDate()
   )
 
   const [analyticItems, setAnalyticItems] = useState<
