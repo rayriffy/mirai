@@ -86,10 +86,7 @@ export const BarRenderer = memo<Props>(props => {
         keys={['pending', 'processing', 'success', 'failed', 'cancelled']}
         indexBy="titleKey"
         margin={{ top: 50, bottom: 50, left: 50, right: 125 }}
-        // padding={0.3}
-        // valueScale={{ type: 'linear' }}
-        // indexScale={{ type: 'band', round: true }}
-        // colors={{ scheme: 'nivo' }}
+        padding={0.3}
         layout={isScreenTooSmall ? 'horizontal' : 'vertical'}
         labelSkipWidth={12}
         labelSkipHeight={12}
