@@ -101,6 +101,9 @@ const Page: NextPage = props => {
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8">
+      <div className="mb-6 mt-8">
+        <h1 className="text-4xl font-bold">Analytics</h1>
+      </div>
       <div className="flex space-x-4">
         <StoreSelector onSelect={storeId => setSelectedStoreId(storeId)} />
         <div className="relative w-40">

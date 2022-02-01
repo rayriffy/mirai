@@ -32,7 +32,7 @@ export const StoreSelector = memo<Props>(props => {
   }, [])
 
   return (
-    <div className="flex">
+    <div className="flex max-w-xs w-full">
       <select
         className={
           classNames(
