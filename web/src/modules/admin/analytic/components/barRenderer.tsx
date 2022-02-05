@@ -47,15 +47,27 @@ export const BarRenderer = memo<Props>(props => {
       const res = Array.from({ length: diffRange + 1 }).map((_, i) => {
         const titleKey = dayjs(startRange).add(i, 'day').format('D MMM')
 
-        const targetGroupItems = Object.entries(groupedByDay).find(([key]) => key === titleKey)
+        const targetGroupItems = Object.entries(groupedByDay).find(
+          ([key]) => key === titleKey
+        )
 
         return {
           titleKey,
-          pending: targetGroupItems ? sumByStatus(targetGroupItems[1], 'pending') : 0,
-          processing: targetGroupItems ? sumByStatus(targetGroupItems[1], 'processing') : 0,
-          success: targetGroupItems ? sumByStatus(targetGroupItems[1], 'success') : 0,
-          failed: targetGroupItems ? sumByStatus(targetGroupItems[1], 'failed') : 0,
-          cancelled: targetGroupItems ? sumByStatus(targetGroupItems[1], 'cancelled') : 0,
+          pending: targetGroupItems
+            ? sumByStatus(targetGroupItems[1], 'pending')
+            : 0,
+          processing: targetGroupItems
+            ? sumByStatus(targetGroupItems[1], 'processing')
+            : 0,
+          success: targetGroupItems
+            ? sumByStatus(targetGroupItems[1], 'success')
+            : 0,
+          failed: targetGroupItems
+            ? sumByStatus(targetGroupItems[1], 'failed')
+            : 0,
+          cancelled: targetGroupItems
+            ? sumByStatus(targetGroupItems[1], 'cancelled')
+            : 0,
         }
       })
 
@@ -85,6 +97,22 @@ export const BarRenderer = memo<Props>(props => {
         data={barData}
         keys={['pending', 'processing', 'success', 'failed', 'cancelled']}
         indexBy="titleKey"
+        colors={bar => {
+          switch (bar.id) {
+            case 'failed':
+              return 'rgb(244, 117, 96)'
+            case 'success':
+              return 'rgb(97, 205, 187)'
+            case 'cancelled':
+              return 'rgb(232, 193, 160)'
+            case 'processing':
+              return 'rgb(241, 225, 91)'
+            case 'pending':
+              return 'rgb(242, 242, 242)'
+            default:
+              return undefined
+          }
+        }}
         margin={{ top: 50, bottom: 50, left: 50, right: 125 }}
         padding={0.3}
         layout={isScreenTooSmall ? 'horizontal' : 'vertical'}
