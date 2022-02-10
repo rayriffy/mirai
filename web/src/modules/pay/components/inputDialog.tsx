@@ -75,7 +75,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
   const [result, setResult] = useState<'success' | 'failed' | undefined>()
 
   const [inputToken, setInputToken] = useState<number>(
-    // 600
+    // 2800
     arcadeWithId.data.tokenPerCredit
   )
 
