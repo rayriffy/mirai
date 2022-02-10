@@ -85,6 +85,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   const { initializeFirebase } = await import(
     '../../../modules/api/services/initializeFirebase'
   )
+  const { default: sortBy } = await import('lodash/sortBy')
 
   try {
     initializeFirebase()
@@ -126,7 +127,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
 
       return {
         props: {
-          arcadesWithId: arcades,
+          arcadesWithId: sortBy(arcades, [arcade => arcade.data.name.toLowerCase()]),
+          // arcadesWithId: arcades,
           storeWithId: store,
         },
       }

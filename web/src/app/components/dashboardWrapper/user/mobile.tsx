@@ -49,7 +49,7 @@ export const MobileUser = memo(() => {
               static
               className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
             >
-              <div className="py-1">
+              {/* <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <a
@@ -91,7 +91,7 @@ export const MobileUser = memo(() => {
                     </a>
                   )}
                 </Menu.Item>
-              </div>
+              </div> */}
               <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (

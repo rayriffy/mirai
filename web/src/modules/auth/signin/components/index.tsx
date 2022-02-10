@@ -22,7 +22,7 @@ import {
 } from 'firebase/auth'
 import { ssoProviders } from '../constants/ssoProviders'
 
-import { XCircleIcon } from '@heroicons/react/outline'
+import { ExclamationIcon, XCircleIcon } from '@heroicons/react/solid'
 import { useStoreon } from '../../../../context/storeon'
 import { getPamuseUrl } from '../../../../app/services/getPamuseUrl'
 
@@ -129,6 +129,17 @@ export const SigninModule: FunctionComponent = () => {
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+        <div className="mx-auto mb-6">
+          <div className="bg-white overflow-hidden shadow rounded-lg mx-2 sm:mx-0">
+            <div className="px-4 py-5 sm:p-6 flex items-center">
+              <ExclamationIcon className="w-10 h-10 text-yellow-600" />
+              <div className="ml-4 mx-auto flex-1">
+                <h1 className="font-semibold text-lg text-gray-900">Early access</h1>
+                <p className="text-gray-700 text-sm">Mirai system is still under ongoing alpha test. Unauthorized testers are at risk for data loss.</p>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           {error !== null && (
             <div className="rounded-md bg-yellow-50 p-4 mb-6">
