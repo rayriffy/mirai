@@ -73,10 +73,10 @@ export const InputDialog: FunctionComponent<Props> = props => {
   })
 
   const [paymentProcessing, setPaymentProcessing] = useState<boolean>(false)
-  const [result, setResult] = useState<'success' | 'failed' | undefined>('success')
-  // const [result, setResult] = useState<'success' | 'failed' | undefined>()
-  const [transactionId, setTransactionId] = useState<string | null>('rOloNOexgdfFNVeh2sNL')
-  // const [transactionId, setTransactionId] = useState<string | null>(null)
+  // const [result, setResult] = useState<'success' | 'failed' | undefined>('success')
+  const [result, setResult] = useState<'success' | 'failed' | undefined>()
+  // const [transactionId, setTransactionId] = useState<string | null>('rOloNOexgdfFNVeh2sNL')
+  const [transactionId, setTransactionId] = useState<string | null>(null)
 
   const [inputToken, setInputToken] = useState<number>(
     // 2800
