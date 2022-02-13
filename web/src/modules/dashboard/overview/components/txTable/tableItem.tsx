@@ -14,7 +14,7 @@ import { classNames } from '../../../../../core/services/classNames'
 import { useLocale } from '../../../../../core/services/useLocale'
 
 import { CancelDialog } from './cancelDialog'
-import { StatusBadge } from './statusBadge'
+import { StatusBadge } from '../../../../../core/components/statusBadge'
 import { RelativeTime } from './relativeTime'
 
 import { TransactionWithId } from '../../../../../core/@types/TransactionWithId'

@@ -1,16 +1,17 @@
 import { memo, useMemo } from 'react'
 
-import { useLocale } from '../../../../../core/services/useLocale'
-import { classNames } from '../../../../../core/services/classNames'
+import { useLocale } from '../services/useLocale'
+import { classNames } from '../services/classNames'
 
-import { Transaction } from '../../../../../core/@types/firebase/Transaction'
+import { Transaction } from '../@types/firebase/Transaction'
 
 interface Props {
   status: Transaction['status']
+  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
 }
 
 export const StatusBadge = memo<Props>(props => {
-  const { status } = props
+  const { status, size } = props
 
   const { locale } = useLocale({
     en: {
@@ -44,8 +45,9 @@ export const StatusBadge = memo<Props>(props => {
   return (
     <span
       className={classNames(
+        size === 'md' ? 'text-base' : size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-lg' : size === 'xl' ? 'text-xl' : 'text-xs',
         color,
-        'inline-flex items-center px-2 py-0.5 rounded text-xs font-medium'
+        'inline-flex items-center px-2 py-0.5 rounded font-medium'
       )}
     >
       {locale(status)}

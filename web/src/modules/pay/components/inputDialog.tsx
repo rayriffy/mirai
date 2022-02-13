@@ -25,6 +25,7 @@ import { FavoriteButton } from './favoriteButton'
 
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { useLocale } from '../../../core/services/useLocale'
+import { TransactionSmall } from './transactionSmall'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -72,7 +73,10 @@ export const InputDialog: FunctionComponent<Props> = props => {
   })
 
   const [paymentProcessing, setPaymentProcessing] = useState<boolean>(false)
-  const [result, setResult] = useState<'success' | 'failed' | undefined>()
+  const [result, setResult] = useState<'success' | 'failed' | undefined>('success')
+  // const [result, setResult] = useState<'success' | 'failed' | undefined>()
+  const [transactionId, setTransactionId] = useState<string | null>('rOloNOexgdfFNVeh2sNL')
+  // const [transactionId, setTransactionId] = useState<string | null>(null)
 
   const [inputToken, setInputToken] = useState<number>(
     // 2800
@@ -125,10 +129,12 @@ export const InputDialog: FunctionComponent<Props> = props => {
 
     try {
       const apiInstance = await createApiInstance(auth)
-      await apiInstance.post('/api/pay', {
+      const { data: paymentResult } = await apiInstance.post<{ data: string }>('/api/pay', {
         targetArcade: arcadeWithId.id,
         token: inputToken,
       })
+
+      setTransactionId(paymentResult.data)
       setResult('success')
     } catch (e) {
       console.error(e)
@@ -168,6 +174,9 @@ export const InputDialog: FunctionComponent<Props> = props => {
                   result === 'success' ? 'successMessage' : 'failedMessage'
                 )}
               </p>
+              {transactionId !== null ? (
+                <TransactionSmall transactionId={transactionId} />
+              ) : null}
             </Fragment>
           ) : (
             <Fragment>

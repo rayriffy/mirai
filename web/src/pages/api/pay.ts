@@ -80,11 +80,12 @@ const api: NextApiHandler = async (req, res) => {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
 
-          await Promise.all([updatePromise, transactionPromise])
+          const [updateedUserDoc, transactionDoc] = await Promise.all([updatePromise, transactionPromise])
 
           return res.status(201).send({
             success: true,
             message: 'transaction added',
+            data: transactionDoc.id,
           })
         } else {
           return res.status(400).send({
