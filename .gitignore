@@ -1,6 +1,15 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/macos,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=macos,node
+# Created by https://www.toptal.com/developers/gitignore/api/xcode,swift,macos,node,firebase
+# Edit at https://www.toptal.com/developers/gitignore?templates=xcode,swift,macos,node,firebase
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
 
 ### macOS ###
 # General
@@ -39,6 +48,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+.pnpm-debug.log*
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -75,8 +85,8 @@ build/Release
 node_modules/
 jspm_packages/
 
-# TypeScript v1 declaration files
-typings/
+# Snowpack dependency directory (https://snowpack.dev/)
+web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
@@ -86,6 +96,9 @@ typings/
 
 # Optional eslint cache
 .eslintcache
+
+# Optional stylelint cache
+.stylelintcache
 
 # Microbundle cache
 .rpt2_cache/
@@ -102,10 +115,12 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# dotenv environment variable files
 .env
-.env.test
-.env*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -113,6 +128,7 @@ typings/
 
 # Next.js build output
 .next
+out
 
 # Nuxt.js build / generate output
 .nuxt
@@ -126,6 +142,12 @@ dist
 
 # vuepress build output
 .vuepress/dist
+
+# vuepress v2.x temp and cache directory
+.temp
+
+# Docusaurus cache and generated files
+.docusaurus
 
 # Serverless directories
 .serverless/
@@ -142,4 +164,118 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# End of https://www.toptal.com/developers/gitignore/api/macos,node
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+### Node Patch ###
+# Serverless Webpack directories
+.webpack/
+
+# Optional stylelint cache
+
+# SvelteKit build / generate output
+.svelte-kit
+
+### Swift ###
+# Xcode
+#
+# gitignore contributors: remember to update Global/Xcode.gitignore, Objective-C.gitignore & Swift.gitignore
+
+## User settings
+xcuserdata/
+
+## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
+*.xcscmblueprint
+*.xccheckout
+
+## compatibility with Xcode 3 and earlier (ignoring not required starting Xcode 4)
+build/
+DerivedData/
+*.moved-aside
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+# Add this line if you want to avoid checking in source code from Swift Package Manager dependencies.
+# Packages/
+# Package.pins
+# Package.resolved
+# *.xcodeproj
+# Xcode automatically generates this directory with a .xcworkspacedata file and xcuserdata
+# hence it is not needed unless you have added a package configuration file to your project
+# .swiftpm
+
+.build/
+
+# CocoaPods
+# We recommend against adding the Pods directory to your .gitignore. However
+# you should judge for yourself, the pros and cons are mentioned at:
+# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
+# Pods/
+# Add this line if you want to avoid checking in source code from the Xcode workspace
+# *.xcworkspace
+
+# Carthage
+# Add this line if you want to avoid checking in source code from Carthage dependencies.
+# Carthage/Checkouts
+
+Carthage/Build/
+
+# Accio dependency management
+Dependencies/
+.accio/
+
+# fastlane
+# It is recommended to not store the screenshots in the git repo.
+# Instead, use fastlane to re-generate the screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/#source-control
+
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# Code Injection
+# After new code Injection tools there's a generated folder /iOSInjectionProject
+# https://github.com/johnno1962/injectionforxcode
+
+iOSInjectionProject/
+
+### Xcode ###
+
+## Xcode 8 and earlier
+
+### Xcode Patch ###
+*.xcodeproj/*
+!*.xcodeproj/project.pbxproj
+!*.xcodeproj/xcshareddata/
+!*.xcworkspace/contents.xcworkspacedata
+/*.gcno
+**/xcshareddata/WorkspaceSettings.xcsettings
+
+# End of https://www.toptal.com/developers/gitignore/api/xcode,swift,macos,node,firebase
+
+swiftui/Mirai/GoogleService-Info.plist
