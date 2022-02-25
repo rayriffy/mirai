@@ -80,7 +80,7 @@ export const Step2: FunctionComponent<Props> = props => {
         </div>
         <input
           type="text"
-          inputMode="decimal"
+          inputMode="numeric"
           ref={inputRef}
           className={classNames(
             inProgress ? 'bg-gray-200' : 'bg-white',
