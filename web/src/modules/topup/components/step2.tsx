@@ -65,19 +65,22 @@ export const Step2: FunctionComponent<Props> = props => {
                     alt=""
                   />
                   <div className="ml-2">
-                  <h1 className="font-semibold">
-                    {targetUser.data.displayName}
-                  </h1>
-                  <p className="text-gray-500 text-sm">{targetUser.id}</p>
+                    <h1 className="font-semibold">
+                      {targetUser.data.displayName}
+                    </h1>
+                    <p className="text-gray-500 text-sm">{targetUser.id}</p>
                   </div>
                 </div>
-                <span className="text-lg flex items-center">{targetUser.data.balance_coin} <FaCoins className="ml-2" /></span>
+                <span className="text-lg flex items-center">
+                  {targetUser.data.balance_coin} <FaCoins className="ml-2" />
+                </span>
               </div>
             </div>
           </div>
         </div>
         <input
           type="text"
+          inputMode="decimal"
           ref={inputRef}
           className={classNames(
             inProgress ? 'bg-gray-200' : 'bg-white',
