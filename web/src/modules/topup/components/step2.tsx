@@ -33,6 +33,7 @@ export const Step2: FunctionComponent<Props> = props => {
         userId: targetUser.id,
         amount: Number(inputRef.current.value),
       })
+      onNext()
     } catch (e) {
       console.error(e)
     } finally {
