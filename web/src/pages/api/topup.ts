@@ -14,7 +14,6 @@ const api: NextApiHandler = async (req, res) => {
 
       const userData = await getUserAndFilterAuth(req.headers.authorization, [
         'staff',
-        'admin',
       ])
 
       const {
