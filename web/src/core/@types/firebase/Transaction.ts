@@ -5,6 +5,8 @@ export type Transaction = (
       type: 'topup'
       createdBy: string
       userId: string
+      storeId: string
+      storeName: string
     }
   | {
       type: 'payment'

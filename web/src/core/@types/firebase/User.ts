@@ -9,6 +9,8 @@ export interface User {
   favoriteArcades: string[]
   balance_coin: number
   balance_buck?: number
+  staffStoreId?: string
+  staffStoreName?: string
   createdAt: Timestamp
   updatedAt: Timestamp
 }

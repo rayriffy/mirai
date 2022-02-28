@@ -19,6 +19,7 @@ const api: NextApiHandler = async (req, res) => {
 
       const {
         auth: { uid },
+        metadata: { staffStoreId, staffStoreName }
       } = userData
       const { userId, amount } = req.body
 
@@ -30,6 +31,8 @@ const api: NextApiHandler = async (req, res) => {
         token: amount,
         status: 'success',
         currency: 'coin',
+        storeId: staffStoreId,
+        storeName: staffStoreName,
         createdAt: firebase.firestore.Timestamp.fromDate(new Date()),
         updatedAt: firebase.firestore.Timestamp.fromDate(new Date()),
       }
