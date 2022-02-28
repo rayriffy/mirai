@@ -16,8 +16,15 @@ export const useTopupStatistic = (targetDate: Date, storeId: string) => {
   
   const summarizedTopupAmount = useMemo<number>(() => topupTransactions.reduce((acc, val) => acc + val.token, 0), [topupTransactions])
 
+  console.log({ topupTransactions })
+
   useEffect(() => {
     setLoading(true)
+
+    console.log({
+      startDate: `${startOfDay(targetDate).toDate().toLocaleDateString()} ${startOfDay(targetDate).toDate().toLocaleTimeString()}`,
+      endOfDay: `${endOfDay(targetDate).toDate().toLocaleDateString()} ${endOfDay(targetDate).toDate().toLocaleTimeString()}`,
+    })
 
     const listener = onSnapshot(
       query(
@@ -34,7 +41,7 @@ export const useTopupStatistic = (targetDate: Date, storeId: string) => {
     )
 
     return () => listener()
-  }, [[targetDate, storeId]])
+  }, [targetDate, storeId])
 
   return {
     loading,

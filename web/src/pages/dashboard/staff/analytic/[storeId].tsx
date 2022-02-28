@@ -22,14 +22,10 @@ const Page: NextPage<Props> = props => {
 
   const [selectedDate, setSelectedDate] = useState<Date>(
     // dayjs('2022-01-01').toDate()
-    startOfDay(dayjs().subtract(7, 'day')).toDate()
+    startOfDay(dayjs()).toDate()
   )
 
   const { loading, data } = useTopupStatistic(selectedDate, props.storeId)
-
-  useEffect(() => {
-    console.log(props)
-  }, [])
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
@@ -45,7 +41,7 @@ const Page: NextPage<Props> = props => {
             htmlFor="startRange"
             className="block text-sm font-medium text-gray-700"
           >
-            Start date
+            Selected date
           </label>
           <div className="mt-1">
             <DatePicker
@@ -62,7 +58,13 @@ const Page: NextPage<Props> = props => {
         </div>
       </div>
       <div className="mt-6">
-        <p className='font-bold text-lg'>{loading ? 'loading...' : data}</p>
+        {loading  ? 'loading...' : (
+          <div>
+            <h1 className="text-xl font-bold text-gray-900">ยอดรวมเครดิตที่จ่ายให้ลูกค้า</h1>
+            <h2 className="text-sm text-gray-700">ประจำวันที่ {selectedDate.toDateString()}</h2>
+            <p className="mt-1 text-gray-900">{data} เหรียญ</p>
+          </div>
+        )}
       </div>
     </div>
   )
