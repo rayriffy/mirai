@@ -58,11 +58,20 @@ const Page: NextPage<Props> = props => {
         </div>
       </div>
       <div className="mt-6">
-        {loading  ? 'loading...' : (
+        {loading ? (
+          'loading...'
+        ) : (
           <div>
-            <h1 className="text-xl font-bold text-gray-900">ยอดรวมเครดิตที่จ่ายให้ลูกค้า</h1>
-            <h2 className="text-sm text-gray-700">ประจำวันที่ {selectedDate.toDateString()}</h2>
-            <p className="mt-1 text-gray-900">{data} เหรียญ</p>
+            <h1 className="text-xl font-bold text-gray-900">
+              ยอดรวมเครดิตที่จ่ายให้ลูกค้า
+            </h1>
+            <h2 className="text-sm text-gray-700">
+              ประจำวันที่ {selectedDate.toDateString()}
+            </h2>
+            <p className="mt-1 text-gray-900">
+              {data.toLocaleString()} เหรียญ ({(data * 10).toLocaleString()}{' '}
+              บาท)
+            </p>
           </div>
         )}
       </div>

@@ -1,9 +1,26 @@
 import { ChartBarIcon } from '@heroicons/react/solid'
 import ArrowRightIcon from '@heroicons/react/solid/ArrowRightIcon'
 import { NextPage } from 'next'
+import { useMemo } from 'react'
+import { useStoreon } from '../../../context/storeon'
 import { menus } from '../../../modules/staff/dashboard/constants/menus'
 
 const Page: NextPage = () => {
+  const { user } = useStoreon('user')
+
+  const builtMenus = useMemo(() => {
+    return [
+      ...menus,
+      {
+        id: 'analytic',
+        link: `/dashboard/staff/analytic/${user?.metadata?.staffStoreId}`,
+        icon: ChartBarIcon,
+        title: 'Analytics',
+        description: 'Monitor store performance',
+      },
+    ]
+  }, [user?.metadata?.staffStoreId])
+
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
       <div className="mb-6 mt-8">
@@ -15,7 +32,7 @@ const Page: NextPage = () => {
         </p>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-        {menus.map(menu => (
+        {builtMenus.map(menu => (
           <a
             className="col-span-1 rounded-lg p-6 space-y-2 transition border border-gray-200 hover:border-blue-500 hover:text-blue-500 bg-white"
             href={menu.link}
