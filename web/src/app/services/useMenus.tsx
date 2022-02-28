@@ -94,7 +94,7 @@ export const useMenus = () => {
         name: locale('stores'),
         match: ['/dashboard/stores'],
       },
-      ...(role !== 'default'
+      ...(role === 'staff'
         ? [
             {
               icon: PuzzleIcon,
