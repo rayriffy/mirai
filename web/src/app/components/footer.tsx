@@ -16,7 +16,7 @@ export const Footer = memo<Props>(props => {
         </div>
         <div className="mt-8 md:mt-0 md:order-1">
           <p className="text-center text-base text-gray-400">
-            &copy; 2020 Phumrapee Limpianchop. All rights reserved.
+            &copy; 2021-2022 Pradit Amusement. All rights reserved.
           </p>
         </div>
       </div>
