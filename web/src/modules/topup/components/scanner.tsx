@@ -3,7 +3,7 @@ import { Fragment, FunctionComponent, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { useLocale } from '../../../core/services/useLocale'
 
-const QRReader = dynamic(() => import('react-qr-reader').then(o => o.QrReader), { ssr: false })
+const QRReader = dynamic(() => import('react-qr-reader'), { ssr: false })
 
 interface Props {
   onScan?(value: string): void
@@ -37,19 +37,15 @@ export const Scanner: FunctionComponent<Props> = props => {
         </div>
       ) : (
         <QRReader
-          onResult={(result, error) => {
-            if (!!result) {
-              // @ts-ignore
-              onScan(result?.text)
-            }
-  
-            if (!!error) {
-              setIsCameraFail(true)
+          onScan={o => {
+            if (o !== null) {
+              onScan(o)
             }
           }}
-          constraints={{
-            facingMode: 'environment',
+          onError={o => {
+            setIsCameraFail(true)
           }}
+          showViewFinder={false}
           className="w-full"
         />
       )}
