@@ -7,6 +7,7 @@ import { classNames } from '../../../../core/services/classNames'
 import { signOut, getAuth } from 'firebase/auth'
 import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 import { useStoreon } from '../../../../context/storeon'
+import { useLocale } from '../../../../core/services/useLocale'
 
 export const MobileUser = memo(() => {
   const {
@@ -18,6 +19,15 @@ export const MobileUser = memo(() => {
   const onLogout = useCallback(() => {
     signOut(getAuth(createFirebaseInstance()))
   }, [])
+
+  const { locale } = useLocale({
+    en: {
+      logout: 'Logout'
+    },
+    th: {
+      logout: 'ออกจากระบบ'
+    },
+  })
 
   return (
     <Menu as="div" className="ml-3 relative">
@@ -102,7 +112,7 @@ export const MobileUser = memo(() => {
                         'block px-4 py-2 text-sm w-full text-left'
                       )}
                     >
-                      Logout
+                      {locale('logout')}
                     </button>
                   )}
                 </Menu.Item>

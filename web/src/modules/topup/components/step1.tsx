@@ -14,6 +14,8 @@ import { Scanner } from './scanner'
 import { User } from '../../../core/@types/firebase/User'
 import { UserWithId } from '../../../core/@types/UserWIthId'
 import { classNames } from '../../../core/services/classNames'
+import { useLocale } from '../../../core/services/useLocale'
+import { locale } from 'dayjs'
 
 interface Props {
   setTargetUser: Dispatch<SetStateAction<UserWithId>>
@@ -28,6 +30,23 @@ export const Step1: FunctionComponent<Props> = props => {
 
   const [error, setError] = useState<string | null>(null)
   const [inProgress, setInProgress] = useState(false)
+
+  const { locale } = useLocale({
+    en: {
+      title: 'Locate user',
+      desc: 'Scan user QR code or manually type user id below',
+      placeholder: 'User ID',
+      next: 'Next',
+      prev: 'Previous',
+    },
+    th: {
+      title: 'ระบุผู้ใช้ที่จะเติมเงินให้',
+      desc: 'แสกน QR code หรือพิมพ์ id ผู้ใช้ด้านล่าง',
+      placeholder: 'รหัสระบุตัวผู้ใช้',
+      next: 'ต่อไป',
+      prev: 'ย้อนกลับ',
+    },
+  })
 
   const handleSubmit = async () => {
     setError(null)
@@ -72,10 +91,10 @@ export const Step1: FunctionComponent<Props> = props => {
     <div className="border border-gray-200 bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
       <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
         <h3 className="text-lg leading-6 font-medium text-gray-900">
-          Locate user
+          {locale('title')}
         </h3>
         <p className="mt-1 text-sm text-gray-500">
-          Scan user QR code or manually type user id below
+          {locale('desc')}
         </p>
       </div>
       <div className="px-4 py-5 sm:p-6">
@@ -97,7 +116,7 @@ export const Step1: FunctionComponent<Props> = props => {
             inProgress ? 'bg-gray-200' : 'bg-white',
             'shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md'
           )}
-          placeholder="User id"
+          placeholder={locale('placeholder')}
         />
         <div className="pt-4 flex justify-center space-x-4">
           <button
@@ -105,7 +124,7 @@ export const Step1: FunctionComponent<Props> = props => {
             disabled
             className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-gray-100 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 cursor-not-allowed"
           >
-            Previous
+            {locale('prev')}
           </button>
           <button
             type="button"
@@ -118,7 +137,7 @@ export const Step1: FunctionComponent<Props> = props => {
               'transition inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             )}
           >
-            Next
+            {locale('next')}
           </button>
         </div>
       </div>

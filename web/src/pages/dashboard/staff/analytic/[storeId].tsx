@@ -1,16 +1,20 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
-import { useRouter } from 'next/router'
 
 import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import 'dayjs/locale/th'
+
 import DatePicker from 'react-datepicker'
 
-import { endOfDay } from '../../../../modules/admin/analytic/services/endOfDay'
 import { startOfDay } from '../../../../modules/admin/analytic/services/startOfDay'
 
 import { Store } from '../../../../core/@types/firebase/Store'
 import { useTopupStatistic } from '../../../../modules/staff/analytics/services/useTopupStatistic'
+import { useLocale } from '../../../../core/services/useLocale'
+
+dayjs.extend(localizedFormat)
 
 interface Props {
   storeId: string
@@ -21,11 +25,25 @@ const Page: NextPage<Props> = props => {
   const { name, currency } = props.store
 
   const [selectedDate, setSelectedDate] = useState<Date>(
-    // dayjs('2022-01-01').toDate()
     startOfDay(dayjs()).toDate()
   )
 
   const { loading, data } = useTopupStatistic(selectedDate, props.storeId)
+
+  const { locale, detectedLocale } = useLocale({
+    en: {
+      selectDate: 'Selected date',
+      totalCredit: 'The total amount of credit given to the users',
+      onDay: 'On',
+      coins: 'coins',
+    },
+    th: {
+      selectDate: 'วันที่เลือก',
+      totalCredit: 'ยอดรวมเครดิตที่จ่ายให้ลูกค้า',
+      onDay: 'ประจำวันที่',
+      coins: 'เหรียญ',
+    },
+  })
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
@@ -41,7 +59,7 @@ const Page: NextPage<Props> = props => {
             htmlFor="startRange"
             className="block text-sm font-medium text-gray-700"
           >
-            Selected date
+            {locale('selectDate')}
           </label>
           <div className="mt-1">
             <DatePicker
@@ -63,14 +81,15 @@ const Page: NextPage<Props> = props => {
         ) : (
           <div>
             <h1 className="text-xl font-bold text-gray-900">
-              ยอดรวมเครดิตที่จ่ายให้ลูกค้า
+              {locale('totalCredit')}
             </h1>
             <h2 className="text-sm text-gray-700">
-              ประจำวันที่ {selectedDate.toDateString()}
+              {locale('onDay')}{' '}
+              {dayjs(selectedDate).locale(detectedLocale).format('LL')}
             </h2>
             <p className="mt-1 text-gray-900">
-              {data.toLocaleString()} เหรียญ ({(data * 10).toLocaleString()}{' '}
-              บาท)
+              {data.toLocaleString()} {locale('coins')} (
+              {(data * 10).toLocaleString()} ฿)
             </p>
           </div>
         )}
