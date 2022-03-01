@@ -77,27 +77,27 @@ export const Alpha = memo<Props>(props => {
           </div>
         </div>
         <div>
-          <div className="flex space-x-4 text-white justify-center mt-2">
+          <div className="flex space-x-4 text-white justify-center mt-3">
             <div>
-              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center">
+              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center font-mono">
                 {remainingTime.day}
               </div>
               <div className="text-sm text-center mt-0.5">{locale('d')}</div>
             </div>
             <div>
-              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center">
+              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center font-mono">
                 {remainingTime.hour}
               </div>
               <div className="text-sm text-center mt-0.5">{locale('h')}</div>
             </div>
             <div>
-              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center">
+              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center font-mono">
                 {remainingTime.minute}
               </div>
               <div className="text-sm text-center mt-0.5">{locale('m')}</div>
             </div>
             <div>
-              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center">
+              <div className="bg-orange-800 px-4 py-3 rounded-lg text-center font-mono">
                 {remainingTime.second}
               </div>
               <div className="text-sm text-center mt-0.5">{locale('s')}</div>
