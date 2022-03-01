@@ -92,18 +92,24 @@ export const Step2: FunctionComponent<Props> = props => {
           <button
             type="button"
             onClick={onPrev}
-            className="inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            disabled={inProgress}
+            className={classNames(
+              inProgress
+                ? 'bg-gray-100 hover:bg-gray-200'
+                : 'bg-white hover:bg-gray-50',
+              "bg-white hover:bg-gray-50",
+              "inline-flex items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            )}
           >
             Previous
           </button>
           <button
             type="button"
             onClick={handleSubmit}
-            // onClick={onNext}
             disabled={inProgress}
             className={classNames(
               inProgress
-                ? 'bg-indigo-400 hover:bg-indigo-500 cursor-not-allowed'
+                ? 'bg-indigo-400 hover:bg-indigo-500 cursor-wait'
                 : 'bg-indigo-600 hover:bg-indigo-700',
               'transition inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500'
             )}
