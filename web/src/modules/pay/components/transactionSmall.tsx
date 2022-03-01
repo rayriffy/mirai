@@ -40,9 +40,16 @@ export const TransactionSmall = memo<{ transactionId: string }>(props => {
               </h1>
               <h2 className="text-gray-600">{transactionData.storeName}</h2>
             </div>
-            <div className='flex'>
-              <b className='flex items-center mr-4 text-gray-900 text-lg'>{transactionData.token} {transactionData.currency === 'coin' ? <FaCoins className="ml-1" /> : <FaProductHunt className="ml-1" />}</b>
-              <StatusBadge status={transactionData.status} size='sm' />
+            <div className="flex">
+              <b className="flex items-center mr-4 text-gray-900 text-lg">
+                {transactionData.token}{' '}
+                {transactionData.currency === 'coin' ? (
+                  <FaCoins className="ml-1" />
+                ) : (
+                  <FaProductHunt className="ml-1" />
+                )}
+              </b>
+              <StatusBadge status={transactionData.status} size="sm" />
             </div>
           </div>
         </div>

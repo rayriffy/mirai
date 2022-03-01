@@ -6,6 +6,6 @@ export const menus = [
     link: '/dashboard/staff/topup',
     icon: CurrencyYenIcon,
     title: 'Topup',
-    description: 'Add coins into user account'
+    description: 'Add coins into user account',
   },
 ]

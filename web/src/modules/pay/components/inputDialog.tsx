@@ -85,7 +85,9 @@ export const InputDialog: FunctionComponent<Props> = props => {
 
   const balance = useMemo(
     () =>
-      arcadeWithId.data.storeCurrency === 'coin' ? balance_coin : balance_buck,
+      arcadeWithId.data.storeCurrency === 'coin'
+        ? balance_coin
+        : balance_buck,
     [balance_coin, balance_buck, arcadeWithId.data.storeCurrency]
   )
   const calculatedPostBalance = useMemo(
@@ -129,10 +131,13 @@ export const InputDialog: FunctionComponent<Props> = props => {
 
     try {
       const apiInstance = await createApiInstance(auth)
-      const { data: paymentResult } = await apiInstance.post<{ data: string }>('/api/pay', {
-        targetArcade: arcadeWithId.id,
-        token: inputToken,
-      })
+      const { data: paymentResult } = await apiInstance.post<{ data: string }>(
+        '/api/pay',
+        {
+          targetArcade: arcadeWithId.id,
+          token: inputToken,
+        }
+      )
 
       setTransactionId(paymentResult.data)
       setResult('success')
@@ -251,7 +256,11 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <h1>{locale('before')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
                       {balance.toLocaleString()}
-                      {arcadeWithId.data.storeCurrency === 'coin' ? <FaCoins className="ml-2" /> : <FaProductHunt className="ml-2" />}
+                      {arcadeWithId.data.storeCurrency === 'coin' ? (
+                        <FaCoins className="ml-2" />
+                      ) : (
+                        <FaProductHunt className="ml-2" />
+                      )}
                     </h2>
                   </div>
                   <div>
@@ -261,7 +270,11 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <h1>{locale('after')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
                       {calculatedPostBalance.toLocaleString()}
-                      {arcadeWithId.data.storeCurrency === 'coin' ? <FaCoins className="ml-2" /> : <FaProductHunt className="ml-2" />}
+                      {arcadeWithId.data.storeCurrency === 'coin' ? (
+                        <FaCoins className="ml-2" />
+                      ) : (
+                        <FaProductHunt className="ml-2" />
+                      )}
                     </h2>
                   </div>
                 </div>

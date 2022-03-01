@@ -45,7 +45,15 @@ export const StatusBadge = memo<Props>(props => {
   return (
     <span
       className={classNames(
-        size === 'md' ? 'text-base' : size === 'sm' ? 'text-sm' : size === 'lg' ? 'text-lg' : size === 'xl' ? 'text-xl' : 'text-xs',
+        size === 'md'
+          ? 'text-base'
+          : size === 'sm'
+          ? 'text-sm'
+          : size === 'lg'
+          ? 'text-lg'
+          : size === 'xl'
+          ? 'text-xl'
+          : 'text-xs',
         color,
         'inline-flex items-center px-2 py-0.5 rounded font-medium'
       )}

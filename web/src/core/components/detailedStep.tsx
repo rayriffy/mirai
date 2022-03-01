@@ -17,7 +17,8 @@ export const DetailedStep = memo<Props>(props => {
       <ol role="list" className="space-y-6">
         {details.map((detail, i) => (
           <li key={`step-${detail}-${i}`}>
-            {i < currentIndex || (i === currentIndex && currentStatus === 'success') ? (
+            {i < currentIndex ||
+            (i === currentIndex && currentStatus === 'success') ? (
               <span className="flex items-start">
                 <span className="flex-shrink-0 relative h-5 w-5 flex items-center justify-center">
                   <CheckCircleIcon
@@ -25,7 +26,14 @@ export const DetailedStep = memo<Props>(props => {
                     aria-hidden="true"
                   />
                 </span>
-                <span className={classNames(i === currentIndex ? 'text-indigo-600' : 'text-gray-500 group-hover:text-gray-900', 'ml-3 text-sm font-medium')}>
+                <span
+                  className={classNames(
+                    i === currentIndex
+                      ? 'text-indigo-600'
+                      : 'text-gray-500 group-hover:text-gray-900',
+                    'ml-3 text-sm font-medium'
+                  )}
+                >
                   {detail}
                 </span>
               </span>

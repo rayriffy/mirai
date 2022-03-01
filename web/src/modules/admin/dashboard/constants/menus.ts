@@ -6,6 +6,6 @@ export const menus = [
     link: '/dashboard/admin/analytic',
     icon: ChartBarIcon,
     title: 'Analytics',
-    description: 'Monitor token flow through the system'
+    description: 'Monitor token flow through the system',
   },
 ]

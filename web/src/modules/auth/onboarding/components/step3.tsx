@@ -43,7 +43,10 @@ export const Step3: FunctionComponent<Props> = props => {
     ;(async () => {
       try {
         const apiInstance = await createApiInstance(auth)
-        const res = await apiInstance.post<{ success: boolean }>('/api/onboarding', input)
+        const res = await apiInstance.post<{ success: boolean }>(
+          '/api/onboarding',
+          input
+        )
 
         setResult(res.data.success ? 'success' : 'fail')
       } catch (e) {

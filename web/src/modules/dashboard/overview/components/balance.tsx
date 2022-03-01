@@ -28,15 +28,17 @@ export const Balance = memo(() => {
       </h2>
       <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
         <dd className="text-3xl font-semibold text-gray-900 flex items-center">
-          {balance_coin.toLocaleString()}<FaCoins className="ml-2" />
+          {balance_coin.toLocaleString()}
+          <FaCoins className="ml-2" />
         </dd>
       </div>
       {balance_buck !== undefined && (
-      <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
-        <dd className="text-3xl font-semibold text-gray-900 flex items-center">
-          {balance_buck.toLocaleString()}<FaProductHunt className="ml-2" />
-        </dd>
-      </div>
+        <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
+          <dd className="text-3xl font-semibold text-gray-900 flex items-center">
+            {balance_buck.toLocaleString()}
+            <FaProductHunt className="ml-2" />
+          </dd>
+        </div>
       )}
     </div>
   )

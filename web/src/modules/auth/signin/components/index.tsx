@@ -46,7 +46,8 @@ export const SigninModule: FunctionComponent = () => {
       orFast: 'Or continue with',
       errorHead: 'Unable to proceed',
       early_heading: 'Early access',
-      early_text: 'Mirai system is still under ongoing alpha test. Unauthorized testers are at risk for data loss.',
+      early_text:
+        'Mirai system is still under ongoing alpha test. Unauthorized testers are at risk for data loss.',
     },
     th: {
       signInHead: 'เข้าสู่ระบบ',
@@ -59,7 +60,8 @@ export const SigninModule: FunctionComponent = () => {
       orFast: 'หรือเข้าสู่ระบบด้วย',
       errorHead: 'ไม่สามารถทำรายการต่อได้',
       early_heading: 'อยู่ระหว่างทดสอบระบบ',
-      early_text: 'ระบบ Mirai ยังอยู่ระหว่างทดสอบระบบ ข้อมูลของผู้ใช้ที่ไม่ได้รับอนุญาตมีโอกาสสูญหายได้ในระหว่างการทดสอบ',
+      early_text:
+        'ระบบ Mirai ยังอยู่ระหว่างทดสอบระบบ ข้อมูลของผู้ใช้ที่ไม่ได้รับอนุญาตมีโอกาสสูญหายได้ในระหว่างการทดสอบ',
     },
   })
 
@@ -138,7 +140,9 @@ export const SigninModule: FunctionComponent = () => {
             <div className="px-4 py-5 sm:p-6 flex items-center">
               <ExclamationIcon className="w-10 h-10 text-yellow-600" />
               <div className="ml-4 mx-auto flex-1">
-                <h1 className="font-semibold text-lg text-gray-900">{locale('early_heading')}</h1>
+                <h1 className="font-semibold text-lg text-gray-900">
+                  {locale('early_heading')}
+                </h1>
                 <p className="text-gray-700 text-sm">{locale('early_text')}</p>
               </div>
             </div>

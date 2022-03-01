@@ -163,32 +163,40 @@ const Page: NextPage<Props> = props => {
             </div>
           </div>
           {/* {transactionWithId.data.type === 'payment' && ( */}
-            <div className="bg-white overflow-hidden shadow rounded-lg">
-              <div className="p-6">
-                <div className="flex justify-between items-center">
-                  <div>
-                    <h1 className="text-gray-800 font-semibold text-xl">
-                      {transactionWithId.data.type === 'payment' ? transactionWithId.data.arcadeName : transactionWithId.data.type === 'topup' ? locale('wallet') : '#'}
-                    </h1>
-                    <div className="mt-0.5">
-                      <h2 className="text-gray-500 text-sm">
-                      {transactionWithId.data.type === 'payment' ? transactionWithId.data.storeName : transactionWithId.data.type === 'topup' ? transactionWithId.data.userId : '#'}
-                      </h2>
-                    </div>
-                  </div>
-                  <div>
-                    <h2 className="text-xl font-semibold flex items-center">
-                      {transactionWithId.data.token.toLocaleString()}
-                      {transactionWithId.data.currency === 'coin' ? (
-                        <FaCoins className="ml-2" />
-                      ) : (
-                        <FaProductHunt className="ml-2" />
-                      )}
+          <div className="bg-white overflow-hidden shadow rounded-lg">
+            <div className="p-6">
+              <div className="flex justify-between items-center">
+                <div>
+                  <h1 className="text-gray-800 font-semibold text-xl">
+                    {transactionWithId.data.type === 'payment'
+                      ? transactionWithId.data.arcadeName
+                      : transactionWithId.data.type === 'topup'
+                      ? locale('wallet')
+                      : '#'}
+                  </h1>
+                  <div className="mt-0.5">
+                    <h2 className="text-gray-500 text-sm">
+                      {transactionWithId.data.type === 'payment'
+                        ? transactionWithId.data.storeName
+                        : transactionWithId.data.type === 'topup'
+                        ? transactionWithId.data.userId
+                        : '#'}
                     </h2>
                   </div>
                 </div>
+                <div>
+                  <h2 className="text-xl font-semibold flex items-center">
+                    {transactionWithId.data.token.toLocaleString()}
+                    {transactionWithId.data.currency === 'coin' ? (
+                      <FaCoins className="ml-2" />
+                    ) : (
+                      <FaProductHunt className="ml-2" />
+                    )}
+                  </h2>
+                </div>
               </div>
             </div>
+          </div>
           {/*  )} */}
         </div>
         <div className="col-span-1 md:col-span-2 lg:col-span-3">

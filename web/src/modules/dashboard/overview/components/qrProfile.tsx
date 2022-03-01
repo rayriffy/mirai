@@ -25,12 +25,7 @@ export const QRProfile = memo(() => {
         {locale('qr')}
       </h2>
       <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full">
-        <img
-          src={`/api/qr/${uid}`}
-          width={768}
-          height={768}
-          alt="Profile QR"
-        />
+        <img src={`/api/qr/${uid}`} width={768} height={768} alt="Profile QR" />
         <dd className="text-sm lg:text-xs text-center font-mono pt-2 break-words">
           {uid}
         </dd>

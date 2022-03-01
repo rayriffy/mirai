@@ -52,7 +52,7 @@ export const Alpha = memo<Props>(props => {
       h: 'ชั่วโมง',
       m: 'นาที',
       s: 'วินาที',
-    }
+    },
   })
 
   return (
@@ -70,9 +70,7 @@ export const Alpha = memo<Props>(props => {
               <h1 className="font-medium text-white truncate text-lg">
                 {locale('title')}
               </h1>
-              <p className="text-white text-sm">
-                {locale('desc')}
-              </p>
+              <p className="text-white text-sm">{locale('desc')}</p>
             </div>
           </div>
         </div>

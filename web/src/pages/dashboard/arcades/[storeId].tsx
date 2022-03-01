@@ -127,7 +127,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
 
       return {
         props: {
-          arcadesWithId: sortBy(arcades, [arcade => arcade.data.name.toLowerCase()]),
+          arcadesWithId: sortBy(arcades, [
+            arcade => arcade.data.name.toLowerCase(),
+          ]),
           // arcadesWithId: arcades,
           storeWithId: store,
         },

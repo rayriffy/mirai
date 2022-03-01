@@ -35,7 +35,8 @@ const api: NextApiHandler = async (req, res) => {
       if (arcadeDoc.exists) {
         const arcadeData = arcadeDoc.data() as Arcade
 
-        const balance = arcadeData.storeCurrency === 'coin' ? balance_coin : balance_buck
+        const balance =
+          arcadeData.storeCurrency === 'coin' ? balance_coin : balance_buck
 
         if (balance - token >= 0) {
           const transactionPayload: Transaction = {
@@ -58,15 +59,17 @@ const api: NextApiHandler = async (req, res) => {
             .collection('users')
             .doc(uid)
             .update({
-              ...(arcadeData.storeCurrency === 'coin' ? {
-                balance_coin: firebase.firestore.FieldValue.increment(
-                  -Math.abs(token)
-                ),
-              } : {
-                balance_buck: firebase.firestore.FieldValue.increment(
-                  -Math.abs(token)
-                ),
-              }),
+              ...(arcadeData.storeCurrency === 'coin'
+                ? {
+                    balance_coin: firebase.firestore.FieldValue.increment(
+                      -Math.abs(token)
+                    ),
+                  }
+                : {
+                    balance_buck: firebase.firestore.FieldValue.increment(
+                      -Math.abs(token)
+                    ),
+                  }),
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
 
@@ -80,7 +83,10 @@ const api: NextApiHandler = async (req, res) => {
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
 
-          const [updateedUserDoc, transactionDoc] = await Promise.all([updatePromise, transactionPromise])
+          const [updateedUserDoc, transactionDoc] = await Promise.all([
+            updatePromise,
+            transactionPromise,
+          ])
 
           return res.status(201).send({
             success: true,
