@@ -24,7 +24,7 @@ export const FavoriteArcades = memo(() => {
   } = useStoreon('user')
 
   return (
-    <div className="col-span-1 md:col-span-1 lg:col-span-3 xl:col-span-4 px-4 mt-6 sm:px-6 lg:px-8">
+    <div>
       <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
         {locale('title')}
       </h2>
