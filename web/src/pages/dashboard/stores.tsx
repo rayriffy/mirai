@@ -1,4 +1,4 @@
-import { Fragment, useState, useCallback, useMemo } from 'react'
+import { Fragment, useState, useCallback, useMemo, useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
@@ -29,14 +29,16 @@ interface StoreWithDistance extends StoreWithId {
 const Page: NextPage<Props> = props => {
   const { storesWithId } = props
 
-  const { locale } = useLocale({
+  const { locale, detectedLocale } = useLocale({
     en: {
+      page: 'Stores',
       closest: 'Closest',
       km: 'km',
       maps: 'Maps',
       locationWording: 'Cannot find store? Try to find it by your location',
     },
     th: {
+      page: 'สาขา',
       closest: 'ใกล้ที่สุด',
       km: 'กม.',
       maps: 'แผนที่',
@@ -45,10 +47,15 @@ const Page: NextPage<Props> = props => {
   })
 
   const {
+    dispatch,
     user: {
       metadata: { balance_buck = undefined },
     },
-  } = useStoreon('user')
+  } = useStoreon('user', 'title')
+
+  useEffect(() => {
+    dispatch('title/set', locale('page'))
+  }, [detectedLocale])
 
   const [gpsLocation, setGpsLocation] = useState<GeolocationCoordinates>(null)
   const renderedStores = useMemo<StoreWithDistance[]>(() => {

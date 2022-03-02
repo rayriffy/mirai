@@ -14,6 +14,7 @@ import { DetailedStep } from '../../../core/components/detailedStep'
 
 import { TransactionWithId } from '../../../core/@types/TransactionWithId'
 import { Transaction } from '../../../core/@types/firebase/Transaction'
+import { useStoreon } from '../../../context/storeon'
 
 dayjs.extend(localizedFormat)
 
@@ -26,6 +27,7 @@ const Page: NextPage<Props> = props => {
 
   const { locale, detectedLocale } = useLocale({
     en: {
+      page: 'Transaction',
       type_topup: 'Topup',
       type_payment: 'Payment',
       step_payment_1: 'Order has been placed',
@@ -46,6 +48,7 @@ const Page: NextPage<Props> = props => {
       tx_subheader: 'Detailed description of the transaction.',
     },
     th: {
+      page: 'คำสั่งซื้อ',
       type_topup: 'เติมเงิน',
       type_payment: 'ชำระเงิน',
       step_payment_1: 'ได้รับคำสั่งซื้อแล้ว',
@@ -66,6 +69,11 @@ const Page: NextPage<Props> = props => {
       tx_subheader: 'ข้อมูลเกี่ยวกับคำสั่งซื้อแบบละเอียด',
     },
   })
+
+  const { dispatch } = useStoreon('title')
+  useEffect(() => {
+    dispatch('title/set', locale('page'))
+  }, [detectedLocale])
 
   const keyValues = useMemo(
     () => [

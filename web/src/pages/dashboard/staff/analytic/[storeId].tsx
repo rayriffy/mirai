@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -8,11 +8,13 @@ import 'dayjs/locale/th'
 
 import DatePicker from 'react-datepicker'
 
+import { useStoreon } from '../../../../context/storeon'
+import { useLocale } from '../../../../core/services/useLocale'
+
 import { startOfDay } from '../../../../modules/admin/analytic/services/startOfDay'
+import { useTopupStatistic } from '../../../../modules/staff/analytics/services/useTopupStatistic'
 
 import { Store } from '../../../../core/@types/firebase/Store'
-import { useTopupStatistic } from '../../../../modules/staff/analytics/services/useTopupStatistic'
-import { useLocale } from '../../../../core/services/useLocale'
 
 dayjs.extend(localizedFormat)
 
@@ -32,18 +34,25 @@ const Page: NextPage<Props> = props => {
 
   const { locale, detectedLocale } = useLocale({
     en: {
+      page: 'Analytics',
       selectDate: 'Selected date',
       totalCredit: 'The total amount of credit given to the users',
       onDay: 'On',
       coins: 'coins',
     },
     th: {
+      page: 'วิเคราะห์',
       selectDate: 'วันที่เลือก',
       totalCredit: 'ยอดรวมเครดิตที่จ่ายให้ลูกค้า',
       onDay: 'ประจำวันที่',
       coins: 'เหรียญ',
     },
   })
+
+  const { dispatch } = useStoreon('title')
+  useEffect(() => {
+    dispatch('title/set', locale('page'))
+  }, [detectedLocale])
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">

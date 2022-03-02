@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
@@ -10,6 +10,7 @@ import { Store } from '../../../core/@types/firebase/Store'
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { StoreWithId } from '../../../core/@types/StoreWithId'
 import { useLocale } from '../../../core/services/useLocale'
+import { useStoreon } from '../../../context/storeon'
 
 interface Props {
   arcadesWithId: ArcadeWithId[]
@@ -31,6 +32,11 @@ const Page: NextPage<Props> = props => {
       pergame: 'เหรียญต่อการเข้าเล่นหนึ่งรอบ',
     },
   })
+
+  const { dispatch } = useStoreon('title')
+  useEffect(() => {
+    dispatch('title/set', storeWithId.data.name)
+  }, [])
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">

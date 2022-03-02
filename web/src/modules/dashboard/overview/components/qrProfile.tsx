@@ -1,5 +1,7 @@
 import { memo } from 'react'
 
+import { MdSubdirectoryArrowLeft } from 'react-icons/md'
+
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
 

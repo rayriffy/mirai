@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -10,6 +10,7 @@ import { TransactionHistory } from '../../modules/dashboard/overview/components/
 import { useLocale } from '../../core/services/useLocale'
 import { Alpha } from '../../modules/dashboard/overview/components/alpha'
 import dayjs from 'dayjs'
+import { useStoreon } from '../../context/storeon'
 
 interface Props {
   endTestingDate: string
@@ -18,7 +19,7 @@ interface Props {
 const Page: NextPage<Props> = props => {
   const { endTestingDate } = props
 
-  const { locale } = useLocale({
+  const { locale, detectedLocale } = useLocale({
     en: {
       home: 'Home',
     },
@@ -26,6 +27,11 @@ const Page: NextPage<Props> = props => {
       home: 'หน้าหลัก',
     },
   })
+
+  const { dispatch } = useStoreon('title')
+  useEffect(() => {
+    dispatch('title/set', locale('home'))
+  }, [detectedLocale])
 
   return (
     <Fragment>

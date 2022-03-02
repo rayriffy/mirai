@@ -11,19 +11,15 @@ interface Props {
 }
 
 export const HeadTitle: FunctionComponent<Props> = props => {
-  const { title, description = 'Next Tailwind template', children } = props
+  const { description = 'Virtual token payment system', children } = props
 
   const router = useRouter()
-  const { dispatch } = useStoreon('title')
+  const { title } = useStoreon('title')
 
   const transformedTitle = useMemo(
     () => (title ? `${title} · Mirai` : 'Mirai'),
     [title]
   )
-
-  useEffect(() => {
-    dispatch('title/set', title)
-  }, [title])
 
   return (
     <Head>

@@ -11,6 +11,7 @@ import { Step2 } from '../../../modules/topup/components/step2'
 import { UserWithId } from '../../../core/@types/UserWIthId'
 import { CheckCircleIcon } from '@heroicons/react/outline'
 import Link from 'next/link'
+import { useStoreon } from '../../../context/storeon'
 
 const Page: NextPage = () => {
   const [targetUser, setTargetUser] = useState<UserWithId | null>(null)
@@ -20,18 +21,25 @@ const Page: NextPage = () => {
   const onNext = () => setStep(o => o + 1)
   const onPrev = () => setStep(o => o - 1)
 
-  const { locale } = useLocale({
+  const { locale, detectedLocale } = useLocale({
     en: {
+      page: 'Topup',
       back: 'Back to dashboard',
       success: 'Success',
       failed: 'Failed',
     },
     th: {
+      page: 'เติมเหรียญ',
       back: 'กลับไปหน้าหลัก',
       success: 'สำเร็จ',
       failed: 'ไม่สำเร็จ',
     },
   })
+
+  const { dispatch } = useStoreon('title')
+  useEffect(() => {
+    dispatch('title/set', locale('page'))
+  }, [detectedLocale])
 
   return (
     <Fragment>

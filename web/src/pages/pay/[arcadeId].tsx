@@ -1,7 +1,8 @@
-import { Fragment } from 'react'
+import { useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
+import { useStoreon } from '../../context/storeon'
 import { InputDialog } from '../../modules/pay/components/inputDialog'
 
 import { ArcadeWithId } from '../../core/@types/ArcadeWithId'
@@ -14,6 +15,11 @@ interface Props {
 }
 
 const Page: NextPage<Props> = props => {
+  const { dispatch } = useStoreon('title')
+  useEffect(() => {
+    dispatch('title/set', props.arcadeWithId.data.name)
+  }, [])
+
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       {/* We've used 3xl here, but feel free to try other max-widths based on your needs */}

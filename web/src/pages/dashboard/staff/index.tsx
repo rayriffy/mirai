@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { NextPage } from 'next'
 import Link from 'next/link'
 
@@ -6,10 +8,10 @@ import { useLocale } from '../../../core/services/useLocale'
 import { useMenus } from '../../../modules/staff/dashboard/services/useMenus'
 
 const Page: NextPage = () => {
-  const { user } = useStoreon('user')
+  const { dispatch, user } = useStoreon('user', 'title')
 
   const { menus } = useMenus()
-  const { locale } = useLocale({
+  const { locale, detectedLocale } = useLocale({
     en: {
       title: 'Staff dashboard',
     },
@@ -17,6 +19,10 @@ const Page: NextPage = () => {
       title: 'แดชบอร์ดพนักงาน',
     },
   })
+
+  useEffect(() => {
+    dispatch('title/set', locale('title'))
+  }, [detectedLocale])
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
