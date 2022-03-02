@@ -15,6 +15,9 @@ export const Footer = memo<Props>(props => {
           <LangaugeSelector />
         </div>
         <div className="mt-8 md:mt-0 md:order-1">
+          <p className="text-center md:text-left text-base text-gray-400">
+            Version <b>{process.env.buildNumber}</b>
+          </p>
           <p className="text-center text-base text-gray-400">
             &copy; 2021-2022 Pradit Amusement. All rights reserved.
           </p>
