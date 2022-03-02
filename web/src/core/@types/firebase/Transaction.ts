@@ -9,6 +9,14 @@ export type Transaction = (
       storeName: string
     }
   | {
+      type: 'repossessed'
+      actionBy: string
+      userId: string
+      storeId: string
+      storeName: string
+      reason: 'common1' | 'common2' | string
+    }
+  | {
       type: 'payment'
       arcadeId: string
       arcadeName: string
