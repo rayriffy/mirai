@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   dayjs.extend(timezone)
 
   const endTestingDate = endOfDay(
-    dayjs('2022-03-31', 'Asia/Bangkok')
+    dayjs.tz('2022-03-31', 'Asia/Bangkok')
   ).toISOString()
 
   return {
