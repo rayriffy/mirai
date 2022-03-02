@@ -1,1 +1,1 @@
-export type Role = 'default' | 'staff' | 'admin'
+export type Role = 'default' | 'staff' | 'admin' | 'superstaff'

@@ -94,7 +94,7 @@ export const useMenus = () => {
         name: locale('stores'),
         match: ['/dashboard/stores'],
       },
-      ...(role === 'staff'
+      ...(['staff', 'superstaff'].includes(role)
         ? [
             {
               icon: PuzzleIcon,
@@ -104,7 +104,7 @@ export const useMenus = () => {
             },
           ]
         : []),
-      ...(role === 'admin'
+      ...(['admin', 'superstaff'].includes(role)
         ? [
             {
               icon: PuzzleIcon,
