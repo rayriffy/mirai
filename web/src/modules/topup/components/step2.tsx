@@ -235,6 +235,7 @@ export const Step2: FunctionComponent<Props> = props => {
                 <div className="mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense">
                   <button
                     type="button"
+                    disabled={inProgress}
                     className={classNames(
                       inProgress
                         ? 'bg-indigo-400 hover:bg-indigo-500 cursor-wait'
@@ -247,6 +248,7 @@ export const Step2: FunctionComponent<Props> = props => {
                   </button>
                   <button
                     type="button"
+                    disabled={inProgress}
                     className={classNames(
                       inProgress ? "bg-gray-100 hover:bg-gray-200 cursor-wait" :
                       "bg-white hover:bg-gray-50",
