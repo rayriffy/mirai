@@ -2,11 +2,14 @@ import { FunctionComponent, useState, useCallback, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
+import { Unauthorized } from './unauthorized'
 import { Footer } from '../footer'
 
 import { MobileHeader } from './header/mobile'
 import { MobileOverlay } from './mobileOverlay'
 import { DesktopHeader } from './header/desktop'
+
+import { useRoleAccess } from '../../services/useRoleAccess'
 
 export const DashboardWrapper: FunctionComponent = props => {
   const { children } = props
@@ -19,6 +22,7 @@ export const DashboardWrapper: FunctionComponent = props => {
   }, [router])
 
   const onToggleSidebar = useCallback(() => setSidebarOpen(o => !o), [])
+  const { authorized } = useRoleAccess()
 
   return (
     <div className="h-screen flex overflow-hidden bg-gray-50">
@@ -31,7 +35,9 @@ export const DashboardWrapper: FunctionComponent = props => {
           tabIndex={0}
         >
           <div className="h-full flex flex-col justify-between">
-            <div>{children}</div>
+            <div>
+              {authorized ? children : <Unauthorized />}
+            </div>
             <Footer bg="bg-gray-50" />
           </div>
         </main>

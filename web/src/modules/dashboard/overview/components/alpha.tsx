@@ -57,7 +57,7 @@ export const Alpha = memo<Props>(props => {
 
   return (
     <div className="max-w-lg mx-auto flex justify-center">
-      <div className="p-3 rounded-lg bg-orange-600 shadow-lg sm:p-4 mb-4 w-full">
+      <div className="p-3 rounded-lg bg-orange-600 sm:p-4 mb-4 w-full">
         <div className="flex items-center justify-between flex-wrap">
           <div className="w-0 flex-1 flex items-start">
             <span className="flex p-2 rounded-lg bg-orange-800">

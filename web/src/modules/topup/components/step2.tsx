@@ -8,7 +8,7 @@ import { createApiInstance } from '../../../core/services/createApiInstance'
 import { FaCoins } from 'react-icons/fa'
 import { useLocale } from '../../../core/services/useLocale'
 import { Dialog, Transition } from '@headlessui/react'
-import { CheckIcon, ExclamationCircleIcon } from '@heroicons/react/outline'
+import { ExclamationCircleIcon } from '@heroicons/react/outline'
 
 interface Props {
   targetUser: UserWithId
