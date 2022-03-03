@@ -49,6 +49,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
     en: {
       pay: 'Pay',
       back: 'Back to dashboard',
+      again: 'Start over',
       before: 'Before',
       after: 'After',
       token: 'Token',
@@ -61,6 +62,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
     th: {
       pay: 'จ่าย',
       back: 'กลับไปหน้าหลัก',
+      again: 'เริ่มต้นใหม่',
       before: 'ก่อน',
       after: 'หลัง',
       token: 'จำนวนเหรียญ',
@@ -73,9 +75,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
   })
 
   const [paymentProcessing, setPaymentProcessing] = useState<boolean>(false)
-  // const [result, setResult] = useState<'success' | 'failed' | undefined>('success')
   const [result, setResult] = useState<'success' | 'failed' | undefined>()
-  // const [transactionId, setTransactionId] = useState<string | null>('rOloNOexgdfFNVeh2sNL')
   const [transactionId, setTransactionId] = useState<string | null>(null)
 
   const [inputToken, setInputToken] = useState<number>(
@@ -148,6 +148,13 @@ export const InputDialog: FunctionComponent<Props> = props => {
       setPaymentProcessing(false)
     }
   }, [inputToken, auth.uid])
+
+  const onReset = () => {
+    setPaymentProcessing(false)
+    setTransactionId(null)
+    setInputToken(arcadeWithId.data.tokenPerCredit)
+    setResult(undefined)
+  }
 
   return (
     <div className="mt-10 border border-gray-200 bg-white rounded-md px-4 py-5 sm:p-6 overflow-hidden touch-manipulation">
@@ -299,6 +306,15 @@ export const InputDialog: FunctionComponent<Props> = props => {
             onClick={onPayment}
           >
             {locale('pay')}
+          </button>
+        )}
+        {result !== undefined && (
+          <button
+            type="button"
+            onClick={onReset}
+            className="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            {locale('again')}
           </button>
         )}
         <div className="flex space-x-2 mt-2">
