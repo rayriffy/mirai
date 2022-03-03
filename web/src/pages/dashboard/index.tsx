@@ -49,7 +49,13 @@ const Page: NextPage<Props> = props => {
         </div>
 
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 px-4 mt-6 sm:px-6 lg:px-8">
-          <Alpha endTestDate={dayjs(endTestingDate)} />
+          <div className="mb-4 max-w-lg mx-auto">
+            <Alpha endTestDate={dayjs(endTestingDate)} />
+          </div>
+          {/* <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 justify-center items-start gap-4 mb-4">
+            <div className="bg-white p-6 col-span-1 lg:col-span-2 xl:col-span-3 h-64"></div>
+            <Alpha endTestDate={dayjs(endTestingDate)} />
+          </div> */}
           <FavoriteArcades />
         </div>
       </div>
