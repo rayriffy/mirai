@@ -18,7 +18,7 @@ export const Footer = memo<Props>(props => {
           <p className="text-center md:text-left text-base text-gray-400">
             Version <b>{process.env.buildNumber}</b>
           </p>
-          <p className="text-center text-sm text-gray-400">
+          <p className="text-center text-xs sm:text-sm text-gray-400">
             &copy; 2021-2022 Pradit Amusement. All rights reserved.
           </p>
         </div>
