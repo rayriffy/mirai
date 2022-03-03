@@ -69,13 +69,13 @@ export const TableItem = memo<Props>(props => {
           </span>
         </div>
       </td>
-      <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
+      <td className="table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         <div className="flex items-center">
           {transaction.data.token.toLocaleString()}
           <CurrencyIcon currency={transaction.data.currency} className="ml-2" />
         </div>
       </td>
-      <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
+      <td className="table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         <StatusBadge status={transaction.data.status} />
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
