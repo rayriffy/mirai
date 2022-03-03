@@ -6,8 +6,9 @@ import { SelectorIcon } from '@heroicons/react/outline'
 import { classNames } from '../../../../core/services/classNames'
 import { useStoreon } from '../../../../context/storeon'
 
-import { signOut, getAuth } from 'firebase/auth'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { signOut } from 'firebase/auth'
+import { getAuthInstance } from '../../../../core/services/getAuthInstance'
+
 import { useLocale } from '../../../../core/services/useLocale'
 
 export const DesktopUser = memo(() => {
@@ -19,7 +20,7 @@ export const DesktopUser = memo(() => {
   } = useStoreon('user')
 
   const onLogout = useCallback(() => {
-    signOut(getAuth(createFirebaseInstance()))
+    signOut(getAuthInstance())
   }, [])
 
   const { locale } = useLocale({

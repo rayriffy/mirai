@@ -2,26 +2,23 @@ import { useState, useEffect } from 'react'
 
 import {
   collection,
-  getFirestore,
   onSnapshot,
   query,
   where,
 } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
 import { Store } from '../../../../core/@types/firebase/Store'
 import { StoreWithId } from '../../../../core/@types/StoreWithId'
+import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
 
 export const useStores = () => {
   const [data, setData] = useState<StoreWithId[]>([])
   const [loading, setLoading] = useState<boolean>(true)
 
   useEffect(() => {
-    const instance = createFirebaseInstance()
-
     onSnapshot(
       query(
-        collection(getFirestore(instance), 'stores'),
+        collection(getFirestoreInstance(), 'stores'),
         where('currency', '==', 'coin')
       ),
       snapshot => {

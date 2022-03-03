@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 
-import { collection, doc, getFirestore, getDoc } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { collection, doc, getDoc } from 'firebase/firestore'
+import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
+
 import { Arcade } from '../../../../core/@types/firebase/Arcade'
 
 export const useArcade = (arcadeId: string) => {
@@ -12,7 +13,7 @@ export const useArcade = (arcadeId: string) => {
   useEffect(() => {
     getDoc(
       doc(
-        collection(getFirestore(createFirebaseInstance()), 'arcades'),
+        collection(getFirestoreInstance(), 'arcades'),
         arcadeId
       )
     )

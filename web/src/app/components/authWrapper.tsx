@@ -40,7 +40,7 @@ export const UserWrapper: FunctionComponent = props => {
   } = useStoreon('user')
   const [lock, setLock] = useState(true)
 
-  useUserMetadata(auth.uid)
+  useUserMetadata(auth?.uid)
 
   useEffect(() => {
     if (contextMeta === null && asPath === '/onboarding') {

@@ -15,8 +15,8 @@ import {
   PuzzleIcon,
 } from '@heroicons/react/outline'
 
-import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
 import { getDoc, getFirestore, doc, collection } from 'firebase/firestore'
+import { getFirestoreInstance } from '../../core/services/getFirestoreInstance'
 
 import { useStoreon } from '../../context/storeon'
 import { useLocale } from '../../core/services/useLocale'
@@ -57,7 +57,7 @@ export const useMenus = () => {
     setStoreName('')
     getDoc(
       doc(
-        collection(getFirestore(createFirebaseInstance()), 'stores'),
+        collection(getFirestoreInstance(), 'stores'),
         preferredStore
       )
     )

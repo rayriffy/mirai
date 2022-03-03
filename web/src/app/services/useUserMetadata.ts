@@ -3,8 +3,8 @@ import { useEffect, useState, useMemo } from 'react'
 import { useRouter } from 'next/router'
 import { useStoreon } from '../../context/storeon'
 
-import { onSnapshot, collection, doc, getFirestore } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../core/services/createFirebaseInstance'
+import { onSnapshot, collection, doc } from 'firebase/firestore'
+import { getFirestoreInstance } from '../../core/services/getFirestoreInstance'
 
 import { User } from '../../core/@types/firebase/User'
 
@@ -29,7 +29,7 @@ export const useUserMetadata = (uid: string) => {
     const listener = !isUIDVaid
       ? () => {}
       : onSnapshot(
-          doc(collection(getFirestore(createFirebaseInstance()), 'users'), uid),
+          doc(collection(getFirestoreInstance(), 'users'), uid),
           snapshot => {
             try {
               const data = snapshot.data() as User

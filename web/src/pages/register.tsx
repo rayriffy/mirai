@@ -5,11 +5,11 @@ import { useRouter } from 'next/router'
 
 import { XCircleIcon } from '@heroicons/react/outline'
 
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
 
 import { useLocale } from '../core/services/useLocale'
-import { createFirebaseInstance } from '../core/services/createFirebaseInstance'
 import { getPamuseUrl } from '../app/services/getPamuseUrl'
+import { getAuthInstance } from '../core/services/getAuthInstance'
 
 const Page: NextPage = () => {
   const { push } = useRouter()
@@ -55,8 +55,7 @@ const Page: NextPage = () => {
       const password = passwordRef.current.value
 
       try {
-        const instance = createFirebaseInstance()
-        await createUserWithEmailAndPassword(getAuth(instance), email, password)
+        await createUserWithEmailAndPassword(getAuthInstance(), email, password)
         push('/onboarding')
       } catch (e) {
         const { message } = e

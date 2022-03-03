@@ -4,10 +4,10 @@ import { Menu, Transition } from '@headlessui/react'
 
 import { classNames } from '../../../../core/services/classNames'
 
-import { signOut, getAuth } from 'firebase/auth'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { signOut } from 'firebase/auth'
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
+import { getAuthInstance } from '../../../../core/services/getAuthInstance'
 
 export const MobileUser = memo(() => {
   const {
@@ -17,7 +17,7 @@ export const MobileUser = memo(() => {
   } = useStoreon('user')
 
   const onLogout = useCallback(() => {
-    signOut(getAuth(createFirebaseInstance()))
+    signOut(getAuthInstance())
   }, [])
 
   const { locale } = useLocale({

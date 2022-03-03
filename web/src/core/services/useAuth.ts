@@ -1,16 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-import { getAuth, onAuthStateChanged, User } from 'firebase/auth'
-import { createFirebaseInstance } from './createFirebaseInstance'
+import { onAuthStateChanged, User } from 'firebase/auth'
 import { useStoreon } from '../../context/storeon'
+import { getAuthInstance } from './getAuthInstance'
 
 export const useAuth = () => {
   const { dispatch } = useStoreon('user')
 
   useEffect(() => {
-    const instance = createFirebaseInstance()
-
-    const listener = onAuthStateChanged(getAuth(instance), res => {
+    const listener = onAuthStateChanged(getAuthInstance(), res => {
       dispatch('user/auth', res)
     })
 

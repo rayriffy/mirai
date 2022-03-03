@@ -11,6 +11,7 @@ import { Transaction } from '../../core/@types/firebase/Transaction'
 const api: NextApiHandler = async (req, res) => {
   if (req.method.toLowerCase() === 'post') {
     try {
+      // console.log(process.env)
       initializeFirebase()
 
       const userData = await getUserAndFilterAuth(

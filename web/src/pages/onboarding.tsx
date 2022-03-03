@@ -44,10 +44,10 @@ const Page: NextPage = () => {
   const router = useRouter()
   const { user } = useStoreon('user')
   useEffect(() => {
-    if (typeof user?.metadata?.displayName === 'string') {
+    if (step !== 3 && typeof user?.metadata?.displayName === 'string') {
       router.push('/dashboard')
     }
-  }, [user?.metadata?.displayName])
+  }, [user?.metadata?.displayName, step])
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">

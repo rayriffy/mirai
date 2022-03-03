@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 
-import { collection, getFirestore, onSnapshot, query, where } from "firebase/firestore"
-import { createFirebaseInstance } from "../../../../core/services/createFirebaseInstance"
+import { collection, onSnapshot, query, where } from "firebase/firestore"
+import { getFirestoreInstance } from "../../../../core/services/getFirestoreInstance"
+
 import { startOfDay } from "./startOfDay"
 
 import { TransactionAnalytic } from "../@types/TransactionAnalytic"
@@ -23,7 +24,7 @@ export const useCoinAnalytics = (storeId: string | null, startDate: Date, endDat
         : onSnapshot(
             query(
               collection(
-                getFirestore(createFirebaseInstance()),
+                getFirestoreInstance(),
                 'transactions'
               ),
               where('type', '==', 'payment'),

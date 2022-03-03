@@ -1,9 +1,13 @@
 import { memo, FunctionComponent, useState, useEffect } from 'react'
+
+import { stringify } from 'querystring'
+
+import { collection, onSnapshot } from 'firebase/firestore'
+import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
+import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+
 import { classNames } from '../../../../core/services/classNames'
 
-import { collection, getFirestore, onSnapshot } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
-import { stringify } from 'querystring'
 import { Store } from '../../../../core/@types/firebase/Store'
 
 interface Props {
@@ -19,9 +23,8 @@ export const StoreSelector = memo<Props>(props => {
   >([])
 
   useEffect(() => {
-    const instance = createFirebaseInstance()
     const listeners = onSnapshot(
-      collection(getFirestore(instance), 'stores'),
+      collection(getFirestoreInstance(), 'stores'),
       snapshot => {
         const stores = snapshot.docs.map(doc => ({
           id: doc.id,

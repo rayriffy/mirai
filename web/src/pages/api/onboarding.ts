@@ -47,6 +47,7 @@ const api: NextApiHandler = async (req, res) => {
         message: 'ok',
       })
     } catch (e) {
+      console.log(e)
       return res.status(403).send({
         succcess: false,
         message: 'unauthorized',

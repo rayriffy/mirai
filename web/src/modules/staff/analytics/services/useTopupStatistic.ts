@@ -2,13 +2,11 @@ import { useEffect, useMemo, useState } from 'react'
 
 import {
   collection,
-  getFirestore,
   onSnapshot,
   query,
   where,
 } from 'firebase/firestore'
-
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
 
 import { endOfDay } from '../../../admin/analytic/services/endOfDay'
 import { startOfDay } from '../../../admin/analytic/services/startOfDay'
@@ -24,8 +22,6 @@ export const useTopupStatistic = (targetDate: Date, storeId: string) => {
     () => topupTransactions.reduce((acc, val) => acc + val.token, 0),
     [topupTransactions]
   )
-
-  console.log({ topupTransactions })
 
   useEffect(() => {
     setLoading(true)
@@ -45,7 +41,7 @@ export const useTopupStatistic = (targetDate: Date, storeId: string) => {
 
     const listener = onSnapshot(
       query(
-        collection(getFirestore(createFirebaseInstance()), 'transactions'),
+        collection(getFirestoreInstance(), 'transactions'),
         where('type', '==', 'topup'),
         where('storeId', '==', storeId),
         where('createdAt', '<=', endOfDay(targetDate).toDate()),

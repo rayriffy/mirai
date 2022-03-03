@@ -1,9 +1,7 @@
 import { memo, useEffect, useState } from 'react'
 
-import { FaCoins, FaProductHunt } from 'react-icons/fa'
-
-import { getFirestore, collection, doc, onSnapshot } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
+import { collection, doc, onSnapshot } from 'firebase/firestore'
+import { getFirestoreInstance } from '../../../core/services/getFirestoreInstance'
 
 import { Transaction } from '../../../core/@types/firebase/Transaction'
 import { StatusBadge } from '../../../core/components/statusBadge'
@@ -17,9 +15,8 @@ export const TransactionSmall = memo<{ transactionId: string }>(props => {
   )
 
   useEffect(() => {
-    const instance = createFirebaseInstance()
     const listener = onSnapshot(
-      doc(collection(getFirestore(instance), 'transactions'), transactionId),
+      doc(collection(getFirestoreInstance(), 'transactions'), transactionId),
       doc => {
         if (doc.exists) {
           setTransactionData(doc.data() as Transaction)

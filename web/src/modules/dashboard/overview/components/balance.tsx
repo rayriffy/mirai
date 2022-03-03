@@ -29,7 +29,7 @@ export const Balance = memo(() => {
       </h2>
       <div className="space-y-3">
         {currencies.map(currency => {
-          if (!metadata[`balance_${currency.id}`]) {
+          if (metadata[`balance_${currency.id}`] === undefined) {
             return null
           } else {
             return (

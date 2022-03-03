@@ -12,10 +12,9 @@ import { useRouter } from 'next/router'
 
 import { useLocale } from '../../../../core/services/useLocale'
 
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
+import { getAuthInstance } from '../../../../core/services/getAuthInstance'
 import { useAuthReader } from '../../../../app/services/useAuthReader'
 import {
-  getAuth,
   signInWithEmailAndPassword,
   signInWithRedirect,
   AuthProvider,
@@ -82,8 +81,7 @@ export const SigninModule: FunctionComponent = () => {
       const password = passwordRef.current.value
 
       try {
-        const instance = createFirebaseInstance()
-        await signInWithEmailAndPassword(getAuth(instance), email, password)
+        await signInWithEmailAndPassword(getAuthInstance(), email, password)
 
         if (path === undefined) {
           push('/dashboard')
@@ -105,8 +103,7 @@ export const SigninModule: FunctionComponent = () => {
     setIsOperation(true)
     setError(null)
 
-    const instance = createFirebaseInstance()
-    await signInWithRedirect(getAuth(instance), provider)
+    await signInWithRedirect(getAuthInstance(), provider)
   }
 
   return (

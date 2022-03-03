@@ -6,16 +6,16 @@ import {
   useState,
 } from 'react'
 
-import { doc, collection, getFirestore, getDoc } from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
+import { doc, collection, getDoc } from 'firebase/firestore'
+import { getFirestoreInstance } from '../../../core/services/getFirestoreInstance'
 
 import { Scanner } from './scanner'
 
-import { User } from '../../../core/@types/firebase/User'
-import { UserWithId } from '../../../core/@types/UserWIthId'
 import { classNames } from '../../../core/services/classNames'
 import { useLocale } from '../../../core/services/useLocale'
-import { locale } from 'dayjs'
+
+import { User } from '../../../core/@types/firebase/User'
+import { UserWithId } from '../../../core/@types/UserWIthId'
 
 interface Props {
   setTargetUser: Dispatch<SetStateAction<UserWithId>>
@@ -25,7 +25,6 @@ interface Props {
 export const Step1: FunctionComponent<Props> = props => {
   const { setTargetUser, onNext } = props
 
-  const [showCamera, setShowCamera] = useState(true)
   const inputRef = useRef<HTMLInputElement>(null)
 
   const [error, setError] = useState<string | null>(null)
@@ -62,7 +61,7 @@ export const Step1: FunctionComponent<Props> = props => {
         // get user document
         const userDoc = await getDoc(
           doc(
-            collection(getFirestore(createFirebaseInstance()), 'users'),
+            collection(getFirestoreInstance(), 'users'),
             targetUserId
           )
         )

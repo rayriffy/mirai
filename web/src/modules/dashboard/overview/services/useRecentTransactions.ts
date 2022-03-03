@@ -1,17 +1,19 @@
+import { useEffect, useState } from 'react'
+
 import {
   collection,
-  getFirestore,
   onSnapshot,
   query,
   where,
   orderBy,
   limit,
 } from 'firebase/firestore'
-import { useEffect, useState } from 'react'
+import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
+
 import { useStoreon } from '../../../../context/storeon'
+
 import { Transaction } from '../../../../core/@types/firebase/Transaction'
 import { TransactionWithId } from '../../../../core/@types/TransactionWithId'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
 export const useRecentTransactions = () => {
   const {
@@ -25,7 +27,7 @@ export const useRecentTransactions = () => {
   useEffect(() => {
     const listener = onSnapshot(
       query(
-        collection(getFirestore(createFirebaseInstance()), 'transactions'),
+        collection(getFirestoreInstance(), 'transactions'),
         where('userId', '==', uid),
         orderBy('updatedAt', 'desc'),
         limit(10)
