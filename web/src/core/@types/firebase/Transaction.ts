@@ -1,5 +1,7 @@
 import { Timestamp } from '@google-cloud/firestore'
 
+import { Currency } from '../Currency'
+
 export type Transaction = (
   | {
       type: 'topup'
@@ -30,7 +32,7 @@ export type Transaction = (
     }
 ) & {
   token: number
-  currency: 'coin' | 'buck'
+  currency: Currency
   status: 'pending' | 'processing' | 'success' | 'failed' | 'cancelled'
   createdAt: Timestamp
   updatedAt: Timestamp

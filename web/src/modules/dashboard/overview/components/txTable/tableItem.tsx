@@ -18,6 +18,7 @@ import { StatusBadge } from '../../../../../core/components/statusBadge'
 import { RelativeTime } from './relativeTime'
 
 import { TransactionWithId } from '../../../../../core/@types/TransactionWithId'
+import { CurrencyIcon } from '../../../../../core/components/currencyIcon'
 
 interface Props {
   transaction: TransactionWithId
@@ -71,11 +72,7 @@ export const TableItem = memo<Props>(props => {
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">
         <div className="flex items-center">
           {transaction.data.token.toLocaleString()}
-          {transaction.data.currency === 'coin' ? (
-            <FaCoins className="ml-2" />
-          ) : (
-            <FaProductHunt className="ml-2" />
-          )}
+          <CurrencyIcon currency={transaction.data.currency} className="ml-2" />
         </div>
       </td>
       <td className="hidden md:table-cell px-6 py-3 whitespace-nowrap text-sm text-gray-500 text-right">

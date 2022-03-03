@@ -3,6 +3,7 @@ import { memo } from 'react'
 import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
 import { useStoreon } from '../../../../context/storeon'
+import { currencies } from '../../../../core/constants/currencies'
 import { useLocale } from '../../../../core/services/useLocale'
 
 export const Balance = memo(() => {
@@ -17,7 +18,7 @@ export const Balance = memo(() => {
 
   const {
     user: {
-      metadata: { balance_coin, balance_buck = undefined },
+      metadata,
     },
   } = useStoreon('user')
 
@@ -26,20 +27,22 @@ export const Balance = memo(() => {
       <h2 className="text-gray-500 text-xs font-medium uppercase tracking-wide">
         {locale('balance')}
       </h2>
-      <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
-        <dd className="text-3xl font-semibold text-gray-900 flex items-center">
-          {balance_coin.toLocaleString()}
-          <FaCoins className="ml-2" />
-        </dd>
+      <div className="space-y-3">
+        {currencies.map(currency => {
+          if (!metadata[`balance_${currency.id}`]) {
+            return null
+          } else {
+            return (
+              <div key={`live-balance-${currency.id}`} className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
+                <dd className="text-3xl font-semibold text-gray-900 flex items-center">
+                  {metadata[`balance_${currency.id}`].toLocaleString()}
+                  <currency.icon className="ml-2" />
+                </dd>
+              </div>
+            )
+          }
+        })}
       </div>
-      {balance_buck !== undefined && (
-        <div className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
-          <dd className="text-3xl font-semibold text-gray-900 flex items-center">
-            {balance_buck.toLocaleString()}
-            <FaProductHunt className="ml-2" />
-          </dd>
-        </div>
-      )}
     </div>
   )
 })

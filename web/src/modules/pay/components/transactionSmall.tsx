@@ -7,6 +7,7 @@ import { createFirebaseInstance } from '../../../core/services/createFirebaseIns
 
 import { Transaction } from '../../../core/@types/firebase/Transaction'
 import { StatusBadge } from '../../../core/components/statusBadge'
+import { CurrencyIcon } from '../../../core/components/currencyIcon'
 
 export const TransactionSmall = memo<{ transactionId: string }>(props => {
   const { transactionId } = props
@@ -43,11 +44,7 @@ export const TransactionSmall = memo<{ transactionId: string }>(props => {
             <div className="flex">
               <b className="flex items-center mr-4 text-gray-900 text-lg">
                 {transactionData.token}{' '}
-                {transactionData.currency === 'coin' ? (
-                  <FaCoins className="ml-1" />
-                ) : (
-                  <FaProductHunt className="ml-1" />
-                )}
+                <CurrencyIcon currency={transactionData.currency} className="ml-1" />
               </b>
               <StatusBadge status={transactionData.status} size="sm" />
             </div>

@@ -1,7 +1,9 @@
 import { GeoPoint } from 'firebase/firestore'
 
+import { Currency } from '../Currency'
+
 export interface Store {
   name: string
-  currency: 'coin' | 'buck'
+  currency: Currency
   location: GeoPoint
 }

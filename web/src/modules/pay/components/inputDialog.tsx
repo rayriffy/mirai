@@ -26,6 +26,7 @@ import { FavoriteButton } from './favoriteButton'
 import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { useLocale } from '../../../core/services/useLocale'
 import { TransactionSmall } from './transactionSmall'
+import { CurrencyIcon } from '../../../core/components/currencyIcon'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -263,11 +264,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <h1>{locale('before')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
                       {balance.toLocaleString()}
-                      {arcadeWithId.data.storeCurrency === 'coin' ? (
-                        <FaCoins className="ml-2" />
-                      ) : (
-                        <FaProductHunt className="ml-2" />
-                      )}
+                      <CurrencyIcon currency={arcadeWithId.data.storeCurrency} className="ml-2" />
                     </h2>
                   </div>
                   <div>
@@ -277,11 +274,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <h1>{locale('after')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
                       {calculatedPostBalance.toLocaleString()}
-                      {arcadeWithId.data.storeCurrency === 'coin' ? (
-                        <FaCoins className="ml-2" />
-                      ) : (
-                        <FaProductHunt className="ml-2" />
-                      )}
+                      <CurrencyIcon currency={arcadeWithId.data.storeCurrency} className="ml-2" />
                     </h2>
                   </div>
                 </div>

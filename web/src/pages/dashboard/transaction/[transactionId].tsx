@@ -15,6 +15,7 @@ import { DetailedStep } from '../../../core/components/detailedStep'
 import { TransactionWithId } from '../../../core/@types/TransactionWithId'
 import { Transaction } from '../../../core/@types/firebase/Transaction'
 import { useStoreon } from '../../../context/storeon'
+import { CurrencyIcon } from '../../../core/components/currencyIcon'
 
 dayjs.extend(localizedFormat)
 
@@ -91,11 +92,7 @@ const Page: NextPage<Props> = props => {
         <>
           <div className="flex items-center">
             {transactionWithId.data.token}
-            {transactionWithId.data.currency === 'coin' ? (
-              <FaCoins className="ml-2" />
-            ) : (
-              <FaProductHunt className="ml-2" />
-            )}
+            <CurrencyIcon currency={transactionWithId.data.currency} className="ml-2" />
           </div>
         </>,
       ],
@@ -195,11 +192,7 @@ const Page: NextPage<Props> = props => {
                 <div>
                   <h2 className="text-xl font-semibold flex items-center">
                     {transactionWithId.data.token.toLocaleString()}
-                    {transactionWithId.data.currency === 'coin' ? (
-                      <FaCoins className="ml-2" />
-                    ) : (
-                      <FaProductHunt className="ml-2" />
-                    )}
+                    <CurrencyIcon currency={transactionWithId.data.currency} className="ml-2" />
                   </h2>
                 </div>
               </div>

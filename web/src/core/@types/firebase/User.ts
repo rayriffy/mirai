@@ -1,14 +1,19 @@
 import { Timestamp } from 'firebase/firestore'
 
+import { Currency } from '../Currency'
 import { Role } from '../Role'
-export interface User {
+
+export type BalanceKey = `balance_${Currency}`
+
+type UserBalance = {
+  [key in BalanceKey]?: number
+}
+export interface User extends UserBalance {
   displayName: string
   emailHash: string
   preferredStore: string
   role: Role
   favoriteArcades: string[]
-  balance_coin: number
-  balance_buck?: number
   staffStoreId?: string
   staffStoreName?: string
   createdAt: Timestamp
