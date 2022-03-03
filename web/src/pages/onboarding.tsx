@@ -20,10 +20,14 @@ const Page: NextPage = () => {
     en: {
       title: 'Greetings',
       subtitle: 'Please fill all information before using',
+      offline_title: 'No internet connection',
+      offline_desc: 'Please connect to the internet and restart the app',
     },
     th: {
       title: 'สวัสดี',
       subtitle: 'กรอกข้อมูลเพิ่มเติมก่อนเริ่มใช้งาน',
+      offline_title: 'ไม่มีอินเทอร์เน็ต',
+      offline_desc: 'กรุณาเชื่อมต่ออินเตอร์เน็ตแล้วลองอีกครั้ง',
     },
   })
 
@@ -50,8 +54,8 @@ const Page: NextPage = () => {
       {!isOnline ? (
         <div className="mx-auto text-gray-500 text-center">
           <StatusOfflineIcon className="w-12 h-12 mx-auto" />
-          <h1 className="text-lg font-semibold">No internet connection</h1>
-          <p>Please connect to the internet and restart the app</p>
+          <h1 className="text-lg font-semibold">{locale('offline_title')}</h1>
+          <p>{locale('offline_desc')}</p>
         </div>
       ) : (
         <Fragment>
