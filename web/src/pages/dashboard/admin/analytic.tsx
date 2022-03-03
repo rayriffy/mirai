@@ -21,6 +21,7 @@ import {
 import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
 import { Transaction } from '../../../core/@types/firebase/Transaction'
 import { BarRenderer } from '../../../modules/admin/analytic/components/barRenderer'
+import { useCoinAnalytics } from '../../../modules/admin/analytic/services/useCoinAnalytics'
 
 interface Props {
   stores: {
@@ -44,60 +45,7 @@ const Page: NextPage = props => {
     endOfDay(dayjs()).toDate()
   )
 
-  const [analyticItems, setAnalyticItems] = useState<
-    undefined | null | TransactionAnalytic[]
-  >(undefined)
-
-  useEffect(() => {
-    setAnalyticItems(null)
-
-    if (selectedStoreId === null) {
-      setAnalyticItems(undefined)
-    }
-
-    const listener =
-      selectedStoreId === null
-        ? () => {}
-        : onSnapshot(
-            query(
-              collection(
-                getFirestore(createFirebaseInstance()),
-                'transactions'
-              ),
-              where('type', '==', 'payment'),
-              where('storeId', '==', selectedStoreId),
-              where('updatedAt', '<=', selectedEndRange),
-              where('updatedAt', '>=', selectedStartRange)
-            ),
-            snapshot => {
-              setAnalyticItems(
-                snapshot.docs
-                  .map(doc => {
-                    const transactionData = doc.data() as Transaction
-
-                    if (transactionData.type === 'payment') {
-                      return {
-                        id: doc.id,
-                        type: transactionData.type,
-                        amount: transactionData.token,
-                        status: transactionData.status,
-                        arcadeId: transactionData.arcadeId,
-                        arcadeName: transactionData.arcadeName,
-                        date: startOfDay(
-                          transactionData.updatedAt.toDate()
-                        ).toDate(),
-                      }
-                    } else {
-                      return null
-                    }
-                  })
-                  .filter(o => o !== null)
-              )
-            }
-          )
-
-    return () => listener()
-  }, [selectedStoreId, selectedStartRange, selectedEndRange])
+  const analyticItems = useCoinAnalytics(selectedStoreId, selectedStartRange, selectedEndRange)
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8">

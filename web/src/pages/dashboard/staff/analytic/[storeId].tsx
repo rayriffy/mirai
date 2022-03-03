@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -12,9 +12,12 @@ import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
 
 import { startOfDay } from '../../../../modules/admin/analytic/services/startOfDay'
+import { endOfDay } from '../../../../modules/admin/analytic/services/endOfDay'
 import { useTopupStatistic } from '../../../../modules/staff/analytics/services/useTopupStatistic'
+import { useCoinAnalytics } from '../../../../modules/admin/analytic/services/useCoinAnalytics'
 
 import { Store } from '../../../../core/@types/firebase/Store'
+import { BarRenderer } from '../../../../modules/admin/analytic/components/barRenderer'
 
 dayjs.extend(localizedFormat)
 
@@ -29,6 +32,8 @@ const Page: NextPage<Props> = props => {
   const [selectedDate, setSelectedDate] = useState<Date>(
     startOfDay(dayjs()).toDate()
   )
+  const startDate = useMemo(() => startOfDay(selectedDate).toDate(), [selectedDate])
+  const endDate = useMemo(() => endOfDay(selectedDate).toDate(), [selectedDate])
 
   const { loading, data } = useTopupStatistic(selectedDate, props.storeId)
 
@@ -53,6 +58,13 @@ const Page: NextPage<Props> = props => {
   useEffect(() => {
     dispatch('title/set', locale('page'))
   }, [detectedLocale])
+
+  const analyticItems = useCoinAnalytics(
+    props.storeId,
+    startDate,
+    endDate,
+  )
+  console.log({analyticItems})
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">
@@ -100,6 +112,30 @@ const Page: NextPage<Props> = props => {
               {data.toLocaleString()} {locale('coins')} (
               {(data * 10).toLocaleString()} ฿)
             </p>
+          </div>
+        )}
+      </div>
+      <div className="mt-4">
+        {analyticItems === undefined ? (
+          <div>Please select store</div>
+        ) : analyticItems === null ? (
+          <div>Loading...</div>
+        ) : analyticItems.length === 0 ? (
+          <div>No data</div>
+        ) : (
+          <div className="space-y-6">
+            <BarRenderer
+              analyticItems={analyticItems}
+              startRange={startDate}
+              endRange={endDate}
+              groupBy="date"
+            />
+            <BarRenderer
+              analyticItems={analyticItems}
+              startRange={startDate}
+              endRange={endDate}
+              groupBy="arcade"
+            />
           </div>
         )}
       </div>
