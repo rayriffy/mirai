@@ -55,12 +55,7 @@ export const useMenus = () => {
   const [storeName, setStoreName] = useState<string>(null)
   useEffect(() => {
     setStoreName('')
-    getDoc(
-      doc(
-        collection(getFirestoreInstance(), 'stores'),
-        preferredStore
-      )
-    )
+    getDoc(doc(collection(getFirestoreInstance(), 'stores'), preferredStore))
       .then(doc => {
         if (doc.exists()) setStoreName(doc.data().name)
       })

@@ -21,7 +21,7 @@ export const Scanner: FunctionComponent<Props> = props => {
     th: {
       title: 'ไม่สามารถเปิดใช้งานกล้องได้',
       desc: 'กรุณาเช็คว่าคุณได้ให้อนุญาติเว็บใช้งานกล้องได้',
-    }
+    },
   })
 
   return (

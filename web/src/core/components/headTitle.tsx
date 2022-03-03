@@ -19,10 +19,10 @@ export const HeadTitle: FunctionComponent<Props> = props => {
 
   const { locale, detectedLocale } = useLocale({
     en: {
-      app: 'Mirai'
+      app: 'Mirai',
     },
     th: {
-      app: 'มิไร'
+      app: 'มิไร',
     },
   })
 
@@ -64,30 +64,47 @@ export const HeadTitle: FunctionComponent<Props> = props => {
       />
 
       <link
-        key='favicon-apple'
+        key="favicon-apple"
         rel="apple-touch-icon"
         sizes="180x180"
         href="/static/icons/apple-touch-icon.png"
       />
       <link
-        key='favicon-32'
+        key="favicon-32"
         rel="icon"
         type="image/png"
         sizes="32x32"
         href="/static/icons/favicon-32x32.png"
       />
       <link
-        key='favicon-16'
+        key="favicon-16"
         rel="icon"
         type="image/png"
         sizes="16x16"
         href="/static/icons/favicon-16x16.png"
       />
-      <link key="manifest-json" rel="manifest" href={`/manifest-${detectedLocale}.json`} />
-      <link key="manifest-mask-icon" rel="mask-icon" href="/safari-pinned-tab.svg" color="#4b6fff" />
-      <meta key="manifest-apple-title" name="apple-mobile-web-app-title" content="Mirai" />
+      <link
+        key="manifest-json"
+        rel="manifest"
+        href={`/manifest-${detectedLocale}.json`}
+      />
+      <link
+        key="manifest-mask-icon"
+        rel="mask-icon"
+        href="/safari-pinned-tab.svg"
+        color="#4b6fff"
+      />
+      <meta
+        key="manifest-apple-title"
+        name="apple-mobile-web-app-title"
+        content="Mirai"
+      />
       <meta key="manifest-apple-name" name="application-name" content="Mirai" />
-      <meta key="manifest-ms-tile" name="msapplication-TileColor" content="#ffffff" />
+      <meta
+        key="manifest-ms-tile"
+        name="msapplication-TileColor"
+        content="#ffffff"
+      />
       <meta key="manifest-theme" name="theme-color" content="#ffffff" />
 
       {children}

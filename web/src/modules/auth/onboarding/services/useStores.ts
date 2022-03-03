@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react'
 
-import {
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from 'firebase/firestore'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 
 import { Store } from '../../../../core/@types/firebase/Store'
 import { StoreWithId } from '../../../../core/@types/StoreWithId'

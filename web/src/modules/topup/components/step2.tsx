@@ -250,9 +250,10 @@ export const Step2: FunctionComponent<Props> = props => {
                     type="button"
                     disabled={inProgress}
                     className={classNames(
-                      inProgress ? "bg-gray-100 hover:bg-gray-200 cursor-wait" :
-                      "bg-white hover:bg-gray-50",
-                      "mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm"
+                      inProgress
+                        ? 'bg-gray-100 hover:bg-gray-200 cursor-wait'
+                        : 'bg-white hover:bg-gray-50',
+                      'mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 text-base font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:col-start-1 sm:text-sm'
                     )}
                     onClick={() => setConfirmDialogShow(false)}
                     ref={cancelButtonRef}

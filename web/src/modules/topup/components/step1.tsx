@@ -60,10 +60,7 @@ export const Step1: FunctionComponent<Props> = props => {
       if (firebaseUidRegex.test(targetUserId)) {
         // get user document
         const userDoc = await getDoc(
-          doc(
-            collection(getFirestoreInstance(), 'users'),
-            targetUserId
-          )
+          doc(collection(getFirestoreInstance(), 'users'), targetUserId)
         )
 
         // check if user exists
@@ -92,9 +89,7 @@ export const Step1: FunctionComponent<Props> = props => {
         <h3 className="text-lg leading-6 font-medium text-gray-900">
           {locale('title')}
         </h3>
-        <p className="mt-1 text-sm text-gray-500">
-          {locale('desc')}
-        </p>
+        <p className="mt-1 text-sm text-gray-500">{locale('desc')}</p>
       </div>
       <div className="px-4 py-5 sm:p-6">
         <div className="flex justify-center">

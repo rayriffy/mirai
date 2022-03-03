@@ -1,5 +1,5 @@
-import { getAuth, connectAuthEmulator } from "firebase/auth"
-import { createFirebaseInstance } from "./createFirebaseInstance"
+import { getAuth, connectAuthEmulator } from 'firebase/auth'
+import { createFirebaseInstance } from './createFirebaseInstance'
 
 export const getAuthInstance = () => {
   const instance = createFirebaseInstance()
@@ -8,8 +8,7 @@ export const getAuthInstance = () => {
   if (process.env.NODE_ENV === 'development') {
     try {
       connectAuthEmulator(auth, 'http://localhost:9099')
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   return auth

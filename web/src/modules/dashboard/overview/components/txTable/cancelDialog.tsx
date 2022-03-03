@@ -106,7 +106,10 @@ export const CancelDialog: FunctionComponent<Props> = props => {
                       Are you sure you want to cancael this transaction?{' '}
                       <b className="inline-flex items-center">
                         {transactionValue}{' '}
-                        <CurrencyIcon currency={transactionCurrency} className="ml-1" />
+                        <CurrencyIcon
+                          currency={transactionCurrency}
+                          className="ml-1"
+                        />
                       </b>{' '}
                       will be returned to your balance. This action cannot be
                       undone.

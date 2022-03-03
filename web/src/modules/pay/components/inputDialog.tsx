@@ -264,7 +264,10 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <h1>{locale('before')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
                       {balance.toLocaleString()}
-                      <CurrencyIcon currency={arcadeWithId.data.storeCurrency} className="ml-2" />
+                      <CurrencyIcon
+                        currency={arcadeWithId.data.storeCurrency}
+                        className="ml-2"
+                      />
                     </h2>
                   </div>
                   <div>
@@ -274,7 +277,10 @@ export const InputDialog: FunctionComponent<Props> = props => {
                     <h1>{locale('after')}</h1>
                     <h2 className="text-xl font-semibold flex items-center">
                       {calculatedPostBalance.toLocaleString()}
-                      <CurrencyIcon currency={arcadeWithId.data.storeCurrency} className="ml-2" />
+                      <CurrencyIcon
+                        currency={arcadeWithId.data.storeCurrency}
+                        className="ml-2"
+                      />
                     </h2>
                   </div>
                 </div>

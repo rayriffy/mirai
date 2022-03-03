@@ -17,9 +17,7 @@ export const Balance = memo(() => {
   })
 
   const {
-    user: {
-      metadata,
-    },
+    user: { metadata },
   } = useStoreon('user')
 
   return (
@@ -33,7 +31,10 @@ export const Balance = memo(() => {
             return null
           } else {
             return (
-              <div key={`live-balance-${currency.id}`} className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between">
+              <div
+                key={`live-balance-${currency.id}`}
+                className="mt-3 border border-gray-200 bg-white rounded-md p-4 w-full flex justify-between"
+              >
                 <dd className="text-3xl font-semibold text-gray-900 flex items-center">
                   {metadata[`balance_${currency.id}`].toLocaleString()}
                   <currency.icon className="ml-2" />

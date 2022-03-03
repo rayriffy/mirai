@@ -32,7 +32,10 @@ const Page: NextPage<Props> = props => {
   const [selectedDate, setSelectedDate] = useState<Date>(
     startOfDay(dayjs()).toDate()
   )
-  const startDate = useMemo(() => startOfDay(selectedDate).toDate(), [selectedDate])
+  const startDate = useMemo(
+    () => startOfDay(selectedDate).toDate(),
+    [selectedDate]
+  )
   const endDate = useMemo(() => endOfDay(selectedDate).toDate(), [selectedDate])
 
   const { loading, data } = useTopupStatistic(selectedDate, props.storeId)
@@ -59,12 +62,8 @@ const Page: NextPage<Props> = props => {
     dispatch('title/set', locale('page'))
   }, [detectedLocale])
 
-  const analyticItems = useCoinAnalytics(
-    props.storeId,
-    startDate,
-    endDate,
-  )
-  console.log({analyticItems})
+  const analyticItems = useCoinAnalytics(props.storeId, startDate, endDate)
+  console.log({ analyticItems })
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8 space-y-6">

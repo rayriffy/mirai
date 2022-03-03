@@ -1,5 +1,5 @@
-import { getFirestore, connectFirestoreEmulator } from "firebase/firestore"
-import { createFirebaseInstance } from "./createFirebaseInstance"
+import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
+import { createFirebaseInstance } from './createFirebaseInstance'
 
 export const getFirestoreInstance = () => {
   const instance = createFirebaseInstance()
@@ -8,8 +8,7 @@ export const getFirestoreInstance = () => {
   if (process.env.NODE_ENV === 'development') {
     try {
       connectFirestoreEmulator(firestore, 'localhost', 8080)
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   return firestore

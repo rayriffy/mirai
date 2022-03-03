@@ -41,7 +41,10 @@ export const TransactionSmall = memo<{ transactionId: string }>(props => {
             <div className="flex">
               <b className="flex items-center mr-4 text-gray-900 text-lg">
                 {transactionData.token}{' '}
-                <CurrencyIcon currency={transactionData.currency} className="ml-1" />
+                <CurrencyIcon
+                  currency={transactionData.currency}
+                  className="ml-1"
+                />
               </b>
               <StatusBadge status={transactionData.status} size="sm" />
             </div>

@@ -22,10 +22,10 @@ export const MobileUser = memo(() => {
 
   const { locale } = useLocale({
     en: {
-      logout: 'Logout'
+      logout: 'Logout',
     },
     th: {
-      logout: 'ออกจากระบบ'
+      logout: 'ออกจากระบบ',
     },
   })
 

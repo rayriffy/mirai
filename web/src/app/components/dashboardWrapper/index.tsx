@@ -35,9 +35,7 @@ export const DashboardWrapper: FunctionComponent = props => {
           tabIndex={0}
         >
           <div className="h-full flex flex-col justify-between">
-            <div>
-              {authorized ? children : <Unauthorized />}
-            </div>
+            <div>{authorized ? children : <Unauthorized />}</div>
             <Footer bg="bg-gray-50" />
           </div>
         </main>

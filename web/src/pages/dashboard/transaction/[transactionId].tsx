@@ -92,7 +92,10 @@ const Page: NextPage<Props> = props => {
         <>
           <div className="flex items-center">
             {transactionWithId.data.token}
-            <CurrencyIcon currency={transactionWithId.data.currency} className="ml-2" />
+            <CurrencyIcon
+              currency={transactionWithId.data.currency}
+              className="ml-2"
+            />
           </div>
         </>,
       ],
@@ -192,7 +195,10 @@ const Page: NextPage<Props> = props => {
                 <div>
                   <h2 className="text-xl font-semibold flex items-center">
                     {transactionWithId.data.token.toLocaleString()}
-                    <CurrencyIcon currency={transactionWithId.data.currency} className="ml-2" />
+                    <CurrencyIcon
+                      currency={transactionWithId.data.currency}
+                      className="ml-2"
+                    />
                   </h2>
                 </div>
               </div>

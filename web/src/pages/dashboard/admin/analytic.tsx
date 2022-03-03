@@ -45,7 +45,11 @@ const Page: NextPage = props => {
     endOfDay(dayjs()).toDate()
   )
 
-  const analyticItems = useCoinAnalytics(selectedStoreId, selectedStartRange, selectedEndRange)
+  const analyticItems = useCoinAnalytics(
+    selectedStoreId,
+    selectedStartRange,
+    selectedEndRange
+  )
 
   return (
     <div className="px-4 mt-6 sm:px-6 lg:px-8">

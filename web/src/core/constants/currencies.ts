@@ -1,8 +1,7 @@
+import { FunctionComponent, SVGProps } from 'react'
+import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
-import { FunctionComponent, SVGProps } from "react"
-import { FaCoins, FaProductHunt } from "react-icons/fa"
-
-import { Currency } from "../@types/Currency"
+import { Currency } from '../@types/Currency'
 
 interface CurrencyObject {
   id: Currency
@@ -12,10 +11,10 @@ interface CurrencyObject {
 export const currencies: CurrencyObject[] = [
   {
     id: 'coin',
-    icon: FaCoins
+    icon: FaCoins,
   },
   {
     id: 'buck',
-    icon: FaProductHunt
+    icon: FaProductHunt,
   },
 ]

@@ -1,11 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 
-import {
-  collection,
-  onSnapshot,
-  query,
-  where,
-} from 'firebase/firestore'
+import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
 
 import { endOfDay } from '../../../admin/analytic/services/endOfDay'

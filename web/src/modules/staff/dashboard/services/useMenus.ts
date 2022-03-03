@@ -1,11 +1,6 @@
-import {
-  useMemo,
-} from 'react'
+import { useMemo } from 'react'
 
-import {
-  CurrencyYenIcon,
-  ChartBarIcon,
-} from '@heroicons/react/outline'
+import { CurrencyYenIcon, ChartBarIcon } from '@heroicons/react/outline'
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
 
@@ -40,13 +35,17 @@ export const useMenus = () => {
         title: locale('topupTitle'),
         description: locale('topupDesc'),
       },
-      ...(typeof staffStoreId === 'string' ? [{
-        id: 'analytic',
-        link: `/dashboard/staff/analytic/${staffStoreId}`,
-        icon: ChartBarIcon,
-        title: locale('analyticsTitle'),
-        description: locale('analyticsDesc'),
-      }] : [])
+      ...(typeof staffStoreId === 'string'
+        ? [
+            {
+              id: 'analytic',
+              link: `/dashboard/staff/analytic/${staffStoreId}`,
+              icon: ChartBarIcon,
+              title: locale('analyticsTitle'),
+              description: locale('analyticsDesc'),
+            },
+          ]
+        : []),
     ],
     [detectedLocale, staffStoreId]
   )

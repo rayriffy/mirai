@@ -11,12 +11,7 @@ export const useArcade = (arcadeId: string) => {
   const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
-    getDoc(
-      doc(
-        collection(getFirestoreInstance(), 'arcades'),
-        arcadeId
-      )
-    )
+    getDoc(doc(collection(getFirestoreInstance(), 'arcades'), arcadeId))
       .then(doc => {
         if (doc.exists()) {
           setData(doc.data() as Arcade)

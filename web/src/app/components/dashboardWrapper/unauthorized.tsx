@@ -8,7 +8,7 @@ export const Unauthorized = memo(() => {
   const { locale } = useLocale({
     en: {
       title: 'Unauthorized',
-      desc: 'You don\'t have enough permission to access this page.',
+      desc: "You don't have enough permission to access this page.",
     },
     th: {
       title: 'ไม่มีสิทธิ์เข้าถึง',
