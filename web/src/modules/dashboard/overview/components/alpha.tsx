@@ -39,7 +39,7 @@ export const Alpha = memo<Props>(props => {
   const { locale } = useLocale({
     en: {
       title: 'Alpha test ongoing',
-      desc: 'The system will only be available for testing only from 1 - 31 March. After the alpha test, you will unable to use the remaining token in the system.',
+      desc: 'The system will only be available for testing only from 1 - 31 March. After the alpha test, you will unable to topup token into your wallet until system open again.',
       d: 'Days',
       h: 'Hours',
       m: 'Minutes',
@@ -47,7 +47,7 @@ export const Alpha = memo<Props>(props => {
     },
     th: {
       title: 'ระบบอยู่ในระหว่างการทดสอบ',
-      desc: 'ระบบจะใช้งานได้เพียงในระยะเวลา 1-31 มีนาคมเท่านั้น หลังจากทดสอบระบบเสร็จแล้วจะไม่สามารถใช้งานเหรียญได้อีก',
+      desc: 'ระบบจะใช้งานได้เพียงในระยะเวลา 1-31 มีนาคมเท่านั้น หลังจากทดสอบระบบเสร็จแล้วจะไม่สามารถเติมเหรียญได้อีกจนกว่าจะเปิดระบบอีกรอบ',
       d: 'วัน',
       h: 'ชั่วโมง',
       m: 'นาที',
