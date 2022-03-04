@@ -1,10 +1,7 @@
-import { memo, FunctionComponent, useState, useEffect } from 'react'
-
-import { stringify } from 'querystring'
+import { memo, useState, useEffect } from 'react'
 
 import { collection, onSnapshot } from 'firebase/firestore'
 import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
-import { createFirebaseInstance } from '../../../../core/services/createFirebaseInstance'
 
 import { classNames } from '../../../../core/services/classNames'
 

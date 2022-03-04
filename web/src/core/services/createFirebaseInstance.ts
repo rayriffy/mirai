@@ -1,5 +1,5 @@
 import { initializeApp, getApp, getApps } from 'firebase/app'
-import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
+import { AppCheck, initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 
 export const createFirebaseInstance = () => {
   if (!getApps().length) {
@@ -18,8 +18,8 @@ export const createFirebaseInstance = () => {
       isTokenAutoRefreshEnabled: true
     })
 
-    return app
+    return appCheck
   } else {
-    return getApp()
+    return (getApp() as unknown) as AppCheck
   }
 }

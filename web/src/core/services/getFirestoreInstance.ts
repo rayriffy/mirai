@@ -2,8 +2,8 @@ import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore'
 import { createFirebaseInstance } from './createFirebaseInstance'
 
 export const getFirestoreInstance = () => {
-  const instance = createFirebaseInstance()
-  const firestore = getFirestore(instance)
+  const { app } = createFirebaseInstance()
+  const firestore = getFirestore(app)
 
   if (process.env.NODE_ENV === 'development') {
     try {

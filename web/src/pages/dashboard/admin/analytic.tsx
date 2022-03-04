@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -10,16 +10,6 @@ import { startOfDay } from '../../../modules/admin/analytic/services/startOfDay'
 import { Store } from '../../../core/@types/firebase/Store'
 import { endOfDay } from '../../../modules/admin/analytic/services/endOfDay'
 import { StoreSelector } from '../../../modules/admin/analytic/components/storeSelector'
-import { TransactionAnalytic } from '../../../modules/admin/analytic/@types/TransactionAnalytic'
-import {
-  collection,
-  getFirestore,
-  onSnapshot,
-  query,
-  where,
-} from 'firebase/firestore'
-import { createFirebaseInstance } from '../../../core/services/createFirebaseInstance'
-import { Transaction } from '../../../core/@types/firebase/Transaction'
 import { BarRenderer } from '../../../modules/admin/analytic/components/barRenderer'
 import { useCoinAnalytics } from '../../../modules/admin/analytic/services/useCoinAnalytics'
 
