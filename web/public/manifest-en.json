@@ -55,5 +55,40 @@
       "sizes": "120x120",
       "type": "image/png"
     }
+  ],
+  "shortcuts": [
+    {
+      "name": "Home",
+      "url": "/dashboard",
+      "icons": [
+        {
+          "src": "/static/shortcuts/home.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Arcades",
+      "url": "/fastTrackArcade",
+      "icons": [
+        {
+          "src": "/static/shortcuts/arcades.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Stores",
+      "url": "/stores",
+      "icons": [
+        {
+          "src": "/static/shortcuts/stores.png",
+          "type": "image/png",
+          "sizes": "192x192"
+        }
+      ]
+    }
   ]
 }
