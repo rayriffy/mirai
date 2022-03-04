@@ -240,6 +240,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
       return storeWithId
     })
 
+    ctx.res.setHeader(
+      'Cache-Control',
+      'public, maxage=86400, stale-while-revalidate=3600'
+    )
+
     return {
       props: {
         storesWithId,

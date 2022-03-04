@@ -165,6 +165,12 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
     }
   } else {
     const storeData = storeDoc.data()
+
+    ctx.res.setHeader(
+      'Cache-Control',
+      'public, maxage=86400, stale-while-revalidate=3600'
+    )
+
     return {
       props: {
         storeId: storeDoc.id,

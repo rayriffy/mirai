@@ -258,6 +258,14 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
 
     if (transactionDoc.exists) {
       const transactionData = transactionDoc.data() as Transaction
+
+      ctx.res.setHeader(
+        'Cache-Control',
+        ['pending', 'processing'].includes(transactionData.status)
+          ? 'public, maxage=60, stale-while-revalidate=10'
+          : 'public, maxage=2592000, stale-while-revalidate=86400'
+      )
+
       return {
         props: {
           transactionWithId: {
