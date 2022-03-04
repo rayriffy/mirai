@@ -4,6 +4,7 @@ import omit from 'lodash/omit'
 import firebase from 'firebase-admin'
 import { initializeFirebase } from '../../modules/api/services/initializeFirebase'
 import { getUserAndFilterAuth } from '../../modules/api/services/getUserAndFilterAuth'
+import { verifyAppCheck } from '../../modules/api/services/verifyAppCheck'
 
 import { Arcade } from '../../core/@types/firebase/Arcade'
 import { Transaction } from '../../core/@types/firebase/Transaction'
@@ -14,6 +15,7 @@ const api: NextApiHandler = async (req, res) => {
       // console.log(process.env)
       initializeFirebase()
 
+      await verifyAppCheck(req.headers['x-firebase-appcheck'] as string)
       const userData = await getUserAndFilterAuth(
         req.headers.authorization,
         [],

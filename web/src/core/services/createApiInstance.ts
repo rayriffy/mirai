@@ -9,8 +9,11 @@ export const createApiInstance = async (user: User) => {
 
   let appCheckTokenResponse: AppCheckTokenResult | { token: string } = { token: '' }
   try {
-      appCheckTokenResponse = await getToken(createFirebaseInstance())
+    const instance = createFirebaseInstance()
+    console.log(instance.app)
+    appCheckTokenResponse = await getToken(instance)
   } catch (err) {
+    console.error(err)
   }
 
   return axios.create({

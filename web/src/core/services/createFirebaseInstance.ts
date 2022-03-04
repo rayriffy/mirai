@@ -20,6 +20,12 @@ export const createFirebaseInstance = () => {
 
     return appCheck
   } else {
-    return (getApp() as unknown) as AppCheck
+    const app = getApp()
+
+    const appCheck = initializeAppCheck(app, {
+      provider: new ReCaptchaV3Provider('6LdwJrUeAAAAAG_aFR4xoJMHK-MY_KVkJE_HiVpy'),
+      isTokenAutoRefreshEnabled: true
+    })
+    return appCheck
   }
 }

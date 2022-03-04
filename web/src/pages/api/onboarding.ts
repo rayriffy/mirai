@@ -5,6 +5,8 @@ import crypto from 'crypto'
 import firebase from 'firebase-admin'
 import { initializeFirebase } from '../../modules/api/services/initializeFirebase'
 import { getUserAndFilterAuth } from '../../modules/api/services/getUserAndFilterAuth'
+import { verifyAppCheck } from '../../modules/api/services/verifyAppCheck'
+
 import { User } from '../../core/@types/firebase/User'
 
 const api: NextApiHandler = async (req, res) => {
@@ -12,6 +14,7 @@ const api: NextApiHandler = async (req, res) => {
     try {
       initializeFirebase()
 
+      await verifyAppCheck(req.headers['x-firebase-appcheck'] as string)
       const userData = await getUserAndFilterAuth(
         req.headers.authorization,
         [],

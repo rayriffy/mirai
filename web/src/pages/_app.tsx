@@ -27,8 +27,8 @@ const NextApp: NextPage<AppProps> = props => {
   useEffect(() => {
     const instance = createFirebaseInstance()
 
-    getPerformance(instance)
-    getAnalytics(instance)
+    getPerformance(instance.app)
+    getAnalytics(instance.app)
   }, [])
 
   return (
