@@ -60,17 +60,8 @@ const api: NextApiHandler = async (req, res) => {
             .collection('users')
             .doc(uid)
             .update({
-              ...(arcadeData.storeCurrency === 'coin'
-                ? {
-                    balance_coin: firebase.firestore.FieldValue.increment(
-                      -Math.abs(token)
-                    ),
-                  }
-                : {
-                    balance_buck: firebase.firestore.FieldValue.increment(
-                      -Math.abs(token)
-                    ),
-                  }),
+              [`balance_${arcadeData.storeCurrency}`]:
+                firebase.firestore.FieldValue.increment(-Math.abs(token)),
               updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             })
 
