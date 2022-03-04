@@ -36,6 +36,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
 
 ;(async () => {
   // initialize firebase
+  // if (process.env.MIRAI_ENVIRONMENT === 'dev') {}
   firebase.initializeApp({
     credential: firebase.credential.cert({
       projectId: PROJECT_ID,
@@ -243,6 +244,6 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     }, 60 * 1000)
   }
 })().catch(e => {
-  logger('server', e)
+  require('debug')(`mirai:server`)(e)
   process.exit(1)
 })
