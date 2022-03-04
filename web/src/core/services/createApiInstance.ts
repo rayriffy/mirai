@@ -11,8 +11,6 @@ export const createApiInstance = async (user: User) => {
   try {
       appCheckTokenResponse = await getToken(createFirebaseInstance())
   } catch (err) {
-      // Handle any errors if the token was not retrieved.
-      return;
   }
 
   return axios.create({
