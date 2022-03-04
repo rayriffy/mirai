@@ -1,10 +1,14 @@
 {
   "name": "Mirai",
   "short_name": "Mirai",
+  "description": "Faster way to insert coin into arcade machine, compared to traditional physical coin",
+  "categories": ["utilities", "games", "finance"],
   "theme_color": "#fff",
   "background_color": "#fff",
   "display": "standalone",
   "orientation": "any",
+  "gcm_sender_id": "721530926",
+  "gcm_user_visible_only": true,
   "scope": "/",
   "start_url": "/",
   "icons": [
