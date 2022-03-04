@@ -6,7 +6,7 @@
   "bin": "src/app.js",
   "scripts": {
     "bundle": "pnpm swc src/app.ts -o",
-    "build:mac": "pkg -t node16-macos-x64 --out-path dist src/app.js",
+    "build:mac": "exit 1",
     "build:rasp": "exit 1",
     "start": "DEBUG=mirai:* node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

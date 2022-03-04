@@ -32,37 +32,48 @@ if (!STORE_ID) {
   console.error('STORE_ID is not set')
   throw 'no store id'
 }
-
-const logger = (unit, ...args) => {
-  // log to actual console
-  require('debug')(`mirai:${unit}`)(...args)
-
-  // try to log into network
-  try {
-    const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
-    firebase
-      .database()
-      .ref(`stores/${STORE_ID}/${targetDate}`)
-      .push({
-        unit,
-        message: args[0].replace(/%([a-zA-Z%])/g, match => {
-          if (match === '%%') {
-            return '%'
-          }
-          const val = args[1]
-          args.splice(0, 1)
-          return val
-        }),
-        createdAt: dayjs().toDate(),
-      })
-  } catch (e) {
-    console.error(e)
-  }
-}
 const wait = duration => new Promise(res => setTimeout(res, duration))
 
 ;(async () => {
+  // initialize firebase
+  firebase.initializeApp({
+    credential: firebase.credential.cert({
+      projectId: PROJECT_ID,
+      clientEmail: CLIENT_EMAIL,
+      privateKey: PRIVATE_KEY,
+    }),
+    databaseURL:
+      'https://mirai-da346-default-rtdb.asia-southeast1.firebasedatabase.app/',
+  })
+
   const server = http.createServer()
+
+  const logger = (unit, ...args) => {
+    // log to actual console
+    require('debug')(`mirai:${unit}`)(...args)
+  
+    // try to log into network
+    try {
+      const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
+      firebase
+        .database()
+        .ref(`stores/${STORE_ID}/${targetDate}`)
+        .push({
+          unit,
+          message: args[0].replace(/%([a-zA-Z%])/g, match => {
+            if (match === '%%') {
+              return '%'
+            }
+            const val = args[1]
+            args.splice(0, 1)
+            return val
+          }),
+          createdAt: dayjs().toDate(),
+        })
+    } catch (e) {
+      console.error(e)
+    }
+  }
 
   const io = new Server(server, {
     path: '/mirai-tx',
@@ -88,17 +99,6 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     .flat()
   logger('server', 'all possible ips:')
   allPossibleIps.map(o => logger('server', o))
-
-  // initialize firebase
-  firebase.initializeApp({
-    credential: firebase.credential.cert({
-      projectId: PROJECT_ID,
-      clientEmail: CLIENT_EMAIL,
-      privateKey: PRIVATE_KEY,
-    }),
-    databaseURL:
-      'https://mirai-da346-default-rtdb.asia-southeast1.firebasedatabase.app/',
-  })
 
   io.on('connection', socket => {
     logger('socket', 'esp32 connected to server')
