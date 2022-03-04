@@ -10,6 +10,12 @@ const { networkInterfaces } = require('os')
 const { Server } = require('socket.io')
 const dotenv = require('dotenv')
 
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+const timezone = require('dayjs/plugin/timezone')
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
 const expectedEnv = '/boot/mirai.credentials'
 const backupEnv = path.join(process.cwd(), '..', '.env')
 
@@ -21,10 +27,37 @@ dotenv.config({
   path: targetEnv,
 })
 
-const logger = (unit, ...args) => require('debug')(`mirai:${unit}`)(...args)
-const wait = duration => new Promise(res => setTimeout(res, duration))
-
 const { STORE_ID, PROJECT_ID, CLIENT_EMAIL, PRIVATE_KEY } = process.env
+
+if (!STORE_ID) {
+  console.error('STORE_ID is not set')
+  throw 'no store id'
+}
+
+const logger = (unit, ...args) => {
+  // log to actual console
+  require('debug')(`mirai:${unit}`)(...args)
+
+  // try to log into network
+  try {
+    const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
+    admin.database().ref(`stores/${STORE_ID}/${targetDate}`).push({
+      unit,
+      message: args[0].replace(/%([a-zA-Z%])/g, match => {
+        if (match === '%%') {
+          return '%';
+        }
+        const val = args[1];
+        args.splice(index, 1);
+        return val
+      }),
+      creadtedAt: dayjs().toDate(),
+    })
+  } catch (e) {
+    console.error(e)
+  }
+}
+const wait = duration => new Promise(res => setTimeout(res, duration))
 
 ;(async () => {
   const server = http.createServer()
@@ -61,6 +94,7 @@ const { STORE_ID, PROJECT_ID, CLIENT_EMAIL, PRIVATE_KEY } = process.env
       clientEmail: CLIENT_EMAIL,
       privateKey: PRIVATE_KEY,
     }),
+    databaseURL: 'https://mirai-da346-default-rtdb.asia-southeast1.firebasedatabase.app/',
   })
 
   io.on('connection', socket => {
@@ -171,17 +205,10 @@ const { STORE_ID, PROJECT_ID, CLIENT_EMAIL, PRIVATE_KEY } = process.env
           .collection('users')
           .doc(transactionRefetched.data().userId)
           .update({
-            ...(transactionRefetched.data().currency === 'coin'
-              ? {
-                  balance_coin: firebase.firestore.FieldValue.increment(
-                    Math.abs(transactionRefetched.data().token)
-                  ),
-                }
-              : {
-                  balance_buck: firebase.firestore.FieldValue.increment(
-                    Math.abs(transactionRefetched.data().token)
-                  ),
-                }),
+            [`balance_${transactionRefetched.data().currency}`]:
+              firebase.firestore.FieldValue.increment(
+                Math.abs(transactionRefetched.data().token)
+              ),
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
 
@@ -189,9 +216,10 @@ const { STORE_ID, PROJECT_ID, CLIENT_EMAIL, PRIVATE_KEY } = process.env
 
         logger(
           'processor',
-          'refunded %d THB to user %s',
+          'refunded %d %s to user %s',
           Math.abs(transactionRefetched.data().token),
-          transactionRefetched.data().userId
+          transactionRefetched.data().currency,
+          transactionRefetched.data().userId,
         )
       }
     }, 60 * 1000)
