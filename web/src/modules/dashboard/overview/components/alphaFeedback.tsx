@@ -28,7 +28,7 @@ export const AlphaFeedback = memo(() => {
               <HeartIcon className="h-6 w-6 text-white" aria-hidden="true" />
             </span>
             <div className="ml-3">
-              <h1 className="font-medium text-white truncate text-lg">
+              <h1 className="font-medium text-white text-lg">
                 {locale('title')}
               </h1>
               <p className="text-white text-sm">

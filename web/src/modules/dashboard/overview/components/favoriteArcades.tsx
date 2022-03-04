@@ -9,11 +9,11 @@ export const FavoriteArcades = memo(() => {
   const { locale } = useLocale({
     en: {
       title: 'Favorite Arcades',
-      noArcade: 'Add favorite arcade for faster access',
+      noArcade: 'No favorite arcade in your account yet',
     },
     th: {
       title: 'ตู้เกมโปรด',
-      noArcade: 'เพิ่มตู้เกมที่ชื่นชอบเพื่อเข้าถึงได้เร็วขึ้น',
+      noArcade: 'ยังไม่ได้เพิ่มตู้เกมโปรดในบัญชีของคุณ',
     },
   })
 
