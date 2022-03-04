@@ -11,6 +11,8 @@ import { useLocale } from '../../core/services/useLocale'
 import { Alpha } from '../../modules/dashboard/overview/components/alpha'
 import dayjs from 'dayjs'
 import { useStoreon } from '../../context/storeon'
+import { SpeakerphoneIcon } from '@heroicons/react/outline'
+import { AlphaFeedback } from '../../modules/dashboard/overview/components/alphaFeedback'
 
 interface Props {
   endTestingDate: string
@@ -49,13 +51,10 @@ const Page: NextPage<Props> = props => {
         </div>
 
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 px-4 mt-6 sm:px-6 lg:px-8">
-          <div className="mb-4 max-w-lg mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-4 justify-center items-start gap-4 mb-4">
+            <AlphaFeedback />
             <Alpha endTestDate={dayjs(endTestingDate)} />
           </div>
-          {/* <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-5 justify-center items-start gap-4 mb-4">
-            <div className="bg-white p-6 col-span-1 lg:col-span-2 xl:col-span-3 h-64"></div>
-            <Alpha endTestDate={dayjs(endTestingDate)} />
-          </div> */}
           <FavoriteArcades />
         </div>
       </div>

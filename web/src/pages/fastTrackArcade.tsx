@@ -1,9 +1,7 @@
 import { NextPage } from 'next'
 
 const Page: NextPage = props => {
-  return (
-    <></>
-  ) 
+  return <></>
 }
 
 export default Page
