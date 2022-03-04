@@ -2,7 +2,6 @@ const fs = require('fs')
 const path = require('path')
 
 const http = require('http')
-const server = http.createServer()
 
 const firebase = require('firebase-admin')
 const { networkInterfaces } = require('os')
@@ -41,18 +40,21 @@ const logger = (unit, ...args) => {
   // try to log into network
   try {
     const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
-    admin.database().ref(`stores/${STORE_ID}/${targetDate}`).push({
-      unit,
-      message: args[0].replace(/%([a-zA-Z%])/g, match => {
-        if (match === '%%') {
-          return '%';
-        }
-        const val = args[1];
-        args.splice(index, 1);
-        return val
-      }),
-      creadtedAt: dayjs().toDate(),
-    })
+    firebase
+      .database()
+      .ref(`stores/${STORE_ID}/${targetDate}`)
+      .push({
+        unit,
+        message: args[0].replace(/%([a-zA-Z%])/g, match => {
+          if (match === '%%') {
+            return '%'
+          }
+          const val = args[1]
+          args.splice(0, 1)
+          return val
+        }),
+        createdAt: dayjs().toDate(),
+      })
   } catch (e) {
     console.error(e)
   }
@@ -94,7 +96,8 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
       clientEmail: CLIENT_EMAIL,
       privateKey: PRIVATE_KEY,
     }),
-    databaseURL: 'https://mirai-da346-default-rtdb.asia-southeast1.firebasedatabase.app/',
+    databaseURL:
+      'https://mirai-da346-default-rtdb.asia-southeast1.firebasedatabase.app/',
   })
 
   io.on('connection', socket => {
@@ -212,14 +215,29 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
 
-        await Promise.all([transactionJob, userJob])
+        const refundPayload = {
+          type: 'refund',
+          transactionId: transactionRefetched.id,
+          userId: transactionRefetched.data().userId,
+          token: Math.abs(transactionRefetched.data().token),
+          currency: transactionRefetched.data().currency,
+          status: 'success',
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }
+        const refundJob = firebase
+          .firestore()
+          .collection('transactions')
+          .add(refundPayload)
+
+        await Promise.all([transactionJob, userJob, refundJob])
 
         logger(
           'processor',
           'refunded %d %s to user %s',
           Math.abs(transactionRefetched.data().token),
           transactionRefetched.data().currency,
-          transactionRefetched.data().userId,
+          transactionRefetched.data().userId
         )
       }
     }, 60 * 1000)

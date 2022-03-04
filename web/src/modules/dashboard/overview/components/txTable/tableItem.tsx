@@ -31,12 +31,14 @@ export const TableItem = memo<Props>(props => {
     en: {
       at: 'at',
       topup: 'Topup',
+      refund: 'Refund',
       info: 'Information',
       cancel: 'Cancel',
     },
     th: {
       at: 'ที่',
-      topup: 'เติมเงิน',
+      topup: 'เติมเหรียญ',
+      refund: 'คืนเหรียญ',
       info: 'ดูข้อมูลเพิ่มเติม',
       cancel: 'ยกเลิกคำสั่งซื้อ',
     },
@@ -64,7 +66,7 @@ export const TableItem = memo<Props>(props => {
                 </a>
               </Link>
             ) : (
-              locale('topup')
+              locale(transaction.data.type)
             )}
           </span>
         </div>

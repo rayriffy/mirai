@@ -9,24 +9,13 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 import { useRecentTransactions } from '../services/useRecentTransactions'
 
-import { StatusBadge } from '../../../../core/components/statusBadge'
 import { TableHeader } from './txTable/tableHeader'
 import { TableItem } from './txTable/tableItem'
-import { RelativeTime } from './txTable/relativeTime'
-import { useLocale } from '../../../../core/services/useLocale'
 
 dayjs.extend(relativeTime)
 
 export const TransactionHistory = memo(() => {
-  const { data, loading } = useRecentTransactions()
-  const { locale, detectedLocale } = useLocale({
-    en: {
-      topup: 'Topup',
-    },
-    th: {
-      topup: 'เติมเงิน',
-    },
-  })
+  const { data } = useRecentTransactions()
 
   return (
     <Fragment>

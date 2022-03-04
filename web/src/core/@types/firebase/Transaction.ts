@@ -19,6 +19,11 @@ export type Transaction = (
       reason: 'common1' | 'common2' | string
     }
   | {
+      type: 'refund'
+      transactionId: string
+      userId: string
+    }
+  | {
       type: 'payment'
       arcadeId: string
       arcadeName: string
