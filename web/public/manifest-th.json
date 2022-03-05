@@ -9,6 +9,7 @@
   "orientation": "any",
   "gcm_sender_id": "721530926",
   "gcm_user_visible_only": true,
+  "id": "/th",
   "scope": "/th",
   "start_url": "/th",
   "icons": [
