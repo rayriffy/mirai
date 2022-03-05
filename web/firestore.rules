@@ -1,0 +1,40 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+  	function isAuthenticated() {
+    	return request.auth != null;
+    }
+
+    function isRole(targetUID, targetRoles) {
+      return get(/databases/$(database)/documents/users/$(targetUID)).data.role in targetRoles;
+    }
+    
+    match /users/{userID} {
+    	// only user himslf or moderators should be able to see
+    	allow read: if isAuthenticated() && (userID == request.auth.uid || isRole(request.auth.uid, ['staff', 'superstaff', 'admin']));
+    }
+    
+    match /transactions/{transactionsID} {
+    	// allow read: if isAuthenticated();
+    	allow read: if isAuthenticated() && (
+       // if staff, or admin will get full access
+       isRole(request.auth.uid, ['staff', 'superstaff', 'admin']) ||
+       // otherwise, check for transaction owner
+       resource.data.userId == request.auth.uid
+      );
+    }
+    
+    match /arcades/{arcadeId} {
+    	allow read: if isAuthenticated();
+    }
+    
+    match /stores/{storeId} {
+    	allow read: if isAuthenticated();
+    }
+
+    match /{document=**} {
+      allow write: if false;
+    }
+  }
+}
