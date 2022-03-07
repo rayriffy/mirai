@@ -12,7 +12,8 @@ service cloud.firestore {
     
     match /users/{userID} {
     	// only user himslf or moderators should be able to see
-    	allow read: if isAuthenticated() && (userID == request.auth.uid || isRole(request.auth.uid, ['staff', 'superstaff', 'admin']));
+    	allow get: if isAuthenticated() && (userID == request.auth.uid || isRole(request.auth.uid, ['staff', 'superstaff', 'admin']));
+      allow list: if isAuthenticated() && isRole(request.auth.uid, ['admin']);
     }
     
     match /transactions/{transactionsID} {
