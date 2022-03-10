@@ -23,12 +23,16 @@ const Page: NextPage = () => {
 
   const { locale, detectedLocale } = useLocale({
     en: {
+      cardTitle: 'Add coin',
+      cardDesc: 'Put amout of coin to add',
       page: 'Topup',
       back: 'Back to dashboard',
       success: 'Success',
       failed: 'Failed',
     },
     th: {
+      cardTitle: 'เพิ่มเหรียญ',
+      cardDesc: 'ระบุจำนวนเหรียญที่จะเติมให้ลูกค้า',
       page: 'เติมเหรียญ',
       back: 'กลับไปหน้าหลัก',
       success: 'สำเร็จ',
@@ -56,10 +60,10 @@ const Page: NextPage = () => {
             <div className="border border-gray-200 bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200">
               <div className="bg-white px-4 py-5 border-b border-gray-200 sm:px-6">
                 <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  Add balance
+                  {locale('cardTitle')}
                 </h3>
                 <p className="mt-1 text-sm text-gray-500">
-                  Put amout of balance to add
+                  {locale('cardDesc')}
                 </p>
               </div>
               <div className="px-4 py-5 sm:p-6">
