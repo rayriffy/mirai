@@ -58,7 +58,7 @@ const Page: NextPage<Props> = props => {
           </span>
         </p>
       </div>
-      <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {arcadesWithId.map(arcade => (
           <ArcadeCard arcade={arcade} key={`arcade-${arcade.id}`} />
         ))}
