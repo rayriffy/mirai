@@ -7,6 +7,8 @@ import {
 } from 'react'
 
 import Link from 'next/link'
+import Image from 'next/image'
+
 import {
   TicketIcon,
   PlusIcon,
@@ -15,6 +17,7 @@ import {
   LocationMarkerIcon,
   CheckCircleIcon,
   XCircleIcon,
+  PhotographIcon,
 } from '@heroicons/react/outline'
 import { FaCoins, FaProductHunt } from 'react-icons/fa'
 
@@ -27,6 +30,8 @@ import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { useLocale } from '../../../core/services/useLocale'
 import { TransactionSmall } from './transactionSmall'
 import { CurrencyIcon } from '../../../core/components/currencyIcon'
+import { useCoverImage } from '../../dashboard/arcades/services/useCoverImage'
+import { Spinner } from '../../../core/components/spinner'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -45,6 +50,8 @@ export const InputDialog: FunctionComponent<Props> = props => {
       metadata: { balance_coin, balance_buck = 0 },
     },
   } = useStoreon('user')
+
+  const { data: imageUrl, loading: imageLoading } = useCoverImage(arcadeWithId.id)
 
   const { locale } = useLocale({
     en: {
@@ -158,10 +165,22 @@ export const InputDialog: FunctionComponent<Props> = props => {
   }
 
   return (
-    <div className="mt-10 border border-gray-200 bg-white rounded-md px-4 py-5 sm:p-6 overflow-hidden touch-manipulation">
-      <div>
-        <div className="text-center mt-4">
-          <h3 className="text-2xl leading-6 font-semibold text-gray-900 pt-3">
+    <div className="mt-6 md:mt-10 border border-gray-200 bg-white rounded-xl overflow-hidden touch-manipulation">
+        {!imageLoading && imageUrl !== null ? (
+            <Image
+              src={imageUrl}
+              width={1024}
+              height={600}
+              alt={arcadeWithId.data.name}
+            />
+          ) : (
+            <div className="aspect-[1024/600] bg-slate-100 flex justify-center items-center">
+              {imageLoading ? <Spinner /> : <PhotographIcon className='h-8 w-8 text-gray-900' />}
+            </div>
+          )}
+      <div className="px-4 sm:px-6 py-6">
+        <div className="text-center">
+          <h3 className="text-2xl leading-6 font-semibold text-gray-900">
             {arcadeWithId.data.name}
           </h3>
           <div className="flex justify-center py-2">
@@ -288,7 +307,6 @@ export const InputDialog: FunctionComponent<Props> = props => {
             </Fragment>
           )}
         </div>
-      </div>
       <div className="mt-5 sm:mt-6">
         {result === undefined && (
           <button
@@ -334,6 +352,7 @@ export const InputDialog: FunctionComponent<Props> = props => {
             paymentProcessing={paymentProcessing}
           />
         </div>
+      </div>
       </div>
     </div>
   )
