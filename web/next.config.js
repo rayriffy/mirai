@@ -52,7 +52,7 @@ module.exports = withPlugins(
       // ]
     },
     images: {
-      domains: ['www.gravatar.com'],
+      domains: ['localhost', 'www.gravatar.com', 'firebasestorage.googleapis.com'],
     },
     experimental: {
       polyfillsOptimization: true,

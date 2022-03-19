@@ -5,11 +5,13 @@ export const verifyAppCheck = async (appCheckToken: string | undefined) => {
     throw 'unauthorized'
   } else {
     try {
-      const appCheckClaims = await firebase.appCheck().verifyToken(appCheckToken);
+      const appCheckClaims = await firebase
+        .appCheck()
+        .verifyToken(appCheckToken)
 
       return true
-  } catch (err) {
-      return 'unauthorized'
-  }
+    } catch (err) {
+      throw 'unauthorized'
+    }
   }
 }

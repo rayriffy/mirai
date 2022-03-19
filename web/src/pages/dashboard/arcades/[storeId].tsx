@@ -2,6 +2,7 @@ import { Fragment, useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
 import Link from 'next/link'
+import Image from 'next/image'
 
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 
@@ -11,6 +12,7 @@ import { ArcadeWithId } from '../../../core/@types/ArcadeWithId'
 import { StoreWithId } from '../../../core/@types/StoreWithId'
 import { useLocale } from '../../../core/services/useLocale'
 import { useStoreon } from '../../../context/storeon'
+import { ArcadeCard } from '../../../modules/dashboard/arcades/components/arcadeCard'
 
 interface Props {
   arcadesWithId: ArcadeWithId[]
@@ -62,22 +64,7 @@ const Page: NextPage<Props> = props => {
       </div>
       <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         {arcadesWithId.map(arcade => (
-          <div className="" key={arcade.id}>
-            <Link href={`/pay/${arcade.id}`}>
-              <a>
-                <div className="border border-gray-200 bg-white rounded-md p-4 w-full">
-                  <h1 className="text-gray-800 font-semibold text-xl">
-                    {arcade.data.name}
-                  </h1>
-                  <div className="mt-0.5">
-                    <h2 className="text-gray-500 text-sm">
-                      {arcade.data.tokenPerCredit} {locale('pergame')}
-                    </h2>
-                  </div>
-                </div>
-              </a>
-            </Link>
-          </div>
+          <ArcadeCard arcade={arcade} key={`arcade-${arcade.id}`} />
         ))}
       </div>
     </div>
@@ -88,6 +75,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   const { storeId } = ctx.params
 
   const { default: firebase } = await import('firebase-admin')
+  const { default: dayjs } = await import('dayjs')
   const { initializeFirebase } = await import(
     '../../../modules/api/services/initializeFirebase'
   )
@@ -121,6 +109,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
         .where('storeId', '==', storeDoc.id)
         .orderBy('name', 'asc')
         .get()
+
       const arcades = arcadeCollection.docs.map(doc => {
         const arcadeData = doc.data() as Arcade
         const arcade = {
