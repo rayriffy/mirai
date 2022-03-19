@@ -45,7 +45,7 @@ export const ArcadeCard = memo<Props>(props => {
               {loading ? <Spinner /> : <PhotographIcon className='h-8 w-8 text-gray-900' />}
             </div>
           )}
-          <div className="px-5 py-4">
+          <div className="px-5 py-3">
             <h1 className="text-gray-800 font-semibold text-xl">
               {arcade.data.name}
             </h1>

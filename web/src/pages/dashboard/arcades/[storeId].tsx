@@ -1,8 +1,6 @@
-import { Fragment, useEffect } from 'react'
+import { useEffect } from 'react'
 
 import { GetServerSideProps, NextPage } from 'next'
-import Link from 'next/link'
-import Image from 'next/image'
 
 import { ExternalLinkIcon } from '@heroicons/react/outline'
 
@@ -26,12 +24,10 @@ const Page: NextPage<Props> = props => {
     en: {
       machine: 'Machines',
       maps: 'Maps',
-      pergame: 'coins per game',
     },
     th: {
       machine: 'ตู้',
       maps: 'แผนที่',
-      pergame: 'เหรียญต่อการเข้าเล่นหนึ่งรอบ',
     },
   })
 
