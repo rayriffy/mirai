@@ -69,7 +69,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
             args.splice(0, 1)
             return val
           }),
-          createdAt: dayjs().toDate(),
+          createdAt: dayjs().toISOString(),
         })
     } catch (e) {
       // console.error(e)
