@@ -4,16 +4,16 @@ importers:
 
   raspberrypi:
     specifiers:
-      dayjs: ^1.10.8
-      debug: ^4.3.2
+      dayjs: ^1.11.0
+      debug: ^4.3.4
       dotenv: ^16.0.0
       express: ^4.17.3
       firebase-admin: ^10.0.2
       pkg: ^5.5.2
       socket.io: ^4.4.1
     dependencies:
-      dayjs: 1.10.8
-      debug: 4.3.3
+      dayjs: 1.11.0
+      debug: 4.3.4
       dotenv: 16.0.0
       express: 4.17.3
       firebase-admin: 10.0.2
@@ -3085,7 +3085,7 @@ packages:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -3919,6 +3919,10 @@ packages:
     resolution: {integrity: sha512-wbNwDfBHHur9UOzNUjeKUOJ0fCb0a52Wx0xInmQ7Y8FstyajiV1NmK1e00cxsr9YrE9r7yAChE0VvpuY5Rnlow==}
     dev: false
 
+  /dayjs/1.11.0:
+    resolution: {integrity: sha512-JLC809s6Y948/FuCZPm5IX8rRhQwOiyMb2TfVVQEixG7P8Lm/gt5S7yoQZmC8x1UehI9Pb7sksEt4xx14m+7Ug==}
+    dev: false
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     dependencies:
@@ -3953,6 +3957,17 @@ packages:
       ms: 2.1.2
       supports-color: 9.2.1
     dev: true
+
+  /debug/4.3.4:
+    resolution: {integrity: sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+    dependencies:
+      ms: 2.1.2
 
   /decamelize-keys/1.1.0:
     resolution: {integrity: sha1-0XGoeTMlKAfrPLYdwcFEXQeN8tk=}
@@ -4178,7 +4193,7 @@ packages:
       base64id: 2.0.0
       cookie: 0.4.2
       cors: 2.8.5
-      debug: 4.3.3
+      debug: 4.3.4
       engine.io-parser: 5.0.3
       ws: 8.2.3
     transitivePeerDependencies:
@@ -5170,7 +5185,7 @@ packages:
     dependencies:
       '@tootallnate/once': 2.0.0
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5181,7 +5196,7 @@ packages:
     engines: {node: '>= 6'}
     dependencies:
       agent-base: 6.0.2
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
 
@@ -5631,7 +5646,7 @@ packages:
     engines: {node: '>=10 < 13 || >=14'}
     dependencies:
       '@types/express-jwt': 0.0.42
-      debug: 4.3.3
+      debug: 4.3.4
       jose: 2.0.5
       limiter: 1.1.5
       lru-memoizer: 2.1.4
@@ -7054,7 +7069,7 @@ packages:
     resolution: {integrity: sha512-xA93uxUD/rogV7BV59agW/JHPGXeREMWiZc9jhcwY4YdZ7QOtC7qbomYg0n4wyk2lJhggjvKvhNX8wln/Aldhg==}
     engines: {node: '>=8.10.0'}
     dependencies:
-      debug: 4.3.3
+      debug: 4.3.4
       extend: 3.0.2
     transitivePeerDependencies:
       - supports-color
@@ -7354,7 +7369,7 @@ packages:
     dependencies:
       '@types/component-emitter': 1.2.11
       component-emitter: 1.3.0
-      debug: 4.3.3
+      debug: 4.3.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -7365,7 +7380,7 @@ packages:
     dependencies:
       accepts: 1.3.8
       base64id: 2.0.0
-      debug: 4.3.3
+      debug: 4.3.4
       engine.io: 6.1.3
       socket.io-adapter: 2.3.3
       socket.io-parser: 4.0.4

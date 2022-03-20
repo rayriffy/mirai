@@ -54,26 +54,26 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     require('debug')(`mirai:${unit}`)(...args)
   
     // try to log into network
-    // try {
-    //   const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
-    //   firebase
-    //     .database()
-    //     .ref(`stores/${STORE_ID}/${targetDate}`)
-    //     .push({
-    //       unit,
-    //       message: args[0].replace(/%([a-zA-Z%])/g, match => {
-    //         if (match === '%%') {
-    //           return '%'
-    //         }
-    //         const val = args[1]
-    //         args.splice(0, 1)
-    //         return val
-    //       }),
-    //       createdAt: dayjs().toDate(),
-    //     })
-    // } catch (e) {
-    //   console.error(e)
-    // }
+    try {
+      const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
+      firebase
+        .database()
+        .ref(`stores/${STORE_ID}/${targetDate}`)
+        .push({
+          unit,
+          message: args[0].replace(/%([a-zA-Z%])/g, match => {
+            if (match === '%%') {
+              return '%'
+            }
+            const val = args[1]
+            args.splice(0, 1)
+            return val
+          }),
+          createdAt: dayjs().toDate(),
+        })
+    } catch (e) {
+      // console.error(e)
+    }
   }
 
   const io = new Server(server, {
