@@ -1,0 +1,20 @@
+{
+  "rules": {
+    "arcades": {
+      "$arcadeId": {
+        ".read": "auth != null",
+          ".write": "false"
+      },
+      ".read": "false",
+      ".write": "false"
+    },
+    "stores": {
+      "$storeId": {
+        ".read": "auth.token.role == 'admin' || auth.token.role == 'staff' || auth.token.role == 'superstaff'",
+        ".write": "false"
+      },
+      ".read": "false",
+      ".write": "false"
+    }
+  }
+}
