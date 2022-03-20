@@ -12,7 +12,7 @@ export const useCoverImage = (arcadeId: string) => {
     setLoading(true)
     setData(null)
 
-    getDownloadURL(ref(getStorageInstance(), `${arcadeId}.jpg`))
+    getDownloadURL(ref(getStorageInstance(), `arcades/${arcadeId}.jpg`))
       .then(url => {
         setData(url)
       })
