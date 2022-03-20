@@ -52,7 +52,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
   const logger = (unit, ...args) => {
     // log to actual console
     require('debug')(`mirai:${unit}`)(...args)
-  
+
     // try to log into network
     try {
       const targetDate = dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD')
@@ -130,6 +130,12 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
           })
       }
+    })
+
+    socket.on('pong', async arcadeId => {
+      firebase.database().ref(`arcades/${arcadeId}`).set({
+        pingAt: dayjs().toISOString(),
+      })
     })
   })
 
@@ -243,6 +249,11 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
       }
     }, 60 * 1000)
   }
+
+  // every 1 minute try to ping esp32
+  setInterval(() => {
+    io.emit('ping', {})
+  }, 60 * 1000)
 })().catch(e => {
   require('debug')(`mirai:server`)(e)
   process.exit(1)
