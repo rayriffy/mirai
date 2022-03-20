@@ -105,7 +105,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     logger('socket', 'esp32 connected to server')
 
     socket.on('tx-reply', async transactionId => {
-      logger('socket', 'got response from transaction %s', transactionId)
+      logger('processor', 'got response from transaction %s', transactionId)
 
       // update transaction status to success
       const transaction = await firebase
@@ -133,7 +133,8 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
     })
 
     socket.on('pong', async arcadeId => {
-      firebase.database().ref(`arcades/${arcadeId}`).set({
+      logger('socket', 'pong received from arcade %s', arcadeId)
+      await firebase.database().ref(`arcades/${arcadeId}`).set({
         pingAt: dayjs().toISOString(),
       })
     })
@@ -252,6 +253,7 @@ const wait = duration => new Promise(res => setTimeout(res, duration))
 
   // every 1 minute try to ping esp32
   setInterval(() => {
+    logger('socket', 'ping sent')
     io.emit('ping', {})
   }, 60 * 1000)
 })().catch(e => {
