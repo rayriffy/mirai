@@ -16,18 +16,18 @@ export const PayButton = memo<Props>(props => {
   const { locale } = useLocale({
     en: {
       pay: 'Pay',
-      offline: 'Arcade is offline'
+      offline: 'Arcade is offline',
     },
     th: {
       pay: 'จ่าย',
-      offline: 'ตู้เกมนี้ยังไม่ออนไลน์'
+      offline: 'ตู้เกมนี้ยังไม่ออนไลน์',
     },
   })
 
   const { availability } = useArcadeAvailability(arcadeId)
 
   const isPayButtonDisabled = useMemo(
-    () => calculatedPostBalance < 0 || paymentProcessing || availability === 'offline',
+    () => calculatedPostBalance < 0 || paymentProcessing || ['offline', 'unknown'].includes(availability),
     [calculatedPostBalance, paymentProcessing, availability]
   )
 
@@ -36,7 +36,7 @@ export const PayButton = memo<Props>(props => {
       type="button"
       disabled={isPayButtonDisabled}
       className={classNames(
-        calculatedPostBalance < 0 || availability === 'offline'
+        calculatedPostBalance < 0 || ['offline', 'unknown'].includes(availability)
           ? 'cursor-not-allowed'
           : paymentProcessing
           ? 'cursor-wait'
@@ -45,7 +45,7 @@ export const PayButton = memo<Props>(props => {
       )}
       onClick={onPayment}
     >
-      {availability === 'offline' ? locale('offline') : locale('pay')}
+      {['offline', 'unknown'].includes(availability) ? locale('offline') : locale('pay')}
     </button>
   )
 })
