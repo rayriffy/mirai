@@ -70,7 +70,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   const { default: timezone } = await import('dayjs/plugin/timezone')
 
   const { endOfDay } = await import(
-    '../../modules/admin/analytic/services/endOfDay'
+    '../../modules/analytics/services/endOfDay'
   )
 
   dayjs.extend(utc)
