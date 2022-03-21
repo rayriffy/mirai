@@ -1,10 +1,13 @@
-import { memo, useMemo } from "react";
+import { memo, useMemo } from 'react'
 
-import groupBy from "lodash/groupBy";
+import groupBy from 'lodash/groupBy'
 
-import { TopupAnalytic } from "../@types/TopupAnalytic";
-import dayjs from "dayjs";
-import { CurrencyIcon } from "../../../core/components/currencyIcon";
+import dayjs from 'dayjs'
+import 'dayjs/locale/th'
+
+import { TopupAnalytic } from '../@types/TopupAnalytic'
+import { CurrencyIcon } from '../../../core/components/currencyIcon'
+import { useLocale } from '../../../core/services/useLocale'
 
 interface Props {
   storeId: string
@@ -15,6 +18,17 @@ interface Props {
 
 export const TopupRenderer = memo<Props>(props => {
   const { storeId, topups, startRange, endRange } = props
+
+  const { locale, detectedLocale } = useLocale({
+    en: {
+      date: 'Date',
+      amount: 'Amount',
+    },
+    th: {
+      date: 'วันที่',
+      amount: 'จำนวนเงิน',
+    },
+  })
 
   const grouppedTopup = useMemo(() => {
     const groupedByDay = groupBy(topups, item =>
@@ -41,7 +55,7 @@ export const TopupRenderer = memo<Props>(props => {
 
       return {
         key: titleKey,
-        title: targetDate.format('DD MMM YYYY'),
+        title: targetDate.locale(detectedLocale).format('DD MMM'),
         success: targetGroupItems
           ? sumByStatus(targetGroupItems[1], 'success')
           : 0,
@@ -55,11 +69,17 @@ export const TopupRenderer = memo<Props>(props => {
     <table className="min-w-full divide-y divide-gray-300 text-xs">
       <thead className="bg-gray-50">
         <tr>
-          <th scope="col" className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">
-            Date
+          <th
+            scope="col"
+            className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+          >
+            {locale('date')}
           </th>
-          <th scope="col" className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">
-            Amount
+          <th
+            scope="col"
+            className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+          >
+            {locale('amount')}
           </th>
         </tr>
       </thead>
@@ -69,7 +89,11 @@ export const TopupRenderer = memo<Props>(props => {
             <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
               {item.title}
             </td>
-            <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500 flex items-center">{item.success} <CurrencyIcon className='ml-2 mr-3' currency="coin" /> ({(item.success * 10).toLocaleString()} ฿)</td>
+            <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500 flex items-center">
+              {item.success}{' '}
+              <CurrencyIcon className="ml-2 mr-3" currency="coin" /> (
+              {(item.success * 10).toLocaleString()} ฿)
+            </td>
           </tr>
         ))}
       </tbody>

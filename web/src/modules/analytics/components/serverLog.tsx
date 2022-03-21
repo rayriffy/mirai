@@ -1,6 +1,7 @@
 import { memo } from 'react'
 
 import { Spinner } from '../../../core/components/spinner'
+import { useLocale } from '../../../core/services/useLocale'
 import { useServerLog } from '../services/useServerLog'
 
 interface Props {
@@ -11,6 +12,17 @@ export const ServerLog = memo<Props>(props => {
   const { storeId } = props
 
   const { loading, data } = useServerLog(storeId)
+
+  const { locale } = useLocale({
+    en: {
+      unit: 'Unit',
+      message: 'Message',
+    },
+    th: {
+      unit: 'ระบบ',
+      message: 'ข้อความ',
+    },
+  })
 
   return (
     <div className="h-[25rem] overflow-y-scroll overflow-x-scroll text-xs">
@@ -24,13 +36,13 @@ export const ServerLog = memo<Props>(props => {
                 scope="col"
                 className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
               >
-                Unit
+                {locale('unit')}
               </th>
               <th
                 scope="col"
                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
               >
-                Message
+                {locale('message')}
               </th>
             </tr>
           </thead>
