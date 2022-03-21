@@ -3,10 +3,9 @@ import { useEffect, useMemo, useState } from 'react'
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
 import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
 
-import { endOfDay } from '../../../admin/analytic/services/endOfDay'
-import { startOfDay } from '../../../admin/analytic/services/startOfDay'
-
 import { Transaction } from '../../../../core/@types/firebase/Transaction'
+import { startOfDay } from '../../../analytics/services/startOfDay'
+import { endOfDay } from '../../../analytics/services/endOfDay'
 
 export const useTopupStatistic = (targetDate: Date, storeId: string) => {
   const [loading, setLoading] = useState<boolean>(true)
@@ -20,19 +19,6 @@ export const useTopupStatistic = (targetDate: Date, storeId: string) => {
 
   useEffect(() => {
     setLoading(true)
-
-    console.log({
-      startDate: `${startOfDay(targetDate)
-        .toDate()
-        .toLocaleDateString()} ${startOfDay(targetDate)
-        .toDate()
-        .toLocaleTimeString()}`,
-      endOfDay: `${endOfDay(targetDate)
-        .toDate()
-        .toLocaleDateString()} ${endOfDay(targetDate)
-        .toDate()
-        .toLocaleTimeString()}`,
-    })
 
     const listener = onSnapshot(
       query(
