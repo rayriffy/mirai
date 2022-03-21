@@ -33,6 +33,7 @@ import { CurrencyIcon } from '../../../core/components/currencyIcon'
 import { useCoverImage } from '../../dashboard/arcades/services/useCoverImage'
 import { Spinner } from '../../../core/components/spinner'
 import { ArcadeHealth } from './arcadeHealth'
+import { PayButton } from './payButton'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -131,10 +132,6 @@ export const InputDialog: FunctionComponent<Props> = props => {
     }
   }, [inputToken, isIncreaseDisabled])
 
-  const isPayButtonDisabled = useMemo(
-    () => calculatedPostBalance < 0 || paymentProcessing,
-    [calculatedPostBalance, paymentProcessing]
-  )
   const onPayment = useCallback(async () => {
     setPaymentProcessing(true)
 
@@ -313,21 +310,12 @@ export const InputDialog: FunctionComponent<Props> = props => {
         </div>
       <div className="mt-5 sm:mt-6">
         {result === undefined && (
-          <button
-            type="button"
-            disabled={isPayButtonDisabled}
-            className={classNames(
-              calculatedPostBalance < 0
-                ? 'cursor-not-allowed'
-                : paymentProcessing
-                ? 'cursor-wait'
-                : '',
-              'transition inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-indigo-600 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:text-sm disabled:bg-indigo-400 disabled:hover:bg-indigo-500'
-            )}
-            onClick={onPayment}
-          >
-            {locale('pay')}
-          </button>
+          <PayButton {...{
+            arcadeId: arcadeWithId.id,
+            calculatedPostBalance,
+            paymentProcessing,
+            onPayment,
+          }} />
         )}
         {result !== undefined && (
           <button

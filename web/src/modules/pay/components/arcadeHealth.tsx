@@ -17,8 +17,6 @@ dayjs.extend(relativeTime)
 export const ArcadeHealth = memo<Props>(props => {
   const { arcadeId } = props
 
-  const { loading, secondDiff } = useArcadeAvailability(arcadeId)
-
   const { locale, detectedLocale } = useLocale({
     en: {
       loading: 'Checking',
@@ -36,40 +34,39 @@ export const ArcadeHealth = memo<Props>(props => {
     },
   })
 
+  const { loading, availability } = useArcadeAvailability(arcadeId)
   const builtResult = useMemo(() => {
-    const acceptableDelay = 1.5 * 60 // 1.5 minutes
-    const offlineDelay = 3 * 60 // 3 minutes
-
-    if (secondDiff === -1) {
-      return {
-        primary: 'bg-gray-500',
-        secondary: 'bg-gray-400',
-        text: 'text-gray-600',
-        content: locale('unknown'),
-      }
-    } else if (secondDiff <= acceptableDelay) {
-      return {
-        primary: 'bg-green-500',
-        secondary: 'bg-green-400',
-        text: 'text-green-600',
-        content: locale('online'),
-      }
-    } else if (secondDiff >= offlineDelay) {
-      return {
-        primary: 'bg-red-500',
-        secondary: 'bg-red-400',
-        text: 'text-red-600',
-        content: locale('offline'),
-      }
-    } else {
-      return {
-        primary: 'bg-yellow-500',
-        secondary: 'bg-yellow-400',
-        text: 'text-yellow-600',
-        content: locale('delayed'),
-      }
+    switch(availability) {
+      case 'online':
+        return {
+          primary: 'bg-green-500',
+          secondary: 'bg-green-400',
+          text: 'text-green-600',
+          content: locale('online'),
+        }
+      case 'offline':
+        return {
+          primary: 'bg-red-500',
+          secondary: 'bg-red-400',
+          text: 'text-red-600',
+          content: locale('offline'),
+        }
+      case 'delayed':
+        return {
+          primary: 'bg-yellow-500',
+          secondary: 'bg-yellow-400',
+          text: 'text-yellow-600',
+          content: locale('delayed'),
+        }
+      default:
+        return {
+          primary: 'bg-gray-500',
+          secondary: 'bg-gray-400',
+          text: 'text-gray-600',
+          content: locale('unknown'),
+        }
     }
-  }, [secondDiff, detectedLocale])
+  }, [availability, detectedLocale])
 
   return (
     <div className="border rounded flex px-2 py-1.5 items-center">

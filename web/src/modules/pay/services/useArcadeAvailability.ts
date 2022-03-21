@@ -41,9 +41,27 @@ export const useArcadeAvailability = (arcadeId: string) => {
     }
   }, [arcadeId])
 
+  const arcadeAvailability = useMemo(() => {
+    const acceptableDelay = 1.5 * 60 // 1.5 minutes
+    const offlineDelay = 3 * 60 // 3 minutes
+
+    if (loading) {
+      return 'loading'
+    } else if (secondDiff === -1) {
+      return 'unknown'
+    } else if (secondDiff <= acceptableDelay) {
+      return 'online'
+    } else if (secondDiff >= offlineDelay) {
+      return 'offline'
+    } else {
+      return 'delayed'
+    }
+  }, [loading, secondDiff])
+
   return {
     loading,
     pingAt,
     secondDiff,
+    availability: arcadeAvailability,
   }
 }
