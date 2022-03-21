@@ -5,7 +5,7 @@ export const getAuthInstance = () => {
   const { app } = createFirebaseInstance()
   const auth = getAuth(app)
 
-  if (process.env.NODE_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development' && process.env.disableEmulator !== 'true') {
     try {
       connectAuthEmulator(auth, 'http://localhost:9099')
     } catch (e) {}

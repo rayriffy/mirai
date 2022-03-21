@@ -1,19 +1,19 @@
 import { useEffect, useState } from 'react'
 
 import { collection, onSnapshot, query, where } from 'firebase/firestore'
-import { getFirestoreInstance } from '../../../../core/services/getFirestoreInstance'
+import { getFirestoreInstance } from '../../../core/services/getFirestoreInstance'
 
 import { startOfDay } from './startOfDay'
 
-import { TransactionAnalytic } from '../@types/TransactionAnalytic'
-import { Transaction } from '../../../../core/@types/firebase/Transaction'
+import { Transaction } from '../../../core/@types/firebase/Transaction'
+import { TopupAnalytic } from '../@types/TopupAnalytic'
 
-export const useCoinAnalytics = (
+export const useTopupAnalytics = (
   storeId: string | null,
   startDate: Date,
   endDate: Date
 ) => {
-  const [data, setData] = useState<undefined | null | TransactionAnalytic[]>(
+  const [data, setData] = useState<undefined | null | TopupAnalytic[]>(
     null
   )
 
@@ -30,7 +30,7 @@ export const useCoinAnalytics = (
         : onSnapshot(
             query(
               collection(getFirestoreInstance(), 'transactions'),
-              where('type', '==', 'payment'),
+              where('type', '==', 'topup'),
               where('storeId', '==', storeId),
               where('updatedAt', '<=', endDate),
               where('updatedAt', '>=', startDate)
@@ -41,14 +41,12 @@ export const useCoinAnalytics = (
                   .map(doc => {
                     const transactionData = doc.data() as Transaction
 
-                    if (transactionData.type === 'payment') {
+                    if (transactionData.type === 'topup') {
                       return {
                         id: doc.id,
                         type: transactionData.type,
                         amount: transactionData.token,
                         status: transactionData.status,
-                        arcadeId: transactionData.arcadeId,
-                        arcadeName: transactionData.arcadeName,
                         date: startOfDay(
                           transactionData.updatedAt.toDate()
                         ).toDate(),

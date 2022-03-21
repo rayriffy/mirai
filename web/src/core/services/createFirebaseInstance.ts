@@ -11,6 +11,7 @@ export const createFirebaseInstance = () => {
       messagingSenderId: '721530926',
       appId: '1:721530926:web:b6765b7614fb3b4046efbf',
       measurementId: 'G-VK0WGTLSDK',
+      databaseURL: 'https://mirai-da346-default-rtdb.asia-southeast1.firebasedatabase.app'
     })
 
     const appCheck = initializeAppCheck(app, {

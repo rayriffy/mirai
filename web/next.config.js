@@ -32,6 +32,7 @@ module.exports = withPlugins(
   {
     env: {
       buildNumber: dayjs.tz(dayjs(), 'Asia/Bangkok').format('YYYYMMDD.HH'),
+      disableEmulator: process.env.DISABLE_EMULATOR,
     },
     i18n: {
       locales: ['en', 'th'],

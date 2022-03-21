@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react'
+import { DetailedHTMLProps, HTMLAttributes, memo, useMemo } from 'react'
 
 import { ResponsiveBar, BarDatum } from '@nivo/bar'
 import _groupBy from 'lodash/groupBy'
@@ -6,12 +6,21 @@ import dayjs from 'dayjs'
 
 import { TransactionAnalytic } from '../@types/TransactionAnalytic'
 import { useMedia } from 'web-api-hooks'
+import { classNames } from '../../../core/services/classNames'
 
-interface Props {
+interface Props extends DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   startRange: Date
   endRange: Date
   analyticItems: TransactionAnalytic[]
+  disableLegends?: boolean
+  layout?: 'horizontal' | 'vertical'
   groupBy: 'date' | 'arcade'
+  margin?: {
+    top?: number
+    bottom?: number
+    left?: number
+    right?: number
+  }
 }
 
 interface BarItem extends BarDatum {
@@ -24,7 +33,7 @@ interface BarItem extends BarDatum {
 }
 
 export const BarRenderer = memo<Props>(props => {
-  const { analyticItems, groupBy = 'date', startRange, endRange } = props
+  const { analyticItems, groupBy = 'date', startRange, endRange, layout, disableLegends = false, margin, ...rest } = props
 
   const isScreenTooSmall = useMedia('(max-width: 1024px)')
 
@@ -92,7 +101,10 @@ export const BarRenderer = memo<Props>(props => {
   }, [analyticItems])
 
   return (
-    <div className="h-[500px]">
+    <div {...{
+      ...rest,
+      className: classNames(rest.className, 'h-[500px]')
+    }}>
       <ResponsiveBar
         data={barData}
         keys={['pending', 'processing', 'success', 'failed', 'cancelled']}
@@ -113,39 +125,41 @@ export const BarRenderer = memo<Props>(props => {
               return undefined
           }
         }}
-        margin={{ top: 50, bottom: 50, left: 50, right: 125 }}
+        margin={{ top: margin?.top ?? 50, bottom: margin?.bottom ?? 50, left: margin?.left ?? 50, right: margin?.right ?? 125 }}
         padding={0.3}
-        layout={isScreenTooSmall ? 'horizontal' : 'vertical'}
+        layout={layout ?? (isScreenTooSmall ? 'horizontal' : 'vertical')}
         labelSkipWidth={12}
         labelSkipHeight={12}
         labelTextColor={{
           from: 'color',
           modifiers: [['darker', 1.6]],
         }}
-        legends={[
-          {
-            dataFrom: 'keys',
-            anchor: 'bottom-right',
-            direction: 'column',
-            justify: false,
-            translateX: 120,
-            translateY: 0,
-            itemsSpacing: 2,
-            itemWidth: 100,
-            itemHeight: 20,
-            itemDirection: 'left-to-right',
-            itemOpacity: 0.85,
-            symbolSize: 20,
-            effects: [
-              {
-                on: 'hover',
-                style: {
-                  itemOpacity: 1,
+        {...{
+          legends: disableLegends ? undefined : [
+            {
+              dataFrom: 'keys',
+              anchor: 'bottom-right',
+              direction: 'column',
+              justify: false,
+              translateX: 120,
+              translateY: 0,
+              itemsSpacing: 2,
+              itemWidth: 100,
+              itemHeight: 20,
+              itemDirection: 'left-to-right',
+              itemOpacity: 0.85,
+              symbolSize: 20,
+              effects: [
+                {
+                  on: 'hover',
+                  style: {
+                    itemOpacity: 1,
+                  },
                 },
-              },
-            ],
-          },
-        ]}
+              ],
+            },
+          ]
+        }}
       />
     </div>
   )

@@ -2,7 +2,7 @@ import firebase from 'firebase-admin'
 
 export const initializeFirebase = () => {
   if (!firebase.apps.length) {
-    return process.env.NODE_ENV === 'development'
+    return (process.env.NODE_ENV === 'development' && process.env.DISABLE_EMULATOR !== 'true')
       ? firebase.initializeApp({
           storageBucket: 'mirai-da346.appspot.com',
           projectId: process.env.PROJECT_ID,

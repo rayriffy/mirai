@@ -1,15 +1,15 @@
-import { getStorage, connectStorageEmulator } from 'firebase/storage'
+import { getDatabase, connectDatabaseEmulator } from 'firebase/database'
 import { createFirebaseInstance } from './createFirebaseInstance'
 
-export const getStorageInstance = () => {
+export const getDatabaseInstance = () => {
   const { app } = createFirebaseInstance()
-  const storage = getStorage(app)
+  const auth = getDatabase(app)
 
   if (process.env.NODE_ENV === 'development' && process.env.disableEmulator !== 'true') {
     try {
-      connectStorageEmulator(storage, 'localhost', 9199)
+      // connectAuthEmulator(auth, 'http://localhost:9099')
     } catch (e) {}
   }
 
-  return storage
+  return auth
 }
