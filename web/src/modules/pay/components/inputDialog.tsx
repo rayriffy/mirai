@@ -32,6 +32,7 @@ import { TransactionSmall } from './transactionSmall'
 import { CurrencyIcon } from '../../../core/components/currencyIcon'
 import { useCoverImage } from '../../dashboard/arcades/services/useCoverImage'
 import { Spinner } from '../../../core/components/spinner'
+import { ArcadeHealth } from './arcadeHealth'
 
 interface Props {
   arcadeWithId: ArcadeWithId
@@ -183,11 +184,14 @@ export const InputDialog: FunctionComponent<Props> = props => {
           <h3 className="text-2xl leading-6 font-semibold text-gray-900">
             {arcadeWithId.data.name}
           </h3>
-          <div className="flex justify-center py-2">
-            <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" />
-            <Link href={`/dashboard/arcades/${arcadeWithId.data.storeId}`}>
-              <a className="text-gray-500">{arcadeWithId.data.storeName}</a>
-            </Link>
+          <div className="flex justify-center items-center py-2 space-x-2">
+            <div className="flex">
+              <LocationMarkerIcon className="text-gray-500 w-6 h-6 mr-1" />
+              <Link href={`/dashboard/arcades/${arcadeWithId.data.storeId}`}>
+                <a className="text-gray-500">{arcadeWithId.data.storeName}</a>
+              </Link>
+            </div>
+            <ArcadeHealth arcadeId={arcadeWithId.id} />
           </div>
           {result !== undefined ? (
             <Fragment>

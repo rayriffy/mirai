@@ -3,7 +3,6 @@ import { FunctionComponent, createContext } from 'react'
 import { createStoreon } from 'storeon'
 import { customContext } from 'storeon/react'
 import { persistState } from '@storeon/localstorage'
-import { crossTab } from '@storeon/crosstab'
 
 import { title, TitleStore, TitleEvent } from './store/title'
 import { user, UserStore, UserEvent } from './store/user'
@@ -20,9 +19,6 @@ export const store = createStoreon<
     ? [
         persistState(['startup', 'next'], {
           storage: sessionStorage,
-        }),
-        crossTab({
-          filter: (event, data) => event.toString().startsWith('title/'),
         }),
       ]
     : []),

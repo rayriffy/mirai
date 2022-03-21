@@ -10,6 +10,7 @@ import { useLocale } from '../../../../core/services/useLocale'
 import { useCoverImage } from '../services/useCoverImage'
 
 import { ArcadeWithId } from '../../../../core/@types/ArcadeWithId'
+import { ArcadeHealth } from '../../../pay/components/arcadeHealth'
 
 interface Props {
   arcade: ArcadeWithId
@@ -45,14 +46,19 @@ export const ArcadeCard = memo<Props>(props => {
               {loading ? <Spinner /> : <PhotographIcon className='h-8 w-8 text-gray-900' />}
             </div>
           )}
-          <div className="px-5 py-3">
-            <h1 className="text-gray-800 font-semibold text-xl">
-              {arcade.data.name}
-            </h1>
-            <div className="mt-0.5">
-              <h2 className="text-gray-500 text-sm">
-                {arcade.data.tokenPerCredit} {locale('pergame')}
-              </h2>
+          <div className="px-5 py-3 flex justify-between">
+            <div>
+              <h1 className="text-gray-800 font-semibold text-xl">
+                {arcade.data.name}
+              </h1>
+              <div className="mt-0.5">
+                <h2 className="text-gray-500 text-sm">
+                  {arcade.data.tokenPerCredit} {locale('pergame')}
+                </h2>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <ArcadeHealth arcadeId={arcade.id} />
             </div>
           </div>
         </div>
