@@ -56,6 +56,7 @@ module.exports = withPlugins(
       domains: ['localhost', 'www.gravatar.com', 'firebasestorage.googleapis.com'],
     },
     experimental: {
+      reactRoot: 'concurrent',
       polyfillsOptimization: true,
       scrollRestoration: true,
     },

@@ -1,3 +1,4 @@
+import dayjs from 'dayjs'
 import { memo } from 'react'
 
 import { Spinner } from '../../../core/components/spinner'
@@ -16,10 +17,12 @@ export const ServerLog = memo<Props>(props => {
   const { locale } = useLocale({
     en: {
       unit: 'Unit',
+      time: 'Time',
       message: 'Message',
     },
     th: {
       unit: 'ระบบ',
+      time: 'เวลา',
       message: 'ข้อความ',
     },
   })
@@ -42,6 +45,12 @@ export const ServerLog = memo<Props>(props => {
                 scope="col"
                 className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
               >
+                {locale('time')}
+              </th>
+              <th
+                scope="col"
+                className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+              >
                 {locale('message')}
               </th>
             </tr>
@@ -51,6 +60,9 @@ export const ServerLog = memo<Props>(props => {
               <tr key={`log-${storeId}-${log.createdAt}`}>
                 <td className="whitespace-nowrap py-2 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                   {log.unit}
+                </td>
+                <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500">
+                  {dayjs(log.createdAt).format('HH:mm:ss')}
                 </td>
                 <td className="whitespace-nowrap px-3 py-2 text-sm text-gray-500">
                   {log.message}
