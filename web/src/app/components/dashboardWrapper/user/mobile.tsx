@@ -8,6 +8,7 @@ import { signOut } from 'firebase/auth'
 import { useStoreon } from '../../../../context/storeon'
 import { useLocale } from '../../../../core/services/useLocale'
 import { getAuthInstance } from '../../../../core/services/getAuthInstance'
+import Link from 'next/link'
 
 export const MobileUser = memo(() => {
   const {
@@ -23,9 +24,11 @@ export const MobileUser = memo(() => {
   const { locale } = useLocale({
     en: {
       logout: 'Logout',
+      settings: 'Settings',
     },
     th: {
       logout: 'ออกจากระบบ',
+      settings: 'ตั้งค่า',
     },
   })
 
@@ -59,8 +62,8 @@ export const MobileUser = memo(() => {
               static
               className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
             >
-              {/* <div className="py-1">
-                <Menu.Item>
+              <div className="py-1">
+                {/* <Menu.Item>
                   {({ active }) => (
                     <a
                       href="#"
@@ -72,22 +75,23 @@ export const MobileUser = memo(() => {
                       View profile
                     </a>
                   )}
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
-                      className={classNames(
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm'
-                      )}
-                    >
-                      Settings
-                    </a>
+                    <Link href="/settings">
+                      <a
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block px-4 py-2 text-sm'
+                        )}
+                      >
+                        {locale('settings')}
+                      </a>
+                    </Link>
                   )}
                 </Menu.Item>
               </div>
-              <div className="py-1">
+              {/* <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <a

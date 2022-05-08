@@ -10,6 +10,7 @@ import { signOut } from 'firebase/auth'
 import { getAuthInstance } from '../../../../core/services/getAuthInstance'
 
 import { useLocale } from '../../../../core/services/useLocale'
+import Link from 'next/link'
 
 export const DesktopUser = memo(() => {
   const {
@@ -26,11 +27,11 @@ export const DesktopUser = memo(() => {
   const { locale } = useLocale({
     en: {
       logout: 'Logout',
-      setting: 'Setting',
+      settings: 'Settings',
     },
     th: {
       logout: 'ออกจากระบบ',
-      setting: 'ตั้งค่า',
+      settings: 'ตั้งค่า',
     },
   })
 
@@ -95,15 +96,16 @@ export const DesktopUser = memo(() => {
                 </Menu.Item> */}
                 <Menu.Item>
                   {({ active }) => (
-                    <a
-                      href="#"
-                      className={classNames(
-                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                        'block px-4 py-2 text-sm'
-                      )}
-                    >
-                      {locale('setting')}
-                    </a>
+                    <Link href="/settings">
+                      <a
+                        className={classNames(
+                          active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                          'block px-4 py-2 text-sm'
+                        )}
+                      >
+                        {locale('settings')}
+                      </a>
+                    </Link>
                   )}
                 </Menu.Item>
               </div>
