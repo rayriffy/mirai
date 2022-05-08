@@ -26,9 +26,11 @@ export const DesktopUser = memo(() => {
   const { locale } = useLocale({
     en: {
       logout: 'Logout',
+      setting: 'Setting',
     },
     th: {
       logout: 'ออกจากระบบ',
+      setting: 'ตั้งค่า',
     },
   })
 
@@ -77,8 +79,8 @@ export const DesktopUser = memo(() => {
               static
               className="z-10 mx-3 origin-top absolute right-0 left-0 mt-1 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-200 focus:outline-none"
             >
-              {/* <div className="py-1">
-                <Menu.Item>
+              <div className="py-1">
+                {/* <Menu.Item>
                   {({ active }) => (
                     <a
                       href="#"
@@ -90,7 +92,7 @@ export const DesktopUser = memo(() => {
                       View profile
                     </a>
                   )}
-                </Menu.Item>
+                </Menu.Item> */}
                 <Menu.Item>
                   {({ active }) => (
                     <a
@@ -100,12 +102,12 @@ export const DesktopUser = memo(() => {
                         'block px-4 py-2 text-sm'
                       )}
                     >
-                      Settings
+                      {locale('setting')}
                     </a>
                   )}
                 </Menu.Item>
               </div>
-              <div className="py-1">
+              {/* <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
                     <a

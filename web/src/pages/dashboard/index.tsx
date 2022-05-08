@@ -1,6 +1,6 @@
 import { Fragment, useEffect } from 'react'
 
-import { GetServerSideProps, NextPage } from 'next'
+import { NextPage } from 'next'
 
 import { Balance } from '../../modules/dashboard/overview/components/balance'
 import { QRProfile } from '../../modules/dashboard/overview/components/qrProfile'
@@ -8,20 +8,10 @@ import { QRProfile } from '../../modules/dashboard/overview/components/qrProfile
 import { FavoriteArcades } from '../../modules/dashboard/overview/components/favoriteArcades'
 import { TransactionHistory } from '../../modules/dashboard/overview/components/transactionHistory'
 import { useLocale } from '../../core/services/useLocale'
-import { Alpha } from '../../modules/dashboard/overview/components/alpha'
-import dayjs from 'dayjs'
 import { useStoreon } from '../../context/storeon'
-import { SpeakerphoneIcon } from '@heroicons/react/outline'
-import { AlphaFeedback } from '../../modules/dashboard/overview/components/alphaFeedback'
 
-interface Props {
-  endTestingDate: string
-}
-
-const Page: NextPage<Props> = props => {
-  const { endTestingDate } = props
-
-  const { locale, detectedLocale } = useLocale({
+const Page: NextPage = props => {
+   const { locale, detectedLocale } = useLocale({
     en: {
       home: 'Home',
     },
@@ -51,10 +41,6 @@ const Page: NextPage<Props> = props => {
         </div>
 
         <div className="col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-4 px-4 mt-6 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-4 xl:grid-cols-4 justify-center items-start gap-4 mb-4">
-            <AlphaFeedback />
-            <Alpha endTestDate={dayjs(endTestingDate)} />
-          </div>
           <FavoriteArcades />
         </div>
       </div>
@@ -62,29 +48,6 @@ const Page: NextPage<Props> = props => {
       <TransactionHistory />
     </Fragment>
   )
-}
-
-export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
-  const { default: dayjs } = await import('dayjs')
-  const { default: utc } = await import('dayjs/plugin/utc')
-  const { default: timezone } = await import('dayjs/plugin/timezone')
-
-  const { endOfDay } = await import(
-    '../../modules/analytics/services/endOfDay'
-  )
-
-  dayjs.extend(utc)
-  dayjs.extend(timezone)
-
-  const endTestingDate = endOfDay(
-    dayjs.tz('2022-03-31', 'Asia/Bangkok')
-  ).toISOString()
-
-  return {
-    props: {
-      endTestingDate,
-    },
-  }
 }
 
 export default Page
