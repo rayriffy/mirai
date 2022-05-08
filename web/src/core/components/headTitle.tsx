@@ -1,4 +1,4 @@
-import { FunctionComponent, useMemo, useEffect } from 'react'
+import { FunctionComponent, useMemo, PropsWithChildren } from 'react'
 
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -11,7 +11,7 @@ interface Props {
   description?: string
 }
 
-export const HeadTitle: FunctionComponent<Props> = props => {
+export const HeadTitle: FunctionComponent<PropsWithChildren<Props>> = props => {
   const { description = 'Virtual token payment system', children } = props
 
   const router = useRouter()

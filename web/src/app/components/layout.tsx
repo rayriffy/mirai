@@ -1,4 +1,4 @@
-import { FunctionComponent, useEffect } from 'react'
+import { FunctionComponent, PropsWithChildren, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -7,7 +7,7 @@ import NProgress from 'nprogress'
 import { useStoreon } from '../../context/storeon'
 import { useAuth } from '../../core/services/useAuth'
 
-export const AppLayout: FunctionComponent = props => {
+export const AppLayout: FunctionComponent<PropsWithChildren<{}>> = props => {
   const { children } = props
 
   const {

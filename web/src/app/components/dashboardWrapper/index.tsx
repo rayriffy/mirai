@@ -1,4 +1,4 @@
-import { FunctionComponent, useState, useCallback, useEffect } from 'react'
+import { FunctionComponent, PropsWithChildren, useState, useCallback, useEffect } from 'react'
 
 import { useRouter } from 'next/router'
 
@@ -11,7 +11,7 @@ import { DesktopHeader } from './header/desktop'
 
 import { useRoleAccess } from '../../services/useRoleAccess'
 
-export const DashboardWrapper: FunctionComponent = props => {
+export const DashboardWrapper: FunctionComponent<PropsWithChildren<{}>> = props => {
   const { children } = props
 
   const router = useRouter()
